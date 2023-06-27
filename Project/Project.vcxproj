@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ky.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Trie.cpp" />
   </ItemGroup>

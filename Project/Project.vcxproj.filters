@@ -21,6 +21,9 @@
     <ClCompile Include="Trie.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ky.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="struct.h">
