@@ -6,4 +6,5 @@
 
 using namespace std;
 
-void insert(trieNode*& root, string s, string meaning);
+void insert(trieNode*& root, string s, vector<string> meaning);
+void standardWord(string& S);
