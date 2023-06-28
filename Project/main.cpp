@@ -21,7 +21,8 @@ int main() {
 	trieNode* slangDef = nullptr;
 
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
-	HomePage(screenW, screenH);
+	//HomePage(screenW, screenH);
+	WaitingPage(screenW, screenH);
 
 	return 0;
 }
