@@ -5,6 +5,7 @@ void HomePage(const int screenWidth, const int screenHeight) {
 	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 120, 0, 250);
 	Font italic = LoadFontEx("../Fonts/SourceSansPro-Italic.ttf", 120, 0, 250);
 
+	Texture2D logo = LoadTexture("../resources/School Logo.png");
 	while (!WindowShouldClose()) {
 		BeginDrawing();
 		DrawRectangle(0, 0, float(screenWidth), float(screenHeight), WHITE);
@@ -13,8 +14,11 @@ void HomePage(const int screenWidth, const int screenHeight) {
 		DrawTextEx(bold, "Favorite List", { 15,12 }, 24, 0, WHITE);
 		DrawTextEx(bold, "Add new words", { 188,12 }, 24, 0, WHITE);
 		DrawTextEx(bold, "Revision", { 388,12 }, 24, 0, WHITE);
+		DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, WHITE);
 		DrawLineEx({ 155, 10 }, { 155, 38 }, 3.0, WHITE);
 		DrawLineEx({ 355, 10 }, { 355, 38 }, 3.0, WHITE);
+		DrawTexture(logo, 15, 100, WHITE);
+
 		EndDrawing();
 	}
 }
