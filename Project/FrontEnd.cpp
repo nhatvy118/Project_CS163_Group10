@@ -36,6 +36,8 @@ void HomePage(const int screenWidth, const int screenHeight) {
 		DrawTextEx(bold, "Random a word", { 565,242 }, 31, 0, WHITE);// 581, 245
 		DrawTextEx(bold, "Vocab", { 72,392 }, 43, 0, { 11, 64, 156,255 });
 		DrawTextEx(bold, "Definition", { 67,607 }, 43, 0, { 11, 64, 156,255 });
+		DrawTextEx(bold, "DICTIONARY", { 248,146 }, 49, 0, WHITE);
+		DrawTextEx(italic, "by APCS K22 Group 10", { 219, 196 }, 41, 0, WHITE);
 		DrawLineEx({ 155, 10 }, { 155, 38 }, 3.0, WHITE);
 		DrawLineEx({ 355, 10 }, { 355, 38 }, 3.0, WHITE);
 		DrawLineEx({ 744,133 }, { 744, 168 }, 4.0, { 16,49,107,255 });
