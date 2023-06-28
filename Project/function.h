@@ -8,9 +8,10 @@
 using namespace std;
 
 void insert(trieNode*& root, string s, vector<string> meaning);
+
 void standardWord(string& S);
 
-void insert(trieNode*& root, string s, string meaning);
+void readFileToTree(trieNode* root, string direction);
 
 void DeleteAWord(trieNode*& root, string word, int depth);
 
