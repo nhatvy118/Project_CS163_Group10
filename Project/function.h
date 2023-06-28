@@ -18,3 +18,5 @@ void DeleteAWord(trieNode*& root, string word, int depth);
 void DeleteAllTree(trieNode*& root);
 
 void WriteDictionaryToFile(trieNode* root, string prefix, ofstream &fout);
+
+bool search(trieNode* root, string s, vector<string>& ans);

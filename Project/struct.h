@@ -22,3 +22,47 @@ struct trieNode {
 		this->mean.resize(0);
 	}
 };
+
+struct Node {
+	string data;
+	Node* pNext;
+};
+struct Stack {
+	Node* pHead = nullptr;
+
+	void push(Node* pNew) {
+		pNew->pNext = this->pHead;
+		this->pHead = pNew;
+	}
+	void removeNode(Node* pNew) {
+		Node* cur = this->pHead;
+		if (cur == nullptr) {
+			return;
+		}
+		if (this->pHead->data == pNew->data) {
+			cur = this->pHead;
+			this->pHead = this->pHead->pNext;
+			delete cur;
+			return;
+		}
+		while (cur->pNext) {
+			if (cur->pNext->data == pNew->data) {
+				Node* tmp = cur->pNext;
+				cur->pNext = cur->pNext->pNext;
+				delete tmp;
+			}
+			cur = cur->pNext;
+		}
+	}
+	vector<string> viewList() {
+		Node* cur = pHead;
+		vector<string> ans;
+		ans.resize(0);
+		if (cur == nullptr) return ans;
+		while (cur) {
+			ans.push_back(cur->data);
+			cur = cur->pNext;
+		}
+		return ans;
+	}
+};

@@ -21,10 +21,10 @@ void insert(trieNode*& root, string s, vector<string> meaning) {
 	standardWord(s);
 	trieNode* cur = root;
 	for (auto x : s) {
-		if (!cur->c[int(x) - 'a']) {
-			cur->c[int(x) - 'a'] = new trieNode();
+		if (!cur->c[int(x) - 32]) {
+			cur->c[int(x) - 32] = new trieNode();
 		}
-		cur = cur->c[int(x) - 'a'];
+		cur = cur->c[int(x) - 32];
 	}
 	cur->isEnd = true;
 	for (auto x : meaning) {
@@ -56,4 +56,24 @@ void readFileToTree(trieNode* root, string direction) {
 		insert(root, str,meaning);
 	}
 	fin.close();
+}
+
+bool search(trieNode* root, string s, vector<string>& ans) {
+	trieNode* cur = root;
+	if (!root) return false;
+	for (auto x : s) {
+		if (cur->c[int(x) - 32]) {
+			cur = cur->c[int(x) - 32];
+		}
+		else {
+			return false;
+		}
+	}
+	if (cur->isEnd) {
+		for (auto x : cur->mean) {
+			ans.push_back(x);
+		}
+		return true;
+	}
+	return false;
 }
