@@ -1,1 +1,4 @@
-﻿
+﻿  FrontEnd.cpp
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(10,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(10,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Project.vcxproj -> C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\x64\Debug\Project.exe

@@ -24,6 +24,9 @@
     <ClCompile Include="Ky.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FrontEnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="struct.h">
@@ -31,6 +34,9 @@
     </ClInclude>
     <ClInclude Include="function.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrontEnd.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
