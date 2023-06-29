@@ -23,6 +23,7 @@ int main() {
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
 	//HomePage(screenW, screenH);
 	WaitingPage(screenW, screenH);
+	FavoriteListPage(screenW, screenH);
 
 	return 0;
 }

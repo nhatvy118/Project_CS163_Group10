@@ -52,7 +52,8 @@ void HomePage(const int screenWidth, const int screenHeight) {
 
 	NewPageButton AddWordBtn;
 	AddWordBtn.button = {188,12,166,31};
-
+	NewPageButton FavoriteList;
+	FavoriteList.button = { 15,9,131,31 };
 
 
 
@@ -89,6 +90,7 @@ void HomePage(const int screenWidth, const int screenHeight) {
 		DrawTextEx(bold, "Favorite List", { 15,12 }, 24, 0, WHITE);
 		DrawTextEx(bold, "Add new words", { 188,12 }, 24, 0, WHITE);
 		AddWordBtn.workbutton(mousePoint, AddWordPage);
+		FavoriteList.workbutton(mousePoint, FavoriteListPage);
 		DrawTextEx(bold, "Revision", { 388,12 }, 24, 0, WHITE);
 		DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, WHITE);
 		DrawTextEx(bold, "or", { 634,189 }, 30, 0, WHITE);
@@ -128,6 +130,8 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 	Color yellow = { 253,190,52,255 };
 
 	Texture2D logo = LoadTexture("../resources/School Logo.png");
+	Texture2D arrow = LoadTexture("../resources/Arrow.png");
+	Texture2D confirm = LoadTexture("../resources/confirmBtn.png");
 
 	NewPageButton Back;
 	Back.button = { 1431,9,61,31 };
@@ -179,7 +183,11 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 		DefBar.worktextbox(isTypingDef);
 		DrawTextEx(bold, DefBar.text, { 690,550}, 28, 0, navy);
 
-
+		DrawTextEx(bold, "Please choose the dictionary",{132,522},43,0, yellow);
+		DrawTextEx(bold, "you want to update", { 205, 564 }, 43, 0, yellow);
+		DrawRectangleRounded({ 217,627,261,60 }, 0.18, 0, WHITE);
+		DrawTexture(arrow, 427, 650, WHITE);
+		DrawTexture(confirm, 969, 643, WHITE);
 		//confirmBtnAction = false;
 		//if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {
 		//	//DrawRectangleLines((int)btnBoundsconfirmBtn.x, (int)btnBoundsconfirmBtn.y, (int)btnBoundsconfirmBtn.width, (int)btnBoundsconfirmBtn.height, BLACK);
@@ -201,6 +209,75 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 		//DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
 
 
+		EndDrawing();
+	}
+	CloseWindow();
+}
+void FavoriteListPage(const int screenWidth, const int screenHeight)
+{
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	SetTargetFPS(60);
+
+	Textbox SearchBar;
+	SearchBar.textbox = { 551, 122, 911, 60 };
+	bool isSearching = false;
+
+	Textbox SearchBar2;
+	SearchBar2.textbox = { 28,369, 522, 60};
+	bool isSearching2 = false;
+
+	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
+	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 96, 0, 0);
+	Font italic = LoadFontEx("../Fonts/SourceSansPro-Italic.ttf", 96, 0, 0);
+
+	Color white = { 242, 247, 255,255 };
+	Color blue = { 11,64,156,255 };
+	Color navy = { 16,49,107,255 };
+	Color yellow = { 253,190,52,255 };
+
+	Texture2D logo = LoadTexture("../resources/School Logo.png");
+	Texture2D arrow = LoadTexture("../resources/Arrow.png");
+	Texture2D glass = LoadTexture("../resources/Magnifying Glass.png");
+	Texture2D trashCan = LoadTexture("../resources/TrashCan.png");
+
+	NewPageButton Back;
+	Back.button = { 1431,9,61,31 };
+
+	while (!WindowShouldClose()) 
+	{
+		mousePoint = GetMousePosition();
+		BeginDrawing();
+		DrawRectangle(0, 0, 1512, 982, navy);
+		DrawRectangle(0, 0, 1512, 48, blue);
+		DrawRectangleRounded({ 28,448,135,54 }, 0.18, 0, yellow);
+		DrawRectangleRounded({ 744,450,207,49 }, 0.18, 0, yellow);
+		DrawRectangleRounded({ 28,369,522,60 }, 1.047, 0, white);
+		DrawRectangleRounded({ 551,120,911,60 }, 1.047, 0, white);
+		DrawRectangleRounded(SearchBar.textbox, 60, 0, WHITE);
+		DrawLineEx({ 744,133 }, { 744, 168 }, 4.0, { 16,49,107,255 });
+		if (!isSearching) {
+			DrawTextEx(italic, "Add a word to your favorite list...", { 774,138 }, 28, 0, navy);
+		}
+		SearchBar.worktextbox(isSearching);
+		if (!isSearching2) {
+			DrawTextEx(italic, "Search for your favorite word...", { 54, 387 }, 28, 0, navy);
+		}
+		SearchBar2.worktextbox(isSearching2);
+		DrawTextEx(bold, SearchBar.text, { 774,138 }, 28, 0, navy);
+		DrawTextEx(bold, SearchBar2.text, { 54,387 }, 28, 0, navy);
+		DrawRectangle(28, 489, 523, 283, white);
+		DrawRectangle(744, 489, 523, 283, white);
+		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
+		DrawTextEx(bold, "Word", { 54,448 }, 44, 0, navy);
+		DrawTextEx(bold, "Definition", { 774,448 }, 44, 0, navy);
+		DrawTextEx(bold, "FAVORITE", { 234,143 }, 54, 0, white);
+		DrawTextEx(bold, "LIST", { 287,193 }, 54, 0, white);
+		Back.workbutton(mousePoint, HomePage);
+		DrawTexture(logo, 15, 100, white);
+		DrawCircle(506.5, 399.5, 20.5, yellow);
+		DrawCircle(1429.5, 149.5, 20.5, yellow);
+		DrawTexture(glass, 497, 388, white);
+		DrawTexture(glass, 1419, 138, white);
 		EndDrawing();
 	}
 	CloseWindow();

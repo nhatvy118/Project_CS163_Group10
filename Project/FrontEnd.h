@@ -27,3 +27,4 @@ struct NewPageButton {
 void WaitingPage(const int screenWidth, const int screenHeight);
 void HomePage(const int screenWidth, const int screenHeight);
 void AddWordPage(const int screenWidth, const int screenHeight);
+void FavoriteListPage(const int screenWidth, const int screenHeight);
