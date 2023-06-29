@@ -17,7 +17,7 @@ void WaitingPage(const int screenWidth, const int screenHeight) {
 
 	Texture2D DrawStartBtn = LoadTexture("../resources/StartBtn.png");
 	NewPageButton StartBtn;
-	StartBtn.button = {660,700,200,100};
+	StartBtn.button = {655,700,200,100};
 
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
@@ -28,13 +28,14 @@ void WaitingPage(const int screenWidth, const int screenHeight) {
 		DrawTextEx(bold, "DICTIONARY", { 629,537 }, 60, 0, white);
 		DrawTextEx(italic, "by APCS K22 Group 10", { 644,611 }, 32, 0, white);
 
-		DrawTexture(DrawStartBtn, 660, 700, WHITE);
+		DrawTexture(DrawStartBtn, 655, 700, WHITE);
 		StartBtn.workbutton(mousePoint, HomePage);
 		EndDrawing();
 	}
 	CloseWindow();
 }
 void HomePage(const int screenWidth, const int screenHeight) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
 	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 96, 0, 0);
@@ -49,8 +50,13 @@ void HomePage(const int screenWidth, const int screenHeight) {
 	SearchBar.textbox = { 551, 122, 911, 60 };
 	bool isSearching = false;
 
-	Rectangle randomWordBox = { 551, 227, 197, 60 };
+	NewPageButton AddWordBtn;
+	AddWordBtn.button = {188,12,166,31};
 
+
+
+
+	Rectangle randomWordBox = { 551, 227, 197, 60 };
 	Rectangle Vocab = { 41,391,161,49 };
 	Rectangle Definition = { 41, 605,207,49 };
 	Rectangle VocabBox = { 639,391,49,49 };
@@ -61,6 +67,7 @@ void HomePage(const int screenWidth, const int screenHeight) {
 	Texture2D blueStar = LoadTexture("../resources/Blue Star.png");
 	Texture2D editIcon = LoadTexture("../resources/Edit Icon.png");
 	while (!WindowShouldClose()) {
+		mousePoint = GetMousePosition();
 		BeginDrawing();
 		DrawRectangle(0, 0,screenWidth, screenHeight, white);
 		DrawRectangle(0, 0, 1512, 340, navy);
@@ -79,25 +86,24 @@ void HomePage(const int screenWidth, const int screenHeight) {
 		//DrawRectangleRounded(VocabBox, 15, 0, { 253, 190, 52, 255 });
 		//DrawRectangleRounded(DefinitionBox, 15, 0, { 253, 190, 52, 255 });
 		//DrawCircle(1426.5, 149.5, 20.5, {253, 190, 52, 255});
-		//DrawTextEx(bold, "Favorite List", { 15,12 }, 24, 0, WHITE);
-		//DrawTextEx(bold, "Add new words", { 188,12 }, 24, 0, WHITE);
-		//DrawTextEx(bold, "Revision", { 388,12 }, 24, 0, WHITE);
-		//DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, WHITE);
+		DrawTextEx(bold, "Favorite List", { 15,12 }, 24, 0, WHITE);
+		DrawTextEx(bold, "Add new words", { 188,12 }, 24, 0, WHITE);
+		AddWordBtn.workbutton(mousePoint, AddWordPage);
+		DrawTextEx(bold, "Revision", { 388,12 }, 24, 0, WHITE);
+		DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, WHITE);
 		DrawTextEx(bold, "or", { 634,189 }, 30, 0, WHITE);
 		//DrawTextEx(bold, "Random a word", { 565,242 }, 31, 0, WHITE);// 581, 245
 		//DrawTextEx(bold, "Vocab", { 72,392 }, 43, 0, { 11, 64, 156,255 });
 		//DrawTextEx(bold, "Definition", { 67,607 }, 43, 0, { 11, 64, 156,255 });
 		DrawTextEx(bold, "DICTIONARY", { 248,146 }, 49, 0, WHITE);
 		DrawTextEx(italic, "by APCS K22 Group 10", { 219, 196 }, 41, 0, WHITE);
-		//DrawLineEx({ 155, 10 }, { 155, 38 }, 3.0, WHITE);
-		//DrawLineEx({ 355, 10 }, { 355, 38 }, 3.0, WHITE);
+		DrawLineEx({ 155, 10 }, { 155, 38 }, 3.0, WHITE);
+		DrawLineEx({ 355, 10 }, { 355, 38 }, 3.0, WHITE);
 		DrawLineEx({ 744,133 }, { 744, 168 }, 4.0, { 16,49,107,255 });
 		////First half of arrow
 		//DrawLineEx({ 717.41, 145 }, { 725.895, 153.485 }, 2.0, { 16,49,107,255 });
 		////Second half of arrow
 		//DrawLineEx({ 734.41, 145 }, { 725.895, 153.485 }, 2.0, { 16,49,107,255 });
-		//DrawLineEx({ 670,439 }, { 58,439 }, 1, { 253, 190, 52, 255 });
-		//DrawLineEx({ 670,653 }, { 58,653 }, 1, { 253, 190, 52, 255 });
 
 		DrawTexture(logo, 15, 100, WHITE);
 		//DrawTexture(glass, 1417, 138, WHITE);
@@ -106,6 +112,96 @@ void HomePage(const int screenWidth, const int screenHeight) {
 
 		EndDrawing();
 
+	}
+	CloseWindow();
+}
+void AddWordPage(const int screenWidth, const int screenHeight) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	SetTargetFPS(60);
+	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
+	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 96, 0, 0);
+	Font italic = LoadFontEx("../Fonts/SourceSansPro-Italic.ttf", 96, 0, 0);
+
+	Color white = { 242, 247, 255,255 };
+	Color blue = { 11,64,156,255 };
+	Color navy = { 16,49,107,255 };
+	Color yellow = { 253,190,52,255 };
+
+	Texture2D logo = LoadTexture("../resources/School Logo.png");
+
+	NewPageButton Back;
+	Back.button = { 1431,9,61,31 };
+
+	Textbox WordBar;
+	WordBar.textbox = { 667, 340, 751, 60 };
+	bool isTypingWord = false;
+	Textbox DefBar;
+	DefBar.textbox = { 667, 534, 751, 60 };
+	bool isTypingDef = false;
+
+	Texture2D confirmBtn = LoadTexture("../resources/confirmBtn.png");
+	float frameHeightconfirmBtn = (float)confirmBtn.height;
+	Rectangle sourceRecconfirmBtn = { 0, 0, (float)confirmBtn.width,frameHeightconfirmBtn };
+	// Define button bounds on screen
+	Rectangle btnBoundsconfirmBtn = { 650, 400, (float)confirmBtn.width, frameHeightconfirmBtn };
+	int confirmBtnState = 0;               // Button state: 0-NORMAL, 1-MOUSE_HOVER, 2-PRESSED
+	bool confirmBtnAction = false;         // Button action should be activated
+	bool confirmBtnFalseDisplay = false;
+
+	while (!WindowShouldClose()) {
+		mousePoint = GetMousePosition();
+		BeginDrawing();
+		DrawRectangle(0, 0, screenWidth, screenHeight,navy);
+		DrawRectangle(0, 0, 1512, 48, blue);
+		DrawTexture(logo, 265, 126, WHITE);
+		DrawTextEx(bold, "DICTIONARY", { 255,331 }, 49, 0, white);
+		DrawTextEx(italic, "by APCS K22 Group 10", { 212,392 }, 41, 0, white);
+
+		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
+		Back.workbutton(mousePoint, HomePage);
+
+		DrawRectangleRounded({ 667,295,125,90 },0.18, 0, yellow);
+		DrawRectangleRounded({ 667,487,199,90 },0.18, 0, yellow);
+		DrawTextEx(bold, "Word", { 689,295 }, 44, 0, navy);
+		DrawTextEx(bold, "Definition", { 689,491 }, 44, 0, navy);
+
+		DrawRectangleRounded(WordBar.textbox, 0.18, 0, WHITE);
+		if (!isTypingWord) {
+			DrawTextEx(italic, "Type in a word...", { 690,355 }, 28, 0, navy);
+		}
+		WordBar.worktextbox(isTypingWord);
+		DrawTextEx(bold, WordBar.text, { 690,355 }, 28, 0, navy);
+
+		DrawRectangleRounded(DefBar.textbox, 0.18, 0, WHITE);
+		if (!isTypingDef) {
+			DrawTextEx(italic, "Type in its definition...", { 690,550 }, 28, 0, navy);
+		}
+		DefBar.worktextbox(isTypingDef);
+		DrawTextEx(bold, DefBar.text, { 690,550}, 28, 0, navy);
+
+
+		//confirmBtnAction = false;
+		//if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {
+		//	//DrawRectangleLines((int)btnBoundsconfirmBtn.x, (int)btnBoundsconfirmBtn.y, (int)btnBoundsconfirmBtn.width, (int)btnBoundsconfirmBtn.height, BLACK);
+		//	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) confirmBtnAction = true;
+		//}
+		//else if (IsKeyPressed(KEY_ENTER)) confirmBtnAction = true;
+		//else confirmBtnState = 0;
+		//if (confirmBtnAction) {
+		//	if (createASchoolYear(schoolyear.text)) {
+		//		confirmBtnFalseDisplay = false;
+		//		EndDrawing();
+		//		ViewSchoolYearsPage(screenWidth, screenHeight, CurrentUser);
+		//	}
+		//	else confirmBtnFalseDisplay = true;
+		//}
+		//if (confirmBtnFalseDisplay) DrawTextEx(bold, "Invalid data or this year already existed. Try again!", { 495, 359 }, 25, 0, RED);
+		//// Calculate button frame rectangle to draw depending on button state
+		//sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
+		//DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+
+
+		EndDrawing();
 	}
 	CloseWindow();
 }
