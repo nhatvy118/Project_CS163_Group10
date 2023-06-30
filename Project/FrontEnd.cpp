@@ -46,8 +46,9 @@ void HomePage(const int screenWidth, const int screenHeight) {
 	Color navy = { 16,49,107,255 };
 	Color yellow = { 253,190,52,255 };
 
-	Textbox SearchBar;
-	SearchBar.textbox = { 551, 122, 911, 60 };
+	Rectangle SearchBar = { 551, 122, 911, 60 };;
+	Textbox ActualSearchBar;
+	ActualSearchBar.textbox = { 731, 122, 731, 60 };
 	bool isSearching = false;
 
 	NewPageButton AddWordBtn;
@@ -83,12 +84,12 @@ void HomePage(const int screenWidth, const int screenHeight) {
 		DrawRectangle(0, 340, 1512, 48, yellow);
 		DrawTexture(logo, 15, 100, WHITE);
 
-		DrawRectangleRounded(SearchBar.textbox , 60, 0, white);
+		DrawRectangleRounded(SearchBar , 60, 0, white);
 		if (!isSearching) {
 			DrawTextEx(italic, "Search for a word...", { 774,138 }, 28, 0, navy);
 		}
-		SearchBar.worktextbox(isSearching);
-		DrawTextEx(bold, SearchBar.text, { 774,138 }, 28, 0, navy);
+		ActualSearchBar.worktextbox(isSearching);
+		DrawTextEx(bold, ActualSearchBar.text, { 774,138 }, 28, 0, navy);
 
 		//DrawRectangleRounded(randomWordBox, 60, 0, { 11, 64, 156,255 });
 		//DrawRectangleRounded(Vocab, 15, 0, { 253, 190, 52, 255 });
@@ -287,6 +288,9 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 			DrawRectangle(217, 687+60, 261, 60, yellow);
 			DrawRectangle(217, 687+120, 261, 60, yellow);
 
+			DrawLine(217, 747, 478, 747,navy);
+			DrawLine(217, 747+60, 478, 747+60,navy);
+			DrawLine(217, 747+120, 478, 747+120,navy);
 			DrawTextEx(bold, "ENG-ENG", { 285,697 }, 40, 0, navy);
 			DrawTextEx(bold, "ENG-VIE", { 292,697+60 }, 40, 0, navy);
 			DrawTextEx(bold, "VIE-ENG", { 293,697+120 }, 40, 0, navy);
