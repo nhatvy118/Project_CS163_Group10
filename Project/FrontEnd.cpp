@@ -67,14 +67,23 @@ void HomePage(const int screenWidth, const int screenHeight) {
 	Texture2D whiteStar = LoadTexture("../resources/White Star.png");
 	Texture2D blueStar = LoadTexture("../resources/Blue Star.png");
 	Texture2D editIcon = LoadTexture("../resources/Edit Icon.png");
+	Texture2D arrow = LoadTexture("../resources/Arrow.png");
+
+	Rectangle chooseDictBox = { 551,122,180,60 };
+	bool choose = false;
+	bool chooseEE = false;
+	bool chooseEV = false;
+	bool chooseVE = false;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
 		DrawRectangle(0, 0,screenWidth, screenHeight, white);
 		DrawRectangle(0, 0, 1512, 340, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
+		DrawRectangle(0, 340, 1512, 48, yellow);
+		DrawTexture(logo, 15, 100, WHITE);
 
-		DrawRectangleRounded(SearchBar.textbox , 60, 0, WHITE);
+		DrawRectangleRounded(SearchBar.textbox , 60, 0, white);
 		if (!isSearching) {
 			DrawTextEx(italic, "Search for a word...", { 774,138 }, 28, 0, navy);
 		}
@@ -87,31 +96,81 @@ void HomePage(const int screenWidth, const int screenHeight) {
 		//DrawRectangleRounded(VocabBox, 15, 0, { 253, 190, 52, 255 });
 		//DrawRectangleRounded(DefinitionBox, 15, 0, { 253, 190, 52, 255 });
 		//DrawCircle(1426.5, 149.5, 20.5, {253, 190, 52, 255});
-		DrawTextEx(bold, "Favorite List", { 15,12 }, 24, 0, WHITE);
-		DrawTextEx(bold, "Add new words", { 188,12 }, 24, 0, WHITE);
+		DrawTextEx(bold, "Favorite List", { 15,12 }, 24, 0, white);
+		DrawTextEx(bold, "Add new words", { 188,12 }, 24, 0, white);
 		AddWordBtn.workbutton(mousePoint, AddWordPage);
 		FavoriteList.workbutton(mousePoint, FavoriteListPage);
-		DrawTextEx(bold, "Revision", { 388,12 }, 24, 0, WHITE);
-		DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, WHITE);
-		DrawTextEx(bold, "or", { 634,189 }, 30, 0, WHITE);
+		DrawTextEx(bold, "Revision", { 388,12 }, 24, 0, white);
+		DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, white);
+		DrawTextEx(bold, "or", { 634,189 }, 30, 0, white);
 		//DrawTextEx(bold, "Random a word", { 565,242 }, 31, 0, WHITE);// 581, 245
 		//DrawTextEx(bold, "Vocab", { 72,392 }, 43, 0, { 11, 64, 156,255 });
 		//DrawTextEx(bold, "Definition", { 67,607 }, 43, 0, { 11, 64, 156,255 });
-		DrawTextEx(bold, "DICTIONARY", { 248,146 }, 49, 0, WHITE);
-		DrawTextEx(italic, "by APCS K22 Group 10", { 219, 196 }, 41, 0, WHITE);
-		DrawLineEx({ 155, 10 }, { 155, 38 }, 3.0, WHITE);
-		DrawLineEx({ 355, 10 }, { 355, 38 }, 3.0, WHITE);
+		DrawTextEx(bold, "DICTIONARY", { 248,146 }, 49, 0, white);
+		DrawTextEx(italic, "by APCS K22 Group 10", { 219, 196 }, 41, 0, white);
+		DrawLineEx({ 155, 10 }, { 155, 38 }, 3.0, white);
+		DrawLineEx({ 355, 10 }, { 355, 38 }, 3.0, white);
 		DrawLineEx({ 744,133 }, { 744, 168 }, 4.0, { 16,49,107,255 });
 		////First half of arrow
 		//DrawLineEx({ 717.41, 145 }, { 725.895, 153.485 }, 2.0, { 16,49,107,255 });
 		////Second half of arrow
 		//DrawLineEx({ 734.41, 145 }, { 725.895, 153.485 }, 2.0, { 16,49,107,255 });
 
-		DrawTexture(logo, 15, 100, WHITE);
 		//DrawTexture(glass, 1417, 138, WHITE);
 		//DrawTexture(whiteStar, 647, 398, WHITE);
 		//DrawTexture(editIcon, 645, 611, WHITE);
 
+		//Choose Dictionary
+		DrawTextEx(bold, "None", { 610,132 }, 40, 0, navy);
+		DrawTexture(arrow, 710, 145, WHITE);
+		if (CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			choose = true;
+			chooseEE = false;
+			chooseEV = false;
+			chooseVE = false;
+		}
+		if (choose) { //{ 551, 122, 911, 60 };
+			DrawRectangle(551, 152, 30, 30, white);
+			DrawRectangle(551, 182, 185, 60, white);
+			DrawRectangle(551, 182 + 60, 185, 60, white);
+			DrawRectangle(551, 182 + 120, 185, 60, white);
+
+			DrawLine(551, 182, 736, 182, blue);
+			DrawLine(551, 182+60, 736, 182+60, blue);
+			DrawLine(551, 182+120, 736, 182+120, blue);
+
+			DrawTextEx(bold, "ENG-ENG", { 595,200 }, 30, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 595,200 + 60 }, 30, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 595,200 + 120 }, 30, 0, navy);
+		}
+		if (CheckCollisionPointRec(mousePoint, { 551, 182, 185, 60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
+		}
+		if (chooseEE) {
+			DrawRectangle(575, 128, 160, 40,white);
+			DrawTextEx(bold, "ENG-ENG", { 585, 132 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (CheckCollisionPointRec(mousePoint, { 551, 182 + 60, 185, 60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEV = true;
+		}
+		if (chooseEV) {
+			DrawRectangle(575, 128, 160, 40, white);
+			DrawTextEx(bold, "ENG-VIE", { 585, 132 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (CheckCollisionPointRec(mousePoint, { 551, 182 + 120, 185, 60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseVE = true;
+		}
+		if (chooseVE) {
+			DrawRectangle(575, 128, 160, 40, white);
+			DrawTextEx(bold, "VIE-ENG", { 585, 132 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose = false;
 		EndDrawing();
 
 	}
@@ -130,7 +189,6 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 	Color yellow = { 253,190,52,255 };
 
 	Texture2D logo = LoadTexture("../resources/School Logo.png");
-	Texture2D arrow = LoadTexture("../resources/Arrow.png");
 	Texture2D confirm = LoadTexture("../resources/confirmBtn.png");
 
 	NewPageButton Back;
@@ -152,6 +210,12 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 	bool confirmBtnAction = false;         // Button action should be activated
 	bool confirmBtnFalseDisplay = false;
 
+
+	bool choose = false;
+	bool chooseEE = false;
+	bool chooseEV = false;
+	bool chooseVE = false;
+	Rectangle chooseDictBox = { 217,627,261,60 };
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -185,9 +249,8 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 
 		DrawTextEx(bold, "Please choose the dictionary",{132,522},43,0, yellow);
 		DrawTextEx(bold, "you want to update", { 205, 564 }, 43, 0, yellow);
-		DrawRectangleRounded({ 217,627,261,60 }, 0.18, 0, WHITE);
-		DrawTexture(arrow, 427, 650, WHITE);
-		DrawTexture(confirm, 969, 643, WHITE);
+
+
 		//confirmBtnAction = false;
 		//if (CheckCollisionPointRec(mousePoint, btnBoundsconfirmBtn)) {
 		//	//DrawRectangleLines((int)btnBoundsconfirmBtn.x, (int)btnBoundsconfirmBtn.y, (int)btnBoundsconfirmBtn.width, (int)btnBoundsconfirmBtn.height, BLACK);
@@ -207,6 +270,55 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 		//// Calculate button frame rectangle to draw depending on button state
 		//sourceRecconfirmBtn.y = confirmBtnState * frameHeightconfirmBtn;
 		//DrawTextureRec(confirmBtn, sourceRecconfirmBtn, { btnBoundsconfirmBtn.x, btnBoundsconfirmBtn.y }, WHITE); // Draw button frame
+		DrawTexture(confirm, 969, 643, WHITE);
+
+		//Choose Dictionary
+		DrawRectangleRec(chooseDictBox, WHITE);
+		DrawTextEx(bold, "Choose Dict", { 265,637 }, 40, 0, navy);
+
+		if (CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			choose = true;
+			chooseEE = false;
+			chooseEV = false;
+			chooseVE = false;
+		}
+		if (choose) { //{ 217,627,261,60 };
+			DrawRectangle(217, 687, 261, 60, yellow);
+			DrawRectangle(217, 687+60, 261, 60, yellow);
+			DrawRectangle(217, 687+120, 261, 60, yellow);
+
+			DrawTextEx(bold, "ENG-ENG", { 285,697 }, 40, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 292,697+60 }, 40, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 293,697+120 }, 40, 0, navy);
+		}
+		if (CheckCollisionPointRec(mousePoint, {217,687,261,60}) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
+		}
+		if (chooseEE) {
+			DrawRectangleRec(chooseDictBox, yellow);
+			DrawTextEx(bold, "ENG-ENG", { 285, 637 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (CheckCollisionPointRec(mousePoint, { 217,687+60,261,60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEV = true;
+		}
+		if (chooseEV) {
+			DrawRectangleRec(chooseDictBox, yellow);
+			DrawTextEx(bold, "ENG-VIE", { 285, 637 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (CheckCollisionPointRec(mousePoint, { 217,687+120,261,60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseVE = true;
+		}
+		if (chooseVE) {
+			DrawRectangleRec(chooseDictBox, yellow);
+			DrawTextEx(bold, "VIE-ENG", { 285, 637 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose = false;
 
 
 		EndDrawing();
