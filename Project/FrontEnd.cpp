@@ -335,11 +335,11 @@ void FavoriteListPage(const int screenWidth, const int screenHeight)
 	SetTargetFPS(60);
 
 	Textbox SearchBar;
-	SearchBar.textbox = { 551, 122, 911, 60 };
+	SearchBar.textbox = { 766, 171, 911-200, 60 };
 	bool isSearching = false;
 
 	Textbox SearchBar2;
-	SearchBar2.textbox = { 28,369, 522, 60};
+	SearchBar2.textbox = { 133,382, 522, 60};
 	bool isSearching2 = false;
 
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
@@ -356,6 +356,18 @@ void FavoriteListPage(const int screenWidth, const int screenHeight)
 	Texture2D glass = LoadTexture("../resources/Magnifying Glass.png");
 	Texture2D trashCan = LoadTexture("../resources/TrashCan.png");
 
+	Rectangle chooseDictBox = { 570,171,193, 60 };
+	Rectangle chooseDictBox2 = { 439,496,216,43 };
+	bool choose = false;
+	bool chooseEE = false;
+	bool chooseEV = false;
+	bool chooseVE = false;
+
+	bool choose2 = false;
+	bool chooseEE2 = false;
+	bool chooseEV2 = false;
+	bool chooseVE2 = false;
+
 	NewPageButton Back;
 	Back.button = { 1431,9,61,31 };
 
@@ -365,35 +377,134 @@ void FavoriteListPage(const int screenWidth, const int screenHeight)
 		BeginDrawing();
 		DrawRectangle(0, 0, 1512, 982, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
-		DrawRectangleRounded({ 28,448,135,54 }, 0.18, 0, yellow);
-		DrawRectangleRounded({ 744,450,207,49 }, 0.18, 0, yellow);
-		DrawRectangleRounded({ 28,369,522,60 }, 1.047, 0, white);
-		DrawRectangleRounded({ 551,120,911,60 }, 1.047, 0, white);
-		DrawRectangleRounded(SearchBar.textbox, 60, 0, WHITE);
-		DrawLineEx({ 744,133 }, { 744, 168 }, 4.0, { 16,49,107,255 });
+		DrawRectangleRounded({ 133,496,135,54 }, 0.18, 0, yellow);
+		DrawRectangleRounded({ 856,496,220,54 }, 0.18, 0, yellow);
+		DrawRectangleRounded({ 438,496,218,54 }, 0.18, 0, yellow);
+		DrawRectangleRounded({ 133,382, 522, 60 }, 1.047, 0, white);
+		DrawRectangleRounded({ 570, 171, 911, 60  }, 1.047, 0, white);
+		DrawRectangleRounded(SearchBar.textbox, 60, 0, white);
+		DrawRectangleRounded(SearchBar2.textbox, 60, 0, white);
+		DrawLineEx({ 763,184 }, { 763, 219 }, 4.0, { 16,49,107,255 });
 		if (!isSearching) {
-			DrawTextEx(italic, "Add a word to your favorite list...", { 774,138 }, 28, 0, navy);
+			DrawTextEx(italic, "Add a word to your favorite list...", { 793,189 }, 28, 0, navy);
 		}
 		SearchBar.worktextbox(isSearching);
 		if (!isSearching2) {
-			DrawTextEx(italic, "Search for your favorite word...", { 54, 387 }, 28, 0, navy);
+			DrawTextEx(italic, "Search for your favorite word...", { 159, 400 }, 28, 0, navy);
 		}
 		SearchBar2.worktextbox(isSearching2);
 		DrawTextEx(bold, SearchBar.text, { 774,138 }, 28, 0, navy);
 		DrawTextEx(bold, SearchBar2.text, { 54,387 }, 28, 0, navy);
-		DrawRectangle(28, 489, 523, 283, white);
-		DrawRectangle(744, 489, 523, 283, white);
+		DrawRectangle(133, 539, 523, 283, white);
+		DrawRectangle(856, 539, 523, 283, white);
 		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
-		DrawTextEx(bold, "Word", { 54,448 }, 44, 0, navy);
-		DrawTextEx(bold, "Definition", { 774,448 }, 44, 0, navy);
+		DrawTextEx(bold, "Word", { 162,496 }, 44, 0, navy);
+		DrawTextEx(bold, "Definition", { 890,496 }, 44, 0, navy);
 		DrawTextEx(bold, "FAVORITE", { 234,143 }, 54, 0, white);
 		DrawTextEx(bold, "LIST", { 287,193 }, 54, 0, white);
 		Back.workbutton(mousePoint, HomePage);
 		DrawTexture(logo, 15, 100, white);
-		DrawCircle(506.5, 399.5, 20.5, yellow);
-		DrawCircle(1429.5, 149.5, 20.5, yellow);
-		DrawTexture(glass, 497, 388, white);
-		DrawTexture(glass, 1419, 138, white);
+		DrawCircle(611.5, 412.5, 20.5, yellow);
+		DrawCircle(1448.5, 200.5, 20.5, yellow);
+		DrawTexture(glass, 602, 401, white);
+		DrawTexture(glass, 1439, 189, white);
+
+		DrawTextEx(bold, "None", { 632,180 }, 40, 0, navy);
+		DrawTextEx(bold, "None", { 500,496 }, 40, 0, navy);
+		DrawTexture(arrow, 727.41, 196, WHITE);
+		DrawTexture(arrow, 620.41, 513, WHITE);
+		if (CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			choose = true;
+			chooseEE = false;
+			chooseEV = false;
+			chooseVE = false;
+		}
+		if (choose) { //{ 570, 171, 911, 60 }; //{ 551, 122, 911, 60 };
+			DrawRectangle(570, 201, 30, 30, white);
+			DrawRectangle(570, 231, 185, 60, white);
+			DrawRectangle(570, 231 + 60, 185, 60, white);
+			DrawRectangle(570, 231 + 120, 185, 60, white);
+
+			DrawLine(570, 231, 736, 231, blue);
+			DrawLine(570, 231 + 60, 736, 231 + 60, blue);
+			DrawLine(570, 231 + 120, 736, 231 + 120, blue);
+
+			DrawTextEx(bold, "ENG-ENG", { 595+19,200+49 }, 30, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 595+19,200+49 + 60 }, 30, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 595+19,200+49 + 120 }, 30, 0, navy);
+		}
+		if (CheckCollisionPointRec(mousePoint, { 570, 231, 185, 60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
+		}
+		if (chooseEE) {
+			DrawRectangle(575+19, 128+49, 160, 40, white);
+			DrawTextEx(bold, "ENG-ENG", { 585+19, 132+49 }, 40, 0, navy);
+			choose = false;
+		}
+		if (CheckCollisionPointRec(mousePoint, { 551+19, 182+49 + 60, 185, 60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEV = true;
+		}
+		if (chooseEV) {
+			DrawRectangle(575+19, 128+49, 160, 40, white);
+			DrawTextEx(bold, "ENG-VIE", { 585+19, 132+49 }, 40, 0, navy);
+			choose = false;
+		}
+		if (CheckCollisionPointRec(mousePoint, { 551+19, 182+49 + 120, 185, 60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseVE = true;
+		}
+		if (chooseVE) {
+			DrawRectangle(575+19, 128+49, 160, 40, white);
+			DrawTextEx(bold, "VIE-ENG", { 585+19, 132+49 }, 40, 0, navy);
+			choose = false;
+		}
+		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose = false;
+
+		if (CheckCollisionPointRec(mousePoint, chooseDictBox2) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			choose2 = true;
+			chooseEE2 = false;
+			chooseEV2 = false;
+			chooseVE2 = false;
+		}
+		if (choose2) { //{ 570, 171, 911, 60 }; //{ 439,496,216,43 }//{ 551, 122, 911, 60 };
+			DrawRectangle(438, 534, 30, 30, yellow);
+			DrawRectangle(438, 534, 218, 60, yellow);
+			DrawRectangle(438, 534 + 60, 218, 60, yellow);
+			DrawRectangle(438, 534 + 120, 218, 60, yellow);
+
+			DrawLine(438, 538, 633, 538, blue);
+			DrawLine(438, 538 + 60, 633, 538 + 60, blue);
+			DrawLine(438, 538 + 120, 633, 538 + 120, blue);
+
+			DrawTextEx(bold, "ENG-ENG", { 595 -112,175 + 374 }, 40, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 595 -112,175 + 374 + 60 }, 40, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 595 -112,175 + 374 + 120 }, 40, 0, navy);
+		}
+		if (CheckCollisionPointRec(mousePoint, { 438, 534, 218, 60 }) && choose2) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE2 = true;
+		}
+		if (chooseEE2) {
+			DrawRectangle(575 -112, 124 + 374, 160, 40, yellow);
+			DrawTextEx(bold, "ENG-ENG", { 585 -112, 124 + 374 }, 40, 0, navy);
+			choose2 = false;
+		}
+		if (CheckCollisionPointRec(mousePoint, { 438, 534 + 60, 218, 60 }) && choose2) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEV2 = true;
+		}
+		if (chooseEV2) {
+			DrawRectangle(575 -112, 124 + 374, 160, 40, yellow);
+			DrawTextEx(bold, "ENG-VIE", { 585 -112, 124 + 374 }, 40, 0, navy);
+			choose2 = false;
+		}
+		if (CheckCollisionPointRec(mousePoint, { 438, 534 + 120, 218, 60 }) && choose2) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseVE2 = true;
+		}
+		if (chooseVE2) {
+			DrawRectangle(575 -112, 124 + 374, 160, 40, yellow);
+			DrawTextEx(bold, "VIE-ENG", { 585 -112, 124 + 374 }, 40, 0, navy);
+			choose2 = false;
+		}
+		if (!CheckCollisionPointRec(mousePoint, chooseDictBox2) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose2 = false;
+
 		EndDrawing();
 	}
 	CloseWindow();
