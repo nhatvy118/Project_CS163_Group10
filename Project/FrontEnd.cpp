@@ -75,6 +75,9 @@ void HomePage(const int screenWidth, const int screenHeight) {
 	bool chooseEE = false;
 	bool chooseEV = false;
 	bool chooseVE = false;
+
+	bool resetData = false;
+	Texture2D closeIcon = LoadTexture("../resources/Xicon.png");
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -172,6 +175,22 @@ void HomePage(const int screenWidth, const int screenHeight) {
 			//semesternametmp = (char*)"Fall";
 		}
 		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose = false;
+
+		if (CheckCollisionPointRec(mousePoint, { 1369,12,120,20 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			resetData = true;
+		}
+		if (resetData) {
+			DrawRectangleRounded({ 501,375,511,243 }, 0.08, 0, blue);
+			DrawRectangleRounded({ 542,534,161,49 }, 0.08, 0, yellow);
+			DrawRectangleRounded({ 811,534,161, 49 }, 0.08, 0, yellow);
+			DrawTexture(closeIcon, 966, 393, WHITE);
+			DrawTextEx(bold, "Reset Data Confirmation", { 550,433 }, 48, 0, white);
+			DrawTextEx(bold, "Yes", { 597,537 }, 44, 0, navy);
+			DrawTextEx(bold, "No", { 874,537 }, 44, 0, navy);
+		}
+		if (CheckCollisionPointRec(mousePoint, { 966,393,24,24 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			resetData = false;
+		}
 		EndDrawing();
 
 	}
