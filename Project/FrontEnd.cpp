@@ -537,13 +537,9 @@ void RevisionPage(const int screenWidth, const int screenHeight) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 
-	Textbox SearchBar;
-	SearchBar.textbox = { 766, 171, 911 - 200, 60 };
-	bool isSearching = false;
-
-	Textbox SearchBar2;
-	SearchBar2.textbox = { 133,382, 522, 60 };
-	bool isSearching2 = false;
+	Rectangle ChooseModeBox{ 1036,148,218,54 };
+	Rectangle wordRevision{ 818,148,218,54 };
+	Rectangle defRevision{ 818,202,218,54 };
 
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
 	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 96, 0, 0);
@@ -555,15 +551,75 @@ void RevisionPage(const int screenWidth, const int screenHeight) {
 	Color yellow = { 253,190,52,255 };
 
 	Texture2D logo = LoadTexture("../resources/School Logo.png");
+	Texture2D refreshBtn = LoadTexture("../resources/RefreshBtn.png");
+	Texture2D arrow = LoadTexture("../resources/Arrow2.png");
+
+	NewPageButton Back;
+	Back.button = { 1431,9,61,31 };
+
+
+	bool ChooseMode = false;
+	bool ChooseWord = false;
+	bool ChooseDef = false;
+
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
 		DrawRectangle(0, 0, 1512, 982, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
+		DrawRectangle(270, 372, 984, 221, white);
+		DrawRectangle(270, 649, 404, 85, white);
+		DrawRectangle(270, 774, 404, 85, white);
+		DrawRectangle(850, 649, 404, 85, white);
+		DrawRectangle(850, 774, 404, 85, white);
+		DrawRectangle(270, 372, 984, 17, yellow);
+		DrawRectangle(270, 649, 404, 17, yellow);
+		DrawRectangle(270, 774, 404, 17, yellow);
+		DrawRectangle(850, 649, 404, 17, yellow);
+		DrawRectangle(850, 774, 404, 17, yellow);
+		DrawRectangle(270, 323, 61, 49, yellow);
+		DrawRectangle(1036, 148, 218, 54, yellow);
+		//Refresh button
+		DrawTexture(refreshBtn, 283, 331, WHITE);
 		DrawTexture(logo, 270, 105, WHITE);
+		DrawTexture(arrow, 1057, 168, WHITE);
 		DrawTextEx(bold, "Revision", { 492,152 }, 45, 0, white);
 		DrawTextEx(bold, "Tool", { 536,204 }, 45, 0, white);
+		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
+		DrawTextEx(bold, "MODE", { 1098,154 }, 44, 0, navy);
+		Back.workbutton(mousePoint, HomePage);
 
+		if (CheckCollisionPointRec(mousePoint, ChooseModeBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+		{
+			ChooseMode = true;
+			ChooseWord = false;
+			ChooseDef = false;
+		}
+		if (ChooseMode)
+		{
+			DrawRectangle(818, 148, 218, 54, white);
+			DrawRectangle(818, 202, 218, 54, white);
+			DrawLine(818, 203, 818 + 218, 203, navy);
+			DrawTextEx(bold, "Word revision", { 856,162 }, 30, 0, navy);
+			DrawTextEx(bold, "Definition revision", { 829,213 }, 30, 0, navy);
+		}
+		if (CheckCollisionPointRec(mousePoint, wordRevision) && ChooseMode)
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) ChooseWord = true;
+		if (CheckCollisionPointRec(mousePoint, defRevision) && ChooseMode)
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) ChooseDef = true;
+		if (ChooseWord)
+		{
+			DrawRectangleRec(ChooseModeBox, yellow);
+			DrawTextEx(bold, "Word revision", { 1078,159 }, 30, 0, navy);
+			ChooseMode = false;
+		}
+		if (ChooseDef)
+		{
+			DrawRectangleRec(ChooseModeBox, yellow);
+			DrawTextEx(bold, "Definition revision", { 1047,162 }, 30, 0, navy);
+			ChooseMode = false;
+		}
+		if (!CheckCollisionPointRec(mousePoint, ChooseModeBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) ChooseMode = false;
 		EndDrawing();
 	}
 	CloseWindow();
