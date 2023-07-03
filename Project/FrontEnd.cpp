@@ -55,6 +55,8 @@ void HomePage(const int screenWidth, const int screenHeight) {
 	AddWordBtn.button = {188,12,166,31};
 	NewPageButton FavoriteList;
 	FavoriteList.button = { 15,9,131,31 };
+	NewPageButton RevisionBtn;
+	RevisionBtn.button = { 388,12,120,31 };
 
 
 
@@ -191,6 +193,9 @@ void HomePage(const int screenWidth, const int screenHeight) {
 		if (CheckCollisionPointRec(mousePoint, { 966,393,24,24 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			resetData = false;
 		}
+
+		RevisionBtn.workbutton(mousePoint, RevisionPage);
+
 		EndDrawing();
 
 	}
@@ -523,6 +528,41 @@ void FavoriteListPage(const int screenWidth, const int screenHeight)
 			choose2 = false;
 		}
 		if (!CheckCollisionPointRec(mousePoint, chooseDictBox2) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose2 = false;
+
+		EndDrawing();
+	}
+	CloseWindow();
+}
+void RevisionPage(const int screenWidth, const int screenHeight) {
+	Vector2 mousePoint = { 0.0f, 0.0f };
+	SetTargetFPS(60);
+
+	Textbox SearchBar;
+	SearchBar.textbox = { 766, 171, 911 - 200, 60 };
+	bool isSearching = false;
+
+	Textbox SearchBar2;
+	SearchBar2.textbox = { 133,382, 522, 60 };
+	bool isSearching2 = false;
+
+	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
+	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 96, 0, 0);
+	Font italic = LoadFontEx("../Fonts/SourceSansPro-Italic.ttf", 96, 0, 0);
+
+	Color white = { 242, 247, 255,255 };
+	Color blue = { 11,64,156,255 };
+	Color navy = { 16,49,107,255 };
+	Color yellow = { 253,190,52,255 };
+
+	Texture2D logo = LoadTexture("../resources/School Logo.png");
+	while (!WindowShouldClose()) {
+		mousePoint = GetMousePosition();
+		BeginDrawing();
+		DrawRectangle(0, 0, 1512, 982, navy);
+		DrawRectangle(0, 0, 1512, 48, blue);
+		DrawTexture(logo, 270, 105, WHITE);
+		DrawTextEx(bold, "Revision", { 492,152 }, 45, 0, white);
+		DrawTextEx(bold, "Tool", { 536,204 }, 45, 0, white);
 
 		EndDrawing();
 	}
