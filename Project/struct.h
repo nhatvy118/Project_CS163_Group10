@@ -30,23 +30,26 @@ struct Node {
 struct Stack {
 	Node* pHead = nullptr;
 
-	void push(Node* pNew) {
+	void push(string s) {
+		Node* pNew = new Node;
+		pNew->data = s;
 		pNew->pNext = this->pHead;
 		this->pHead = pNew;
 	}
-	void removeNode(Node* pNew) {
+	void removeNode(string s) {
 		Node* cur = this->pHead;
 		if (cur == nullptr) {
 			return;
 		}
-		if (this->pHead->data == pNew->data) {
+		
+		if (this->pHead->data == s) {
 			cur = this->pHead;
 			this->pHead = this->pHead->pNext;
 			delete cur;
 			return;
 		}
 		while (cur->pNext) {
-			if (cur->pNext->data == pNew->data) {
+			if (cur->pNext->data == s) {
 				Node* tmp = cur->pNext;
 				cur->pNext = cur->pNext->pNext;
 				delete tmp;

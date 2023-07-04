@@ -32,7 +32,7 @@ void insert(trieNode*& root, string s, vector<string> meaning) {
 		cur->mean.push_back(x);
 	}
 }
-void readFileToTree(trieNode* root, string direction) {
+void readFileToTree(trieNode*& root, string direction) {
 	ifstream fin;
 	fin.open("../Dataset/" + direction);
 	string s = "";
@@ -77,3 +77,16 @@ bool search(trieNode* root, string s, vector<string>& ans) {
 	}
 	return false;
 }
+
+
+void addToFavor(Stack& name, string s) {
+	name.push(s);
+	return;
+}
+
+void removeOutFavor(Stack& name, string s) {
+	name.removeNode(s);
+	return;
+}
+
+
