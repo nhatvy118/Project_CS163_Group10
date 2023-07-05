@@ -48,7 +48,7 @@ void HomePage(const int screenWidth, const int screenHeight) {
 
 	Rectangle SearchBar = { 551, 122, 911, 60 };;
 	Textbox ActualSearchBar;
-	ActualSearchBar.textbox = { 731, 122, 731, 60 };
+	ActualSearchBar.textbox = { 731, 122, 616, 60 };
 	bool isSearching = false;
 
 	NewPageButton AddWordBtn;
@@ -77,9 +77,17 @@ void HomePage(const int screenWidth, const int screenHeight) {
 	bool chooseEE = false;
 	bool chooseEV = false;
 	bool chooseVE = false;
+	bool chooseSlang = false;
+	bool chooseEmo = false;
 
 	bool resetData = false;
 	Texture2D closeIcon = LoadTexture("../resources/Xicon.png");
+
+	Texture2D SearchWordModeBtn = LoadTexture("../resources/SearchWordMode.png");
+	Texture2D SearchDefModeBtn = LoadTexture("../resources/SearchDefMode.png");
+	Texture2D SearchBtn = LoadTexture("../resources/searchBtn.png");
+	bool SearchDefMode = true;
+
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -91,7 +99,8 @@ void HomePage(const int screenWidth, const int screenHeight) {
 
 		DrawRectangleRounded(SearchBar , 60, 0, white);
 		if (!isSearching) {
-			DrawTextEx(italic, "Search for a word...", { 774,138 }, 28, 0, navy);
+			if (!SearchDefMode) DrawTextEx(italic, "Search for a word...", { 774,138 }, 28, 0, navy);
+			else DrawTextEx(italic, "Search for a definition...", { 774,138 }, 28, 0, navy);
 		}
 		ActualSearchBar.worktextbox(isSearching);
 		DrawTextEx(bold, ActualSearchBar.text, { 774,138 }, 28, 0, navy);
@@ -134,20 +143,28 @@ void HomePage(const int screenWidth, const int screenHeight) {
 			chooseEE = false;
 			chooseEV = false;
 			chooseVE = false;
+			chooseSlang = false;
+			chooseEmo = false;
 		}
 		if (choose) { //{ 551, 122, 911, 60 };
 			DrawRectangle(551, 152, 30, 30, white);
 			DrawRectangle(551, 182, 185, 60, white);
 			DrawRectangle(551, 182 + 60, 185, 60, white);
 			DrawRectangle(551, 182 + 120, 185, 60, white);
+			DrawRectangle(551, 182 + 180, 185, 60, white);
+			DrawRectangle(551, 182 + 240, 185, 60, white);
 
-			DrawLine(551, 182, 736, 182, blue);
+			DrawRectangleLines(550, 182, 187, 301, blue);
 			DrawLine(551, 182+60, 736, 182+60, blue);
 			DrawLine(551, 182+120, 736, 182+120, blue);
+			DrawLine(551, 182+180, 736, 182+180, blue);
+			DrawLine(551, 182+240, 736, 182+240, blue);
 
 			DrawTextEx(bold, "ENG-ENG", { 595,200 }, 30, 0, navy);
-			DrawTextEx(bold, "ENG-VIE", { 595,200 + 60 }, 30, 0, navy);
-			DrawTextEx(bold, "VIE-ENG", { 595,200 + 120 }, 30, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 600,200 + 60 }, 30, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 600,200 + 120 }, 30, 0, navy);
+			DrawTextEx(bold, "SLANG", { 610,200 + 180 }, 30, 0, navy);
+			DrawTextEx(bold, "EMOJI", { 610,200 + 240 }, 30, 0, navy);
 		}
 		if (CheckCollisionPointRec(mousePoint, { 551, 182, 185, 60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
@@ -163,7 +180,7 @@ void HomePage(const int screenWidth, const int screenHeight) {
 		}
 		if (chooseEV) {
 			DrawRectangle(575, 128, 160, 40, white);
-			DrawTextEx(bold, "ENG-VIE", { 585, 132 }, 40, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 595, 132 }, 40, 0, navy);
 			choose = false;
 			//semesternametmp = (char*)"Fall";
 		}
@@ -172,11 +189,30 @@ void HomePage(const int screenWidth, const int screenHeight) {
 		}
 		if (chooseVE) {
 			DrawRectangle(575, 128, 160, 40, white);
-			DrawTextEx(bold, "VIE-ENG", { 585, 132 }, 40, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 595, 132 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (CheckCollisionPointRec(mousePoint, { 551, 182 + 180, 185, 60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseSlang = true;
+		}
+		if (chooseSlang) {
+			DrawRectangle(575, 128, 160, 40, white);
+			DrawTextEx(bold, "SLANG", { 605, 132 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (CheckCollisionPointRec(mousePoint, { 551, 182 + 240, 185, 60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEmo = true;
+		}
+		if (chooseEmo) {
+			DrawRectangle(575, 128, 160, 40, white);
+			DrawTextEx(bold, "EMOJI", { 605, 132 }, 40, 0, navy);
 			choose = false;
 			//semesternametmp = (char*)"Fall";
 		}
 		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose = false;
+
 
 		if (CheckCollisionPointRec(mousePoint, { 1369,12,120,20 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			resetData = true;
@@ -196,8 +232,16 @@ void HomePage(const int screenWidth, const int screenHeight) {
 
 		RevisionBtn.workbutton(mousePoint, RevisionPage);
 
-		EndDrawing();
+		if (SearchDefMode) DrawTexture(SearchDefModeBtn, 1405, 132, WHITE);
+		else DrawTexture(SearchWordModeBtn, 1405, 132, WHITE);
+		if (CheckCollisionPointRec(mousePoint, { 1405,132,40,40 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			if (SearchDefMode) SearchDefMode = false;
+			else SearchDefMode = true;
+		}
+		DrawTexture(SearchBtn, 1345, 132, WHITE);
 
+
+		EndDrawing();
 	}
 	CloseWindow();
 }

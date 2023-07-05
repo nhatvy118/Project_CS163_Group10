@@ -1,1 +1,20 @@
-﻿
+﻿  FrontEnd.cpp
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(221,46): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(222,45): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(223,46): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(300,43): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(301,43): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(305,41): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(312,40): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(448,44): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(449,44): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(450,44): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(451,46): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(452,48): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(475,21): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(475,14): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(476,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(476,14): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(482,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(483,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Project.vcxproj -> C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\x64\Debug\Project.exe
