@@ -42,4 +42,11 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Dataset\Emoji.txt" />
+    <Text Include="..\Dataset\EngEng.txt" />
+    <Text Include="..\Dataset\EngVie.txt" />
+    <Text Include="..\Dataset\Slang.txt" />
+    <Text Include="..\Dataset\VieEng.txt" />
+  </ItemGroup>
 </Project>

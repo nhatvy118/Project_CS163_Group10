@@ -30,6 +30,13 @@
     <ClInclude Include="function.h" />
     <ClInclude Include="struct.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Dataset\Emoji.txt" />
+    <Text Include="..\Dataset\EngEng.txt" />
+    <Text Include="..\Dataset\EngVie.txt" />
+    <Text Include="..\Dataset\Slang.txt" />
+    <Text Include="..\Dataset\VieEng.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

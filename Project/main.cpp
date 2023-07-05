@@ -20,6 +20,22 @@ int main() {
 	trieNode* slang = nullptr;
 	trieNode* slangDef = nullptr;
 
+	
+	readFileToTree(VieEng,VieEngDef, "VieEng.txt");
+	readFileToTree(EngEng,EngEngDef, "EngEng.txt");
+	readFileToTree(EngVie,EngVieDef, "EngVie.txt");
+	
+	/*vector<string> ans;
+	ans.resize(0);
+	if (search(VieEngDef, "Albania", ans)) {
+		for (auto x : ans) {
+			cout << x << endl;
+		}
+	}
+	else {
+		cout << "No";
+	}*/
+	
 
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
 	//HomePage(screenW, screenH);

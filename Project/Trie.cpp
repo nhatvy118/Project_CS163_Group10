@@ -32,7 +32,8 @@ void insert(trieNode*& root, string s, vector<string> meaning) {
 		cur->mean.push_back(x);
 	}
 }
-void readFileToTree(trieNode*& root, string direction) {
+
+void readFileToTree(trieNode*& root,trieNode*& rootDef, string direction) {
 	ifstream fin;
 	fin.open("../Dataset/" + direction);
 	string s = "";
@@ -40,6 +41,7 @@ void readFileToTree(trieNode*& root, string direction) {
 		string str = s.substr(0, s.find('`'));
 		vector<string> meaning;
 		int i = s.find('`') + 1;
+		s += '|';
 		int sz = s.size();
 		meaning.resize(0);
 		string tmp = "";
@@ -53,13 +55,20 @@ void readFileToTree(trieNode*& root, string direction) {
 			}
 			i++;
 		}
+		vector<string> word;
+		word.resize(0);
+		word.push_back(str);
 		insert(root, str,meaning);
+		for (auto x : meaning) {
+			insert(rootDef, x, word);
+		}
 	}
 	fin.close();
 }
 
 bool search(trieNode* root, string s, vector<string>& ans) {
 	trieNode* cur = root;
+	standardWord(s);
 	if (!root) return false;
 	for (auto x : s) {
 		if (cur->c[int(x) - 32]) {
