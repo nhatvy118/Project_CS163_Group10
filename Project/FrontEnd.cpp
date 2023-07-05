@@ -284,6 +284,8 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 	bool chooseEE = false;
 	bool chooseEV = false;
 	bool chooseVE = false;
+	bool chooseSlang = false;
+	bool chooseEmo = false;
 	Rectangle chooseDictBox = { 217,627,261,60 };
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
@@ -350,25 +352,34 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 			chooseEE = false;
 			chooseEV = false;
 			chooseVE = false;
+			chooseSlang = false;
+			chooseEmo = false;
 		}
 		if (choose) { //{ 217,627,261,60 };
 			DrawRectangle(217, 687, 261, 60, yellow);
 			DrawRectangle(217, 687+60, 261, 60, yellow);
 			DrawRectangle(217, 687+120, 261, 60, yellow);
+			DrawRectangle(217, 687+180, 261, 60, yellow);
+			DrawRectangle(217, 687+ 240, 261, 60, yellow);
 
 			DrawLine(217, 747, 478, 747,navy);
 			DrawLine(217, 747+60, 478, 747+60,navy);
 			DrawLine(217, 747+120, 478, 747+120,navy);
+			DrawLine(217, 747+180, 478, 747+180,navy);
+			DrawLine(217, 747+240, 478, 747+240,navy);
+
 			DrawTextEx(bold, "ENG-ENG", { 285,697 }, 40, 0, navy);
 			DrawTextEx(bold, "ENG-VIE", { 292,697+60 }, 40, 0, navy);
 			DrawTextEx(bold, "VIE-ENG", { 293,697+120 }, 40, 0, navy);
+			DrawTextEx(bold, "SLANG", { 293+10,697+180 }, 40, 0, navy);
+			DrawTextEx(bold, "EMOJI", { 293+15,697+240 }, 40, 0, navy);
 		}
 		if (CheckCollisionPointRec(mousePoint, {217,687,261,60}) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
 		}
 		if (chooseEE) {
 			DrawRectangleRec(chooseDictBox, yellow);
-			DrawTextEx(bold, "ENG-ENG", { 285, 637 }, 40, 0, navy);
+			DrawTextEx(bold, "ENG-ENG", { 287, 637 }, 40, 0, navy);
 			choose = false;
 			//semesternametmp = (char*)"Fall";
 		}
@@ -377,7 +388,7 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 		}
 		if (chooseEV) {
 			DrawRectangleRec(chooseDictBox, yellow);
-			DrawTextEx(bold, "ENG-VIE", { 285, 637 }, 40, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 290, 637 }, 40, 0, navy);
 			choose = false;
 			//semesternametmp = (char*)"Fall";
 		}
@@ -386,7 +397,25 @@ void AddWordPage(const int screenWidth, const int screenHeight) {
 		}
 		if (chooseVE) {
 			DrawRectangleRec(chooseDictBox, yellow);
-			DrawTextEx(bold, "VIE-ENG", { 285, 637 }, 40, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 290, 637 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (CheckCollisionPointRec(mousePoint, { 217,687 + 180,261,60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseSlang = true;
+		}
+		if (chooseSlang) {
+			DrawRectangleRec(chooseDictBox, yellow);
+			DrawTextEx(bold, "SLANG", { 285+20, 637 }, 40, 0, navy);
+			choose = false;
+			//semesternametmp = (char*)"Fall";
+		}
+		if (CheckCollisionPointRec(mousePoint, { 217,687 + 240,261,60 }) && choose) {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEmo = true;
+		}
+		if (chooseEmo) {
+			DrawRectangleRec(chooseDictBox, yellow);
+			DrawTextEx(bold, "EMOJI", { 285+20, 637 }, 40, 0, navy);
 			choose = false;
 			//semesternametmp = (char*)"Fall";
 		}
