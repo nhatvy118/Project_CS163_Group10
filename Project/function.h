@@ -4,6 +4,7 @@
 #include<string>
 #include<vector>
 #include <fstream>
+#include <random>
 
 using namespace std;
 
@@ -24,3 +25,5 @@ bool search(trieNode* root, string s, vector<string>& ans);
 void addToFavor(Stack& favor, string s);
 
 void removeOutFavor(Stack& favor, string s);
+
+void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector<string>& wrong_def);

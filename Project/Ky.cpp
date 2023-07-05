@@ -62,3 +62,32 @@ void WriteDictionaryToFile(trieNode* root, string prefix, ofstream& fout) {
 			WriteDictionaryToFile(root->c[i], prefix + temp, fout);
 		}
 }
+
+void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector<string>& wrong_def) {
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> dist(0, 95);
+	for (int z = 0; z < 4; z++) {
+		trieNode* node = root;
+		string temp = "";
+		while (node != nullptr) {
+			int rand;
+			do {
+				rand = dist(gen);
+
+			} while (node->c[rand] == nullptr);
+			node = node->c[rand];
+			temp.push_back(rand + 32);
+			if (node->isEnd) {
+				if (z == 0) {
+					true_word = temp;
+					true_def = node->mean[0];
+				}
+				else {
+					wrong_def.push_back(node->mean[0]);
+				}
+				break;
+			}
+		}
+	}
+}
