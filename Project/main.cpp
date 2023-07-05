@@ -15,27 +15,29 @@ int main() {
 	trieNode* VieEngDef = nullptr;
 	trieNode* EngVieDef = nullptr;
 	trieNode* EngEngDef = nullptr;
-	trieNode* emoji = nullptr;
-	trieNode* emojiDef = nullptr;
-	trieNode* slang = nullptr;
-	trieNode* slangDef = nullptr;
+	trieNode* Emoji = nullptr;
+	trieNode* EmojiDef = nullptr;
+	trieNode* Slang = nullptr;
+	trieNode* SlangDef = nullptr;
 
 	
 	readFileToTree(VieEng,VieEngDef, "VieEng.txt");
 	readFileToTree(EngEng,EngEngDef, "EngEng.txt");
 	readFileToTree(EngVie,EngVieDef, "EngVie.txt");
+	readFileToTree(Emoji, EmojiDef, "Emoji.txt");
+	readFileToTree(Slang, SlangDef, "Slang.txt");
 	
-	/*vector<string> ans;
-	ans.resize(0);
-	if (search(VieEngDef, "Albania", ans)) {
-		for (auto x : ans) {
-			cout << x << endl;
-		}
-	}
-	else {
-		cout << "No";
-	}*/
-	
+	//vector<string> ans;
+	//ans.resize(0);
+	//if (search(Emoji, "*<:-)", ans)) {
+	//	for (auto x : ans) {
+	//		cout << x << endl;
+	//	}
+	//}
+	//else {
+	//	cout << "No";
+	//}
+	//
 
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
 	//HomePage(screenW, screenH);
