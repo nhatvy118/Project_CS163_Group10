@@ -7,6 +7,18 @@
 
 using namespace std;
 
+const long long hashMod = (long long)(1e15 + 9);
+const int prime = 31;
+
+bool compare(string s1, string s2) {
+	if (s1.size() != s2.size()) {
+		return false;
+	}
+	for (int i = 0; i < s1.size(); ++i) {
+		if (s1[i] != s2[i]) return false;
+	}
+	return true;
+}
 void standardWord(string& S) {
 	int sz = S.size();
 	for (int i = 0; i < sz; ++i) {
@@ -29,7 +41,14 @@ void insert(trieNode*& root, string s, vector<string> meaning) {
 	cur->isEnd = true;
 	for (auto x : meaning) {
 		standardWord(x);
-		cur->mean.push_back(x);
+		bool ok = true;
+		for (string st : cur->mean) {
+			if (compare(st, x)) {
+				ok = false;
+				break;
+			}
+		}
+		if (ok) cur->mean.push_back(x);
 	}
 }
 
@@ -80,6 +99,7 @@ bool search(trieNode* root, string s, vector<string>& ans) {
 	}
 	if (cur->isEnd) {
 		for (auto x : cur->mean) {
+			standardWord(x);
 			ans.push_back(x);
 		}
 		return true;
@@ -88,14 +108,44 @@ bool search(trieNode* root, string s, vector<string>& ans) {
 }
 
 
-void addToFavor(Stack& name, string s) {
+void add(Stack& name, string s) {
 	name.push(s);
 	return;
 }
 
-void removeOutFavor(Stack& name, string s) {
+void remove(Stack& name, string s) {
 	name.removeNode(s);
 	return;
 }
 
 
+
+bool updateDef(trieNode*& root, string s, int t, string def) {
+	trieNode* cur = root;
+	standardWord(s);
+	standardWord(def);
+	if (!root) return false;
+	for (auto x : s) {
+		if (cur->c[int(x) - 32]) {
+			cur = cur->c[int(x) - 32];
+		}
+		else {
+			return false;
+		}
+	}
+	if (cur->isEnd) {
+		if (t > cur->mean.size() - 1) {
+			return false;
+		}
+		bool ok = true;
+		for (int i = 0; i < cur->mean.size(); ++i) {
+			if (compare(cur->mean[i], def) && i != t) {
+				ok = false;
+				break;
+			}
+		}
+		if (ok) cur->mean[t] = def;
+		return true;
+	}
+	return false;
+}
