@@ -20,7 +20,7 @@ void DeleteAWord(trieNode*& root, string word, int depth) {
 		}
 		return;
 	}
-	int index = word[depth] - 32;
+	int index = tolower(word[depth]) - 32;
 	DeleteAWord(root->c[index], word, depth + 1);
 	bool hasChild = false;
 	for (trieNode* i : root->c)

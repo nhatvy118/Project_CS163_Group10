@@ -5,6 +5,7 @@
 #include "FrontEnd.h"
 #include "raylib.h"
 using namespace std;
+/*
 
 	trieNode* VieEng = nullptr;
 	trieNode* EngVie = nullptr;
@@ -33,6 +34,32 @@ int main() {
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
 	//HomePage(screenW, screenH);
 	WaitingPage(screenW, screenH, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
-
+	
+	
 	return 0;
+}*/
+int main() {
+	trieNode* root = nullptr, * rootDef = nullptr;
+	readFileToTree(root, rootDef, "VieEng.txt");
+	vector<string> ans;
+	if (search(root, "Anh My", ans)) {
+		for (string i : ans)
+			cout << i << endl;
+		cout << endl;
+	}
+	else {
+		cout << "not found" << endl;
+	}
+	ans.clear();
+	DeleteAWord(root, "Anh My", 0);
+	if (search(root, "Anh My", ans)) {
+		for (string i : ans)
+			cout << i << endl;
+		cout << endl;
+	}
+	else {
+		cout << "not found" << endl;
+	}
+	DeleteAllTree(root);
+	DeleteAllTree(rootDef);
 }
