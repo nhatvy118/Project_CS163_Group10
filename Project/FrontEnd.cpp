@@ -74,16 +74,16 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,tr
 	RevisionBtn.button = { 388,12,120,31 };
 
 	Rectangle randomWordBox = { 551, 227, 197, 60 };
-	Rectangle Vocab = { 41,391,161,49 };
-	Rectangle Definition = { 41, 605,207,49 };
+	Rectangle Vocab = { 41,411,150,49 };
+	Rectangle Definition = { 41, 530,207,49 };
 	Rectangle VocabBox = { 639,391,49,49 };
 	Rectangle DefinitionBox = { 639, 605, 49, 49 };
 	Texture2D logo = LoadTexture("../resources/School Logo.png");
-	Texture2D glass = LoadTexture("../resources/Magnifying Glass.png");
 	Texture2D whiteStar = LoadTexture("../resources/White Star.png");
 	Texture2D blueStar = LoadTexture("../resources/Blue Star.png");
 	Texture2D editIcon = LoadTexture("../resources/Edit Icon.png");
 	Texture2D arrow = LoadTexture("../resources/Arrow.png");
+	Texture2D trashcan = LoadTexture("../resources/TrashCan.png");
 	////---------------------------------------------------------------------------------------------------
 	// Set up choose Dict
 	Rectangle chooseDictBox = { 551,122,180,60 };
@@ -93,13 +93,15 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,tr
 	bool chooseVE = false;
 	bool chooseSlang = false;
 	bool chooseEmo = false;
-	string DictType;
+	string DictType = "NONE";
 	////---------------------------------------------------------------------------------------------------
 	// Set up for reset data
 	bool resetData = false;
 	Texture2D closeIcon = LoadTexture("../resources/Xicon.png");
 	////---------------------------------------------------------------------------------------------------
-
+	// Set up for Random a word
+	Texture2D randomBtn = LoadTexture("../resources/RandomBtn.png");
+	bool isFavorite = false;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -109,6 +111,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,tr
 		DrawRectangle(0, 340, 1512, 48, yellow);
 		DrawTexture(logo, 15, 100, WHITE);
 
+		DrawTexture(randomBtn, 550, 227, WHITE);
 		DrawRectangleRounded(SearchBar , 60, 0, white);
 		if (!isSearching) {
 			if (!SearchDefMode) DrawTextEx(italic, "Search for a word...", { 774,138 }, 28, 0, navy);
@@ -118,8 +121,6 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,tr
 		DrawTextEx(bold, ActualSearchBar.text, { 774,138 }, 28, 0, navy);
 
 		//DrawRectangleRounded(randomWordBox, 60, 0, { 11, 64, 156,255 });
-		//DrawRectangleRounded(Vocab, 15, 0, { 253, 190, 52, 255 });
-		//DrawRectangleRounded(Definition, 15, 0, { 253, 190, 52, 255 });
 		//DrawRectangleRounded(VocabBox, 15, 0, { 253, 190, 52, 255 });
 		//DrawRectangleRounded(DefinitionBox, 15, 0, { 253, 190, 52, 255 });
 		//DrawCircle(1426.5, 149.5, 20.5, {253, 190, 52, 255});
@@ -131,17 +132,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,tr
 		DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, white);
 		DrawTextEx(bold, "or", { 634,189 }, 30, 0, white);
 		//DrawTextEx(bold, "Random a word", { 565,242 }, 31, 0, WHITE);// 581, 245
-		//DrawTextEx(bold, "Vocab", { 72,392 }, 43, 0, { 11, 64, 156,255 });
-		//DrawTextEx(bold, "Definition", { 67,607 }, 43, 0, { 11, 64, 156,255 });
+
 		DrawTextEx(bold, "DICTIONARY", { 248,146 }, 49, 0, white);
 		DrawTextEx(italic, "by APCS K22 Group 10", { 219, 196 }, 41, 0, white);
 		DrawLineEx({ 155, 10 }, { 155, 38 }, 3.0, white);
 		DrawLineEx({ 355, 10 }, { 355, 38 }, 3.0, white);
 		DrawLineEx({ 744,133 }, { 744, 168 }, 4.0, { 16,49,107,255 });
-		////First half of arrow
-		//DrawLineEx({ 717.41, 145 }, { 725.895, 153.485 }, 2.0, { 16,49,107,255 });
-		////Second half of arrow
-		//DrawLineEx({ 734.41, 145 }, { 725.895, 153.485 }, 2.0, { 16,49,107,255 });
 
 		//DrawTexture(glass, 1417, 138, WHITE);
 		//DrawTexture(whiteStar, 647, 398, WHITE);
@@ -223,8 +219,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,tr
 			choose = false;
 			DictType = "EMOJI";
 		}
-		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose = false;
-
+		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			DictType = "NONE";
+			choose = false;
+		}
 
 		if (CheckCollisionPointRec(mousePoint, { 1369,12,120,20 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			resetData = true;
@@ -301,12 +299,38 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,tr
 					j += dem;
 				}
 			}*/
+			DrawRectangleRounded(Vocab, 0.3, 0, yellow);
+			DrawRectangleRounded(Definition, 0.3, 0, yellow);
+			DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 2, Vocab.x + 1400, Vocab.y + Vocab.height - 2, yellow);
+			DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 1, Vocab.x + 1400, Vocab.y + Vocab.height - 1, yellow);
+			DrawLine(Definition.x + 10, Definition.y + Definition.height - 2, Definition.x + 1400, Definition.y + Definition.height - 2, yellow);
+			DrawLine(Definition.x + 10, Definition.y + Definition.height - 1, Definition.x + 1400, Definition.y + Definition.height - 1, yellow);
+			DrawRectangleRounded({ Vocab.x + 158,Vocab.y,49,49 }, 0.3, 0, yellow);
+			DrawRectangleRounded({ Vocab.x + 1365 ,Vocab.y,49,49 }, 0.3, 0, yellow);
+			DrawRectangleRounded({ Definition.x + 1365,Definition.y,49,49 }, 0.3, 0, yellow);
+			DrawTexture(trashcan, Vocab.x + 1376, Vocab.y + 10, WHITE);
+			DrawTexture(editIcon, Definition.x + 1370+3, Definition.y + 5, WHITE);
+			DrawTextEx(bold, "Vocab", { 69,412 }, 43, 0, navy);
+			DrawTextEx(bold, "Definition", { 67,530 }, 43, 0, navy);
+				
+			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				if (isFavorite) isFavorite = false;
+				else if (!isFavorite) isFavorite = true;
+			}
+			if (!isFavorite) DrawTexture(whiteStar, Vocab.x + 167, Vocab.y + 8, GRAY);
+			else DrawTexture(blueStar, Vocab.x + 167, Vocab.y + 8, GRAY);
+
+			DrawTextEx(bold, ActualSearchBar.text, { 72, 470 }, 30, 0, navy);
+
 			for (int i = 0; i < ans.size(); ++i) {
-				DrawTextEx(bold, ans[i].c_str(), { 30, (520 + 50 * (float)i )},30,0,navy);
+				DrawTextEx(bold, ans[i].c_str(), { 72, (590 + 50 * (float)i) }, 30, 0, navy);
 			}
 		}
-		else DrawTextEx(bold, "No Data Available", {30, (520)}, 30, 0, navy);
+		else {
+			DrawTextEx(bold, "No Data Available", { 30+450, (520) }, 100, 0, RED);
+			DrawTextEx(bold, "Please try again", { 30+50+450, (600) }, 90, 0, RED);
 
+		};
 
 		EndDrawing();
 	}
