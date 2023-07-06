@@ -1,11 +1,12 @@
 #include"function.h"
 
-void DeleteAWord(trieNode*& root, string word, int depth) {
+void DeleteAWord(trieNode*& root, string word, int depth, vector<string> &meaning) {
 	if (root == nullptr)
 		return;
 	if (depth == word.size()) {
 		if (root->isEnd) {
 			root->isEnd = false;
+			meaning = root->mean;
 			root->mean.clear();
 		}
 		bool hasChild = false;
@@ -21,7 +22,7 @@ void DeleteAWord(trieNode*& root, string word, int depth) {
 		return;
 	}
 	int index = tolower(word[depth]) - 32;
-	DeleteAWord(root->c[index], word, depth + 1);
+	DeleteAWord(root->c[index], word, depth + 1,meaning);
 	bool hasChild = false;
 	for (trieNode* i : root->c)
 		if (i != nullptr) {

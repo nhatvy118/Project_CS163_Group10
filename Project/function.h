@@ -14,7 +14,7 @@ void standardWord(string& S);
 
 void readFileToTree(trieNode*& root,trieNode*& rootDef, string direction);
 
-void DeleteAWord(trieNode*& root, string word, int depth);
+void DeleteAWord(trieNode*& root, string word, int depth, vector<string>& meaning);
 
 void DeleteAllTree(trieNode*& root);
 
