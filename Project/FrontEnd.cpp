@@ -4,17 +4,9 @@
 #include "FrontEnd.h"
 
 
-void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng,
-	trieNode* EngVie,
-	trieNode* EngEng,
-	trieNode* VieEngDef,
-	trieNode* EngVieDef,
-	trieNode* EngEngDef,
-	trieNode* Emoji,
-	trieNode* EmojiDef,
-	trieNode* Slang,
-	trieNode* SlangDef) 
+void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng,trieNode* EngVie,trieNode* EngEng,trieNode* VieEngDef,trieNode* EngVieDef,trieNode* EngEngDef,trieNode* Emoji,trieNode* EmojiDef,trieNode* Slang,trieNode* SlangDef) 
 {
+	// Set up the page
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
@@ -25,15 +17,14 @@ void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 	Color blue = { 11,64,156,255 };
 	Color navy = { 16,49,107,255 };
 	Color yellow = { 253,190,52,255 };
-
+	////---------------------------------------------------------------------------------------------------
+	// Set up components
 	Texture2D logo2 = LoadTexture("../resources/School Logo2.png");
-
 	Texture2D DrawStartBtn = LoadTexture("../resources/StartBtn.png");
 	NewPageButton StartBtn;
 	StartBtn.button = {655,700,200,100};
-
+	////---------------------------------------------------------------------------------------------------
 	
-
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 
@@ -49,17 +40,9 @@ void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 	}
 	CloseWindow();
 }
-void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,
-	trieNode* EngVie,
-	trieNode* EngEng,
-	trieNode* VieEngDef,
-	trieNode* EngVieDef,
-	trieNode* EngEngDef,
-	trieNode* Emoji,
-	trieNode* EmojiDef,
-	trieNode* Slang,
-	trieNode* SlangDef)
+void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,trieNode* EngVie,trieNode* EngEng,trieNode* VieEngDef,trieNode* EngVieDef,trieNode* EngEngDef,trieNode* Emoji,trieNode* EmojiDef,trieNode* Slang,trieNode* SlangDef)
 {
+	// Set up the page
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
@@ -70,21 +53,25 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,
 	Color blue = { 11,64,156,255 };
 	Color navy = { 16,49,107,255 };
 	Color yellow = { 253,190,52,255 };
-
+	////---------------------------------------------------------------------------------------------------
+	// Set up searching components
 	Rectangle SearchBar = { 551, 122, 911, 60 };;
 	Textbox ActualSearchBar;
 	ActualSearchBar.textbox = { 731, 122, 616, 60 };
 	bool isSearching = false;
 	bool isDisplayingResult = false;
-
+	Texture2D SearchWordModeBtn = LoadTexture("../resources/SearchWordMode.png");
+	Texture2D SearchDefModeBtn = LoadTexture("../resources/SearchDefMode.png");
+	Texture2D SearchBtn = LoadTexture("../resources/searchBtn.png");
+	bool SearchDefMode = true;
+	////---------------------------------------------------------------------------------------------------
+	// Set up Page component
 	NewPageButton AddWordBtn;
 	AddWordBtn.button = {188,12,166,31};
 	NewPageButton FavoriteList;
 	FavoriteList.button = { 15,9,131,31 };
 	NewPageButton RevisionBtn;
 	RevisionBtn.button = { 388,12,120,31 };
-
-
 
 	Rectangle randomWordBox = { 551, 227, 197, 60 };
 	Rectangle Vocab = { 41,391,161,49 };
@@ -97,7 +84,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,
 	Texture2D blueStar = LoadTexture("../resources/Blue Star.png");
 	Texture2D editIcon = LoadTexture("../resources/Edit Icon.png");
 	Texture2D arrow = LoadTexture("../resources/Arrow.png");
-
+	////---------------------------------------------------------------------------------------------------
+	// Set up choose Dict
 	Rectangle chooseDictBox = { 551,122,180,60 };
 	bool choose = false;
 	bool chooseEE = false;
@@ -105,16 +93,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,
 	bool chooseVE = false;
 	bool chooseSlang = false;
 	bool chooseEmo = false;
-
+	string DictType;
+	////---------------------------------------------------------------------------------------------------
+	// Set up for reset data
 	bool resetData = false;
 	Texture2D closeIcon = LoadTexture("../resources/Xicon.png");
-
-	Texture2D SearchWordModeBtn = LoadTexture("../resources/SearchWordMode.png");
-	Texture2D SearchDefModeBtn = LoadTexture("../resources/SearchDefMode.png");
-	Texture2D SearchBtn = LoadTexture("../resources/searchBtn.png");
-	bool SearchDefMode = true;
-
-	string DictType;
+	////---------------------------------------------------------------------------------------------------
 
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();

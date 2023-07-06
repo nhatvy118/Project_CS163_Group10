@@ -12,31 +12,15 @@ using namespace std;
 	trieNode* VieEngDef = nullptr;
 	trieNode* EngVieDef = nullptr;
 	trieNode* EngEngDef = nullptr;
-	trieNode* emoji = nullptr;
-	trieNode* emojiDef = nullptr;
-	trieNode* slang = nullptr;
-	trieNode* slangDef = nullptr;
+	trieNode* Emoji = nullptr;
+	trieNode* EmojiDef = nullptr;
+	trieNode* Slang = nullptr;
+	trieNode* SlangDef = nullptr;
 
 int main() {
 	const int screenW = 1512;
 	const int screenH = 982;
 	
-<<<<<<< Updated upstream
-	//readFileToTree(VieEng,VieEngDef, "VieEng.txt");
-	//readFileToTree(EngEng,EngEngDef, "EngEng.txt");
-	//readFileToTree(EngVie,EngVieDef, "EngVie.txt");
-	
-	/*vector<string> ans;
-	ans.resize(0);
-	if (search(VieEngDef, "Albania", ans)) {
-		for (auto x : ans) {
-			cout << x << endl;
-		}
-	}
-	else {
-		cout << "No";
-	}*/
-=======
 
 	readFileToTree(VieEng, VieEngDef, "VieEng.txt");
 	readFileToTree(EngEng, EngEngDef, "EngEng.txt");
@@ -44,17 +28,6 @@ int main() {
 	readFileToTree(Emoji, EmojiDef, "Emoji.txt");
 	readFileToTree(Slang, SlangDef, "Slang.txt");
 
-	//vector<string> ans;
-	//ans.resize(0);
-	//if (search(EngEngDef, "of Abandon", ans)) {
-	//	for (auto x : ans) {
-	//		cout << x << endl;
-	//	}
-	//}
-	//else {
-	//	cout << "No";
-	//}
->>>>>>> Stashed changes
 	
 
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
