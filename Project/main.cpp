@@ -5,7 +5,7 @@
 #include "FrontEnd.h"
 #include "raylib.h"
 using namespace std;
-/*
+
 
 	trieNode* VieEng = nullptr;
 	trieNode* EngVie = nullptr;
@@ -17,7 +17,8 @@ using namespace std;
 	trieNode* EmojiDef = nullptr;
 	trieNode* Slang = nullptr;
 	trieNode* SlangDef = nullptr;
-
+	Stack* favor = nullptr;
+	Stack* history = nullptr;
 int main() {
 	const int screenW = 1512;
 	const int screenH = 982;
@@ -37,29 +38,4 @@ int main() {
 	
 	
 	return 0;
-}*/
-int main() {
-	trieNode* root = nullptr, * rootDef = nullptr;
-	readFileToTree(root, rootDef, "VieEng.txt");
-	vector<string> ans;
-	if (search(root, "Anh My", ans)) {
-		for (string i : ans)
-			cout << i << endl;
-		cout << endl;
-	}
-	else {
-		cout << "not found" << endl;
-	}
-	ans.clear();
-	DeleteAWord(root, "Anh My", 0);
-	if (search(root, "Anh My", ans)) {
-		for (string i : ans)
-			cout << i << endl;
-		cout << endl;
-	}
-	else {
-		cout << "not found" << endl;
-	}
-	DeleteAllTree(root);
-	DeleteAllTree(rootDef);
 }
