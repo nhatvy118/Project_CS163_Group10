@@ -1,5 +1,6 @@
 #include <iostream>
 #include <raylib.h>
+#include "struct.h"
 #include "FrontEnd.h"
 
 void Textbox::worktextbox(bool& isSearching) {
@@ -72,7 +73,26 @@ void Textbox::worktextbox(bool& isSearching) {
 	else isSearching = false;
 
 }
-void NewPageButton::workbutton(Vector2 mousePoint, void(*func)(const int screenWidth, const int screenHeight)) {
+void NewPageButton::workbutton(Vector2 mousePoint, void(*func)(const int screenWidth, const int screenHeight, trieNode* VieEng,
+	trieNode* EngVie,
+	trieNode* EngEng,
+	trieNode* VieEngDef,
+	trieNode* EngVieDef,
+	trieNode* EngEngDef,
+	trieNode* Emoji,
+	trieNode* EmojiDef,
+	trieNode* Slang,
+	trieNode* SlangDef), 
+	trieNode* VieEng,
+	trieNode* EngVie,
+	trieNode* EngEng,
+	trieNode* VieEngDef,
+	trieNode* EngVieDef,
+	trieNode* EngEngDef,
+	trieNode* Emoji,
+	trieNode* EmojiDef,
+	trieNode* Slang,
+	trieNode* SlangDef) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
 		//DrawRectangleLines((int)button.x, (int)button.y, (int)button.width, (int)button.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
@@ -81,6 +101,6 @@ void NewPageButton::workbutton(Vector2 mousePoint, void(*func)(const int screenW
 	if (action)
 	{
 		EndDrawing();
-		func(screenWidth, screenHeight);
+		func(screenWidth, screenHeight, VieEng,EngVie,EngEng,VieEngDef,EngVieDef,EngEngDef,Emoji,EmojiDef,Slang,SlangDef);
 	}
 }
