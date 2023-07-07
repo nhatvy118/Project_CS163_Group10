@@ -203,14 +203,14 @@ void rcmFunc(trieNode* root, string s, vector<string>& ans) {
 	if (!root) {
 		return;
 	}
+	if (root->isEnd) {
+		ans.push_back(s);
+	}
 	for (int i = 0; i < 96; ++i) {
 		if (root->c[i]) {
-			s += char(i + 32);
-			if (root->isEnd) {
-				ans.push_back(s);
-			}
+			char tmp = char(i + 32);
+			rcmFunc(root->c[i], s + tmp, ans);
 		}
-		rcmFunc(root->c[i], s, ans);
 	}
 }
 	
