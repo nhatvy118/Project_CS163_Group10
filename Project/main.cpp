@@ -17,19 +17,17 @@ using namespace std;
 	trieNode* EmojiDef = nullptr;
 	trieNode* Slang = nullptr;
 	trieNode* SlangDef = nullptr;
-	Stack* favor = nullptr;
-	Stack* history = nullptr;
+	Node* favor = nullptr;
+	Node* history = nullptr;
 int main() {
 	const int screenW = 1512;
 	const int screenH = 982;
-	
 
 	readFileToTree(VieEng, VieEngDef, "VieEng.txt");
 	readFileToTree(EngEng, EngEngDef, "EngEng.txt");
 	readFileToTree(EngVie, EngVieDef, "EngVie.txt");
 	readFileToTree(Emoji, EmojiDef, "Emoji.txt");
 	readFileToTree(Slang, SlangDef, "Slang.txt");
-
 	
 
 	InitWindow(screenW, screenH, "Group 10 Dictionary");

@@ -22,12 +22,14 @@ void WriteDictionaryToFile(trieNode* root, string prefix, ofstream &fout);
 
 bool search(trieNode* root, string s, vector<string>& ans);
 
-void add(Stack& name, string s);
-
-void remove(Stack& name, string s);
-
 void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector<string>& wrong_def);
 
 bool updateDef(trieNode*& root, string s, int t, string def);
 
 bool compare(string s1, string s2);
+
+void add(Node*& pHead, string s);
+
+void remove(Node*& pHead, string s);
+
+vector<string> viewList(Node* pHead);

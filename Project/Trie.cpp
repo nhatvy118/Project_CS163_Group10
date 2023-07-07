@@ -106,18 +106,55 @@ bool search(trieNode* root, string s, vector<string>& ans) {
 	}
 	return false;
 }
-
-
-void add(Stack& name, string s) {
-	name.push(s);
+void add(Node*& pHead, string s) {
+	if (!pHead) {
+		pHead = new Node;
+		pHead->data = s;
+		return;
+	}
+	Node* tmp = pHead;
+	Node* pNew = new Node;
+	pNew->data = s;
+	pHead = pNew;
+	pNew->pNext = tmp;
 	return;
 }
 
-void remove(Stack& name, string s) {
-	name.removeNode(s);
-	return;
+
+void remove(Node*& pHead, string s) {
+	Node* cur = pHead;
+	if (cur == nullptr) {
+		return;
+	}
+
+	if (pHead->data == s) {
+		cur = pHead;
+		pHead = pHead->pNext;
+		delete cur;
+		return;
+	}
+	while (cur->pNext) {
+		if (cur->pNext->data == s) {
+			Node* tmp = cur->pNext;
+			cur->pNext = cur->pNext->pNext;
+			delete tmp;
+			break;
+		}
+		cur = cur->pNext;
+	}
 }
 
+ vector<string> viewList(Node* pHead) {
+	Node* cur = pHead;
+	vector<string> ans;
+	ans.resize(0);
+	if (cur == nullptr) return ans;
+	while (cur) {
+		ans.push_back(cur->data);
+		cur = cur->pNext;
+	}
+	return ans;
+}
 
 
 bool updateDef(trieNode*& root, string s, int t, string def) {
