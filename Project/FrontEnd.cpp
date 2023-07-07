@@ -885,6 +885,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 	Rectangle ChooseModeBox{ 1036,148-30,218,54 };
 	Rectangle wordRevision{ 818,148-30,218,54 };
 	Rectangle defRevision{ 818,202-30,218,54 };
+	Rectangle ChooseDictBox{ 1036, 230, 218, 54 };
+	Rectangle ChooseEEbox{ 818, 230, 218, 54 };
+	Rectangle ChooseEVbox{ 818, 230+54, 218, 54 };
+	Rectangle ChooseVEbox{ 818, 230+54*2, 218, 54 };
+	Rectangle ChooseSlangbox{ 818, 230+54*3, 218, 54 };
+	Rectangle ChooseEmobox{ 818, 230+54*4, 218, 54 };
 
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
 	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 96, 0, 0);
@@ -908,31 +914,51 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 	bool ChooseWord = false;
 	bool ChooseDef = false;
 
+	bool chooseDict = false;
+	bool chooseEE = false;
+	bool chooseEV = false;
+	bool chooseVE = false;
+	bool chooseSlang = false;
+	bool chooseEmo = false;
+
+	string trueWord = "";
+	string trueDef = "";
+	vector<string> wrongdef(3);
+	for (int i = 0; i < 3; ++i) {
+		wrongdef[i] = "";
+	}
+	int randomNum = 0;
+	bool correctAns = false;
+	bool wrongAns = false;
+	int positionWrong = 0;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
 		DrawRectangle(0, 0, 1512, 982, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
 		DrawRectangle(270, 342, 984, 104, white);
-		DrawRectangle(270, 515, 984, 77, white);
+		DrawRectangle(270, 503, 984, 77, white);
 		DrawRectangle(270, 628, 984, 77, white);
 		DrawRectangle(270, 753, 984, 77, white);
 		DrawRectangle(270, 878, 984, 77, white);
 		DrawRectangle(270, 342, 984, 17, yellow);
-		DrawRectangle(270, 515, 984, 17, skin);
+		DrawRectangle(270, 503, 984, 17, skin);
 		DrawRectangle(270, 628, 984, 17, skin);
 		DrawRectangle(270, 753, 984, 17, skin);
 		DrawRectangle(270, 878, 984, 17, skin);
 		DrawRectangle(270, 292, 61, 49, yellow);
 		DrawRectangle(1036, 148-30, 218, 54, yellow);
+		DrawRectangleRec(ChooseDictBox, yellow);
 		//Refresh button
 		DrawTexture(refreshBtn, 283, 300, WHITE);
 		DrawTexture(logo, 270, 80, WHITE);
+		DrawTexture(arrow, 1057, 168 - 33 + 58*2, WHITE);
 		DrawTexture(arrow, 1057, 168-30, WHITE);
 		DrawTextEx(bold, "Revision", { 492,127 }, 54, 0, white);
 		DrawTextEx(bold, "Tool", { 530,179 }, 54, 0, white);
 		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
 		DrawTextEx(bold, "MODE", { 1098,154-30 }, 44, 0, navy);
+		DrawTextEx(bold, "DICT", { 1108, 237 }, 44, 0, navy);
 		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
 
 		if (CheckCollisionPointRec(mousePoint, ChooseModeBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
@@ -966,6 +992,489 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 			ChooseMode = false;
 		}
 		if (!CheckCollisionPointRec(mousePoint, ChooseModeBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) ChooseMode = false;
+
+		if (CheckCollisionPointRec(mousePoint, ChooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			chooseDict = true;
+			chooseEE = false;
+			chooseEV = false;
+			chooseVE = false;
+			chooseSlang = false;
+			chooseEmo = false;
+		}
+		if (chooseDict) {
+			DrawRectangleRec(ChooseEEbox, white);
+			DrawRectangleRec(ChooseEVbox, white);
+			DrawRectangleRec(ChooseVEbox, white);
+			DrawRectangleRec(ChooseSlangbox, white);
+			DrawRectangleRec(ChooseEmobox, white);
+
+			DrawTextEx(bold, "ENG-ENG", { 876, 242}, 30, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 876+1, 242 +54 }, 30, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 876+2, 242+108 }, 30, 0, navy);
+			DrawTextEx(bold, "SLANG", { 876+3, 242 +54*3}, 30, 0, navy);
+			DrawTextEx(bold, "EMOJI", { 876+4, 242 +54*4}, 30, 0, navy);
+
+
+			DrawLine(ChooseEEbox.x, ChooseEEbox.y + 54, ChooseEEbox.x + ChooseEEbox.width, ChooseEEbox.y + 54, navy);
+			DrawLine(ChooseEVbox.x, ChooseEVbox.y + 54, ChooseEVbox.x + ChooseEVbox.width, ChooseEVbox.y + 54, navy);
+			DrawLine(ChooseVEbox.x, ChooseVEbox.y + 54, ChooseVEbox.x + ChooseVEbox.width, ChooseVEbox.y + 54, navy);
+			DrawLine(ChooseSlangbox.x, ChooseSlangbox.y + 54, ChooseSlangbox.x + ChooseSlangbox.width, ChooseSlangbox.y + 54, navy);
+			DrawLine(ChooseEmobox.x, ChooseEmobox.y + 54, ChooseEmobox.x + ChooseEmobox.width, ChooseEmobox.y + 54, navy);
+		}
+		if (CheckCollisionPointRec(mousePoint, ChooseEEbox) && chooseDict)
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
+		if (CheckCollisionPointRec(mousePoint, ChooseEVbox) && chooseDict)
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEV = true;
+		if (CheckCollisionPointRec(mousePoint, ChooseVEbox) && chooseDict)
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseVE = true;
+		if (CheckCollisionPointRec(mousePoint, ChooseSlangbox) && chooseDict)
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseSlang = true;
+		if (CheckCollisionPointRec(mousePoint, ChooseEmobox) && chooseDict)
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEmo = true;
+		if (chooseEE)
+		{
+			DrawRectangleRec(ChooseDictBox, yellow);
+			DrawTextEx(bold, "ENG-ENG", { 1094,242 }, 30, 0, navy);
+			chooseDict = false;
+		}
+		if (chooseEV)
+		{
+			DrawRectangleRec(ChooseDictBox, yellow);
+			DrawTextEx(bold, "ENG-VIE", { 1094,242 }, 30, 0, navy);
+			chooseDict = false;
+		}
+		if (chooseVE)
+		{
+			DrawRectangleRec(ChooseDictBox, yellow);
+			DrawTextEx(bold, "VIE-ENG", { 1094,242 }, 30, 0, navy);
+			chooseDict = false;
+		}
+		if (chooseSlang)
+		{
+			DrawRectangleRec(ChooseDictBox, yellow);
+			DrawTextEx(bold, "SLANG", { 1094,242 }, 30, 0, navy);
+			chooseDict = false;
+		}
+		if (chooseEmo)
+		{
+			DrawRectangleRec(ChooseDictBox, yellow);
+			DrawTextEx(bold, "EMOJI", { 1094,242 }, 30, 0, navy);
+			chooseDict = false;
+		}
+
+		
+		if (chooseEE && ChooseWord) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(EngEng, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387}, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		if (chooseEV && ChooseWord) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(EngVie, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		if (chooseVE && ChooseWord) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(VieEng, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		if (chooseSlang && ChooseWord) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(Slang, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		if (chooseEmo && ChooseWord) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(Emoji, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		if (chooseEE && ChooseDef) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(EngEngDef, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		if (chooseEV && ChooseDef) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(EngVieDef, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		if (chooseVE && ChooseDef) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(VieEngDef, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		if (chooseSlang && ChooseDef) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(SlangDef, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		if (chooseEmo && ChooseDef) {
+			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				random1Word4Def(EmojiDef, trueWord, trueDef, wrongdef);
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> dist(0, 3);
+				randomNum = dist(gen);
+				correctAns = false;
+				wrongAns = false;
+				positionWrong = 0;
+			}
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			int j = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					++j;
+				}
+			}
+			if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)randomNum, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				correctAns = true;
+			}
+			for (int i = 0; i < 4; ++i) {
+				if (i != randomNum) {
+					if (CheckCollisionPointRec(mousePoint, { 270, 503 + 125 * (float)i, 984, 77 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						wrongAns = true;
+						positionWrong = i;
+						break;
+					}
+				}
+			}
+
+			if (correctAns) {
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+			if (wrongAns) {
+				DrawRectangle(270, 503 + 125 * positionWrong, 984, 17, RED);
+				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
+			}
+		}
+		
 		EndDrawing();
 	}
 	CloseWindow();

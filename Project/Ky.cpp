@@ -68,7 +68,8 @@ void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<> dist(0, 95);
-	for (int z = 0; z < 4; z++) {
+	int count = 0;
+	while (count!=4) {
 		trieNode* node = root;
 		string temp = "";
 		while (node != nullptr) {
@@ -80,12 +81,22 @@ void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector
 			node = node->c[rand];
 			temp.push_back(rand + 32);
 			if (node->isEnd) {
-				if (z == 0) {
+				if (count == 0) {
 					true_word = temp;
 					true_def = node->mean[0];
+					count++;
 				}
 				else {
-					wrong_def.push_back(node->mean[0]);
+					bool duplicate = false;
+					for(string x : wrong_def)
+						if (x == node->mean[0]) {
+							duplicate = true;
+							break;
+						}
+					if (!duplicate) {
+						wrong_def[count - 1] = node->mean[0];
+						count++;
+					}
 				}
 				break;
 			}
