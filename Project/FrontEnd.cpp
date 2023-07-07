@@ -882,9 +882,9 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 
-	Rectangle ChooseModeBox{ 1036,148,218,54 };
-	Rectangle wordRevision{ 818,148,218,54 };
-	Rectangle defRevision{ 818,202,218,54 };
+	Rectangle ChooseModeBox{ 1036,148-30,218,54 };
+	Rectangle wordRevision{ 818,148-30,218,54 };
+	Rectangle defRevision{ 818,202-30,218,54 };
 
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
 	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 96, 0, 0);
@@ -894,6 +894,7 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 	Color blue = { 11,64,156,255 };
 	Color navy = { 16,49,107,255 };
 	Color yellow = { 253,190,52,255 };
+	Color skin = { 252,213,155,255 };
 
 	Texture2D logo = LoadTexture("../resources/School Logo.png");
 	Texture2D refreshBtn = LoadTexture("../resources/RefreshBtn.png");
@@ -912,26 +913,26 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 		BeginDrawing();
 		DrawRectangle(0, 0, 1512, 982, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
-		DrawRectangle(270, 372, 984, 221, white);
-		DrawRectangle(270, 649, 404, 85, white);
-		DrawRectangle(270, 774, 404, 85, white);
-		DrawRectangle(850, 649, 404, 85, white);
-		DrawRectangle(850, 774, 404, 85, white);
-		DrawRectangle(270, 372, 984, 17, yellow);
-		DrawRectangle(270, 649, 404, 17, yellow);
-		DrawRectangle(270, 774, 404, 17, yellow);
-		DrawRectangle(850, 649, 404, 17, yellow);
-		DrawRectangle(850, 774, 404, 17, yellow);
-		DrawRectangle(270, 323, 61, 49, yellow);
-		DrawRectangle(1036, 148, 218, 54, yellow);
+		DrawRectangle(270, 342, 984, 104, white);
+		DrawRectangle(270, 515, 984, 77, white);
+		DrawRectangle(270, 628, 984, 77, white);
+		DrawRectangle(270, 753, 984, 77, white);
+		DrawRectangle(270, 878, 984, 77, white);
+		DrawRectangle(270, 342, 984, 17, yellow);
+		DrawRectangle(270, 515, 984, 17, skin);
+		DrawRectangle(270, 628, 984, 17, skin);
+		DrawRectangle(270, 753, 984, 17, skin);
+		DrawRectangle(270, 878, 984, 17, skin);
+		DrawRectangle(270, 292, 61, 49, yellow);
+		DrawRectangle(1036, 148-30, 218, 54, yellow);
 		//Refresh button
-		DrawTexture(refreshBtn, 283, 331, WHITE);
-		DrawTexture(logo, 270, 105, WHITE);
-		DrawTexture(arrow, 1057, 168, WHITE);
-		DrawTextEx(bold, "Revision", { 492,152 }, 45, 0, white);
-		DrawTextEx(bold, "Tool", { 536,204 }, 45, 0, white);
+		DrawTexture(refreshBtn, 283, 300, WHITE);
+		DrawTexture(logo, 270, 80, WHITE);
+		DrawTexture(arrow, 1057, 168-30, WHITE);
+		DrawTextEx(bold, "Revision", { 492,127 }, 54, 0, white);
+		DrawTextEx(bold, "Tool", { 530,179 }, 54, 0, white);
 		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
-		DrawTextEx(bold, "MODE", { 1098,154 }, 44, 0, navy);
+		DrawTextEx(bold, "MODE", { 1098,154-30 }, 44, 0, navy);
 		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
 
 		if (CheckCollisionPointRec(mousePoint, ChooseModeBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
@@ -942,11 +943,11 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 		}
 		if (ChooseMode)
 		{
-			DrawRectangle(818, 148, 218, 54, white);
-			DrawRectangle(818, 202, 218, 54, white);
-			DrawLine(818, 203, 818 + 218, 203, navy);
-			DrawTextEx(bold, "Word revision", { 856,162 }, 30, 0, navy);
-			DrawTextEx(bold, "Definition revision", { 829,213 }, 30, 0, navy);
+			DrawRectangle(818, 148-30, 218, 54, white);
+			DrawRectangle(818, 202-30, 218, 54, white);
+			DrawLine(818, 203-30, 818 + 218, 203-30, navy);
+			DrawTextEx(bold, "Word revision", { 856,162-30 }, 30, 0, navy);
+			DrawTextEx(bold, "Definition revision", { 829,213-30 }, 30, 0, navy);
 		}
 		if (CheckCollisionPointRec(mousePoint, wordRevision) && ChooseMode)
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) ChooseWord = true;
@@ -955,13 +956,13 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 		if (ChooseWord)
 		{
 			DrawRectangleRec(ChooseModeBox, yellow);
-			DrawTextEx(bold, "Word revision", { 1078,159 }, 30, 0, navy);
+			DrawTextEx(bold, "Word revision", { 1078,159-30 }, 30, 0, navy);
 			ChooseMode = false;
 		}
 		if (ChooseDef)
 		{
 			DrawRectangleRec(ChooseModeBox, yellow);
-			DrawTextEx(bold, "Definition revision", { 1047,162 }, 30, 0, navy);
+			DrawTextEx(bold, "Definition revision", { 1047,162-30 }, 30, 0, navy);
 			ChooseMode = false;
 		}
 		if (!CheckCollisionPointRec(mousePoint, ChooseModeBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) ChooseMode = false;
