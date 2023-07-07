@@ -37,6 +37,12 @@ int main() {
 	for (auto x : ans) {
 		cout << x << endl;
 	}*/
+
+	/*vector<string> ans;
+	ans.resize(0);
+	trieNode* tmp = find(VieEng, "anh");
+	rcmFunc(tmp, "anh", ans);*/
+	
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
 	//HomePage(screenW, screenH);
 	WaitingPage(screenW, screenH, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);

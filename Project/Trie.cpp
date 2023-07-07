@@ -186,3 +186,31 @@ bool updateDef(trieNode*& root, string s, int t, string def) {
 	}
 	return false;
 }
+trieNode* find(trieNode* root, string s) {
+	standardWord(s);
+	if (!root) return nullptr;
+	for (auto x : s) {
+		if (root->c[int(x) - 32]) {
+			root = root->c[int(x) - 32];
+		}
+		else {
+			return nullptr;
+		}
+	}
+	return root;
+}
+void rcmFunc(trieNode* root, string s, vector<string>& ans) {
+	if (!root) {
+		return;
+	}
+	for (int i = 0; i < 96; ++i) {
+		if (root->c[i]) {
+			s += char(i + 32);
+			if (root->isEnd) {
+				ans.push_back(s);
+			}
+		}
+		rcmFunc(root->c[i], s, ans);
+	}
+}
+	

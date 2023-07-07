@@ -33,3 +33,7 @@ void add(Node*& pHead, string s);
 void remove(Node*& pHead, string s);
 
 vector<string> viewList(Node* pHead);
+
+trieNode* find(trieNode* root, string s);
+
+void rcmFunc(trieNode* root, string s, vector<string>& ans);
