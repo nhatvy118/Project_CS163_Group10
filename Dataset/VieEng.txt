@@ -171,7 +171,7 @@ Hiep Thien Dai`Heavenly Palace (Cao Dai)
 Hiep dinh khong pho bien vu khi hach nhan`Nuclear non-proliferation treaty
 Hieu kinh`the Classic of Filial Piety
 Hitle`Hitler
-Ho Phap`legislative affairs director (Cao Dai)
+Ho Phap`legislative affairs director
 Ho Phap Cao Dai`Cao Dai pope
 Hoa`(1) China; (2) flower|blossom
 Hoa Ky`United States|America
@@ -204,9 +204,7 @@ Huong Cang`Hong Kong
 Huynh de Hoi giao`Muslim brotherhood
 Hy Lap`Greece|Greek
 I Rac`Iraq
-KH&KT`Khoa Hoc va Ky Thuat
-KHCN`khoa hoc cong nghe
-KHDT`science and technology
+KHCN`Science and technology
 Kha Luan Bo`Christopher Columbus
 Kho Me Do`Khmer Rouge
 Kho chua!`How unfortunate!
@@ -417,15 +415,6 @@ So Viet hoa`to Sovietize
 Su Quan Anh`British Embassy
 Su Quan My`American Embassy
 Su Quan Viet Nam`Vietnamese Embassy
-TCT`corporation
-TGD`Tong giam doc
-TL`tay lich
-TNHH`trach nhiem huu han
-TP.HCM`(abbreviation for Thanh Pho Ho Chi Minh)
-TPHCM`thanh pho Ho Chi Minh
-TQ`Trung Quoc
-TQLC`(thuy quan luc chien) Marines
-TT`thu tuong|tong thong
 Tam Bao`Buddhist trinity
 Tam Cam`Vietnamese version of the Cinderella story
 Tan De Li`New Delphi
@@ -451,7 +440,6 @@ Tay Tang`Tibet|Tibetan
 Tay ban cau`Western hemisphere
 Tay hieu`Western-brand (e.g. product)
 Tay phuong`the West|Occident
-Thai`Thai	
 Thai Binh Duong`the Pacific Ocean
 Thai Cuc Dao`Tae Kwon Do
 Thai Duong`sun
@@ -536,14 +524,11 @@ Tu Duc`Vietnamese king (1840-1883)
 Tu Quoc`Shikoku (region of Japan)
 Tu Xuyen`Szechuan
 Tuong Tuong Gioi Thach`General Chang Kai Shek
-VC`Viet Cong
-VN`Viet Nam
-VNCH`Viet Nam Cong Hoa
+VN`VietNam
 Vacxava`Warsaw
 Van Nam`Yunnan
 Van Tuong`Vientiane
 Vang a`Yes sir
-Vi Xi`VC|Viet Cong
 Vien Bao Hien`Constitutional Court
 Vien Suc Khoe Quoc Gia`National Institute of Health
 Viet`Vietnamese

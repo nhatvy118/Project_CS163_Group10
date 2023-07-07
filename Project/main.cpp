@@ -28,8 +28,15 @@ int main() {
 	readFileToTree(EngVie, EngVieDef, "EngVie.txt");
 	readFileToTree(Emoji, EmojiDef, "Emoji.txt");
 	readFileToTree(Slang, SlangDef, "Slang.txt");
-	
-
+	/*vector<string> ans;
+	ans.resize(0);
+	string s = "";
+	string def = "";
+	random1Word4Def(VieEng, s, def, ans);
+	cout << s << endl << def << endl;
+	for (auto x : ans) {
+		cout << x << endl;
+	}*/
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
 	//HomePage(screenW, screenH);
 	WaitingPage(screenW, screenH, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
