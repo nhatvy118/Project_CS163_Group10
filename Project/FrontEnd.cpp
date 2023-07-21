@@ -46,6 +46,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	// Set up the page
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
+	int scrollSpeed = 20;
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
 	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 96, 0, 0);
 	Font italic = LoadFontEx("../Fonts/SourceSansPro-Italic.ttf", 96, 0, 0);
@@ -107,11 +108,178 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	bool confirmDelete = false;
 
 	vector <string> tmpdef;
-
+	int defPositionY = 590;
+	int StarPositionY = 595;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
 		DrawRectangle(0, 0,screenWidth, screenHeight, white);
+
+		vector<string> ans;
+		ans.resize(0);
+		if (ActualSearchBar.text[0] != '\0') {
+			if (DictType == "ENG-ENG") {
+				if (!SearchDefMode) {
+					isDisplayingResult = search(EngEng, ActualSearchBar.text, ans);
+				}
+				else isDisplayingResult = search(EngEngDef, ActualSearchBar.text, ans);
+			}
+			if (DictType == "ENG-VIE") {
+				if (!SearchDefMode) {
+					isDisplayingResult = search(EngVie, ActualSearchBar.text, ans);
+				}
+				else isDisplayingResult = search(EngVieDef, ActualSearchBar.text, ans);
+			}
+			if (DictType == "VIE-ENG") {
+				if (!SearchDefMode) {
+					isDisplayingResult = search(VieEng, ActualSearchBar.text, ans);
+				}
+				else isDisplayingResult = search(VieEngDef, ActualSearchBar.text, ans);
+			}
+			if (DictType == "SLANG") {
+				if (!SearchDefMode) {
+					isDisplayingResult = search(Slang, ActualSearchBar.text, ans);
+				}
+				else isDisplayingResult = search(SlangDef, ActualSearchBar.text, ans);
+			}
+			if (DictType == "EMOJI") {
+				if (!SearchDefMode) {
+					isDisplayingResult = search(Emoji, ActualSearchBar.text, ans);
+				}
+				else isDisplayingResult = search(EmojiDef, ActualSearchBar.text, ans);
+			}
+		}
+
+		if (isDisplayingResult) {
+
+			defPositionY += (GetMouseWheelMove() * scrollSpeed);
+			StarPositionY += (GetMouseWheelMove() * scrollSpeed);
+			int newDefMark = 0;
+			for (int i = 0; i < ans.size(); ++i) {
+				if (ans[i].size() > 130) {
+					tmpdef = divideString(ans[i]);
+					for (int j = 0; j < tmpdef.size(); ++j) {
+						if (j == 0) DrawTextEx(bold, "*", { 50, (StarPositionY + 50 * (float)(i + newDefMark + j)) }, 30, 0, navy);
+						DrawTextEx(bold, tmpdef[j].c_str(), { 72, (defPositionY + 50 * (float)(i + newDefMark + j)) }, 30, 0, navy);
+					}
+					newDefMark += tmpdef.size() - 1;
+				}
+				else {
+					DrawTextEx(bold, "*", { 50, (StarPositionY + 50 * (float)(i + newDefMark)) }, 30, 0, navy);
+					DrawTextEx(bold, ans[i].c_str(), { 72, (defPositionY + 50 * (float)(i + newDefMark)) }, 30, 0, navy);
+					//newDefMark += 1;
+				}
+			}
+
+			DrawRectangle(10, 388, 1492, 200, white);
+			DrawRectangleRounded(Vocab, 0.3, 0, yellow);
+			DrawRectangleRounded(Definition, 0.3, 0, yellow);
+			DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 2, Vocab.x + 1400, Vocab.y + Vocab.height - 2, yellow);
+			DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 1, Vocab.x + 1400, Vocab.y + Vocab.height - 1, yellow);
+			DrawLine(Definition.x + 10, Definition.y + Definition.height - 2, Definition.x + 1400, Definition.y + Definition.height - 2, yellow);
+			DrawLine(Definition.x + 10, Definition.y + Definition.height - 1, Definition.x + 1400, Definition.y + Definition.height - 1, yellow);
+			DrawRectangleRounded({ Vocab.x + 158,Vocab.y,49,49 }, 0.3, 0, yellow);
+			DrawRectangleRounded({ Vocab.x + 1365 ,Vocab.y,49,49 }, 0.3, 0, yellow);
+			DrawRectangleRounded({ Definition.x + 1365,Definition.y,49,49 }, 0.3, 0, yellow);
+			DrawTexture(trashcan, Vocab.x + 1376, Vocab.y + 10, WHITE);
+			DrawTexture(editIcon, Definition.x + 1370 + 3, Definition.y + 5, WHITE);
+			DrawTextEx(bold, "Vocab", { 69,412 }, 43, 0, navy);
+			DrawTextEx(bold, "Definition", { 67,530 }, 43, 0, navy);
+
+			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				if (isFavorite) isFavorite = false;
+				else if (!isFavorite) isFavorite = true;
+			}
+			if (!isFavorite) DrawTexture(whiteStar, Vocab.x + 167, Vocab.y + 8, GRAY);
+			else DrawTexture(blueStar, Vocab.x + 167, Vocab.y + 8, GRAY);
+
+			DrawTextEx(bold, ActualSearchBar.text, { 72, 470 }, 30, 0, navy);
+
+
+			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 1365, Vocab.y, 49, 49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+			{
+				confirmDelete = true;
+			}
+			if (confirmDelete)
+			{
+				DrawRectangleRounded({ 501,375,511,243 }, 0.08, 0, blue);
+				DrawRectangleRounded({ 542,534,161,49 }, 0.08, 0, yellow);
+				DrawRectangleRounded({ 811,534,161, 49 }, 0.08, 0, yellow);
+				DrawTexture(closeIcon, 966, 393, WHITE);
+				DrawTextEx(bold, "Delete Confirmation", { 585,448 }, 48, 0, white);
+				DrawTextEx(bold, "Yes", { 597,537 }, 44, 0, navy);
+				DrawTextEx(bold, "No", { 874,537 }, 44, 0, navy);
+				if (CheckCollisionPointRec(mousePoint, { 965,389,31,27 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					confirmDelete = false;
+				}
+				if (CheckCollisionPointRec(mousePoint, { 811,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					confirmDelete = false;
+				}
+				string str(ActualSearchBar.text);
+				vector <string> tmp;
+				tmp.resize(0);
+				if (CheckCollisionPointRec(mousePoint, { 542,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					if (DictType == "ENG-ENG")
+					{
+						DeleteAWord(EngEng, str, 0, tmp);
+						vector <string> tmp2 = tmp;
+						for (auto x : tmp)
+						{
+							DeleteAWord(EngEngDef, x, 0, tmp2);
+						}
+					}
+					else
+						if (DictType == "ENG-VIE")
+						{
+							DeleteAWord(EngVie, str, 0, tmp);
+							vector <string> tmp2 = tmp;
+							for (auto x : tmp)
+							{
+								DeleteAWord(EngVieDef, x, 0, tmp2);
+							}
+						}
+						else
+							if (DictType == "VIE-ENG")
+							{
+								DeleteAWord(VieEng, str, 0, tmp);
+								vector <string> tmp2 = tmp;
+								for (auto x : tmp)
+								{
+									DeleteAWord(VieEngDef, x, 0, tmp2);
+								}
+							}
+							else
+								if (DictType == "SLANG")
+								{
+									DeleteAWord(Slang, str, 0, tmp);
+									vector <string> tmp2 = tmp;
+									for (auto x : tmp)
+									{
+										DeleteAWord(SlangDef, x, 0, tmp2);
+									}
+								}
+								else
+									if (DictType == "EMOJI")
+									{
+										DeleteAWord(Emoji, str, 0, tmp);
+										vector <string> tmp2 = tmp;
+										for (auto x : tmp)
+										{
+											DeleteAWord(EmojiDef, x, 0, tmp2);
+										}
+									}
+					confirmDelete = false;
+				}
+			}
+
+		}
+		else {
+			DrawTextEx(bold, "No Data Available", { 20 + 450, (520) }, 100, 0, RED);
+			DrawTextEx(bold, "Please try again", { 20 + 50 + 450, (600) }, 90, 0, RED);
+		};
+
 		DrawRectangle(0, 0, 1512, 340, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
 		DrawRectangle(0, 340, 1512, 48, yellow);
@@ -240,179 +408,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		}
 		DrawTexture(SearchBtn, 1345, 132, WHITE);
 		
-		vector<string> ans;
-		ans.resize(0);
-		if (ActualSearchBar.text[0] != '\0' ) {
-			if (DictType == "ENG-ENG") {
-				if (!SearchDefMode) {
-					isDisplayingResult = search(EngEng, ActualSearchBar.text, ans);
-				}
-				else isDisplayingResult = search(EngEngDef, ActualSearchBar.text, ans);
-			}			
-			if (DictType == "ENG-VIE") {
-				if (!SearchDefMode) {
-					isDisplayingResult = search(EngVie, ActualSearchBar.text, ans);
-				}
-				else isDisplayingResult = search(EngVieDef, ActualSearchBar.text, ans);
-			}
-			if (DictType == "VIE-ENG") {
-				if (!SearchDefMode) {
-					isDisplayingResult = search(VieEng, ActualSearchBar.text, ans);
-				}
-				else isDisplayingResult = search(VieEngDef, ActualSearchBar.text, ans);
-			}
-			if (DictType == "SLANG") {
-				if (!SearchDefMode) {
-					isDisplayingResult = search(Slang, ActualSearchBar.text, ans);
-				}
-				else isDisplayingResult = search(SlangDef, ActualSearchBar.text, ans);
-			}
-			if (DictType == "EMOJI") {
-				if (!SearchDefMode) {
-					isDisplayingResult = search(Emoji, ActualSearchBar.text, ans);
-				}
-				else isDisplayingResult = search(EmojiDef, ActualSearchBar.text, ans);
-			}
-		}		
-
-		if (isDisplayingResult) {
-			/*for (int i = 0; i < ans.size(); ++i) {
-				string tmp = "";
-				int cnt = 0;
-				int j = 0;
-				int size = ans[i].size();
-				while (j < size) {
-					tmp = ans[i].substr(j, min(j + 100, size-1));
-					int dem = tmp.size();
-					while (tmp[tmp.size()] != ' ') dem--;
-					string str = tmp.substr(0, dem);
-					DrawTextEx(bold, str.c_str(), {30, (520 + 50 * (float)i)}, 30, 0, navy);
-					j += dem;
-				}
-			}*/
-			DrawRectangleRounded(Vocab, 0.3, 0, yellow);
-			DrawRectangleRounded(Definition, 0.3, 0, yellow);
-			DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 2, Vocab.x + 1400, Vocab.y + Vocab.height - 2, yellow);
-			DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 1, Vocab.x + 1400, Vocab.y + Vocab.height - 1, yellow);
-			DrawLine(Definition.x + 10, Definition.y + Definition.height - 2, Definition.x + 1400, Definition.y + Definition.height - 2, yellow);
-			DrawLine(Definition.x + 10, Definition.y + Definition.height - 1, Definition.x + 1400, Definition.y + Definition.height - 1, yellow);
-			DrawRectangleRounded({ Vocab.x + 158,Vocab.y,49,49 }, 0.3, 0, yellow);
-			DrawRectangleRounded({ Vocab.x + 1365 ,Vocab.y,49,49 }, 0.3, 0, yellow);
-			DrawRectangleRounded({ Definition.x + 1365,Definition.y,49,49 }, 0.3, 0, yellow);
-			DrawTexture(trashcan, Vocab.x + 1376, Vocab.y + 10, WHITE);
-			DrawTexture(editIcon, Definition.x + 1370+3, Definition.y + 5, WHITE);
-			DrawTextEx(bold, "Vocab", { 69,412 }, 43, 0, navy);
-			DrawTextEx(bold, "Definition", { 67,530 }, 43, 0, navy);
-				
-			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-				if (isFavorite) isFavorite = false;
-				else if (!isFavorite) isFavorite = true;
-			}
-			if (!isFavorite) DrawTexture(whiteStar, Vocab.x + 167, Vocab.y + 8, GRAY);
-			else DrawTexture(blueStar, Vocab.x + 167, Vocab.y + 8, GRAY);
-
-			DrawTextEx(bold, ActualSearchBar.text, { 72, 470 }, 30, 0, navy);
-
-			int newDefMark = 0;
-			for (int i = 0; i < ans.size(); ++i) {
-				if (ans[i].size() > 130) {
-					tmpdef = divideString(ans[i]);
-					for (int j = 0; j < tmpdef.size(); ++j) {
-						if(j == 0) DrawTextEx(bold,"*", {50, (595 + 50 * (float)(i + newDefMark + j))}, 30, 0, navy);
-						DrawTextEx(bold, tmpdef[j].c_str(), { 72, (590 + 50 * (float)(i+newDefMark+j)) }, 30, 0, navy);
-					}
-					newDefMark += tmpdef.size()-1;
-				}
-				else {
-					DrawTextEx(bold, "*", {50, (595 + 50 * (float)(i + newDefMark))}, 30, 0, navy);
-					DrawTextEx(bold, ans[i].c_str(), {72, (590 + 50 * (float)(i + newDefMark))}, 30, 0, navy);
-					//newDefMark += 1;
-				}
-			}
-
-			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 1365, Vocab.y, 49, 49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-			{
-				confirmDelete = true;
-			}
-			if (confirmDelete)
-			{
-				DrawRectangleRounded({ 501,375,511,243 }, 0.08, 0, blue);
-				DrawRectangleRounded({ 542,534,161,49 }, 0.08, 0, yellow);
-				DrawRectangleRounded({ 811,534,161, 49 }, 0.08, 0, yellow);
-				DrawTexture(closeIcon, 966, 393, WHITE);
-				DrawTextEx(bold, "Delete Confirmation", { 585,448 }, 48, 0, white);
-				DrawTextEx(bold, "Yes", { 597,537 }, 44, 0, navy);
-				DrawTextEx(bold, "No", { 874,537 }, 44, 0, navy);
-				if (CheckCollisionPointRec(mousePoint, { 965,389,31,27 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-				{
-					confirmDelete = false;
-				}
-				if (CheckCollisionPointRec(mousePoint, { 811,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-				{
-					confirmDelete = false;
-				}
-				string str(ActualSearchBar.text);
-				vector <string> tmp;
-				tmp.resize(0);
-				if (CheckCollisionPointRec(mousePoint, { 542,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {	
-					if (DictType == "ENG-ENG")
-					{
-						DeleteAWord(EngEng, str, 0,tmp);
-						vector <string> tmp2 = tmp;
-						for (auto x : tmp)
-						{
-							DeleteAWord(EngEngDef, x, 0, tmp2);
-						}
-					}
-					else
-					if (DictType == "ENG-VIE")
-					{
-						DeleteAWord(EngVie, str, 0,tmp);
-						vector <string> tmp2 = tmp;
-						for (auto x : tmp)
-						{
-							DeleteAWord(EngVieDef, x, 0, tmp2);
-						}
-					}
-					else
-					if (DictType == "VIE-ENG")
-					{
-						DeleteAWord(VieEng, str, 0,tmp);
-						vector <string> tmp2 = tmp;
-						for (auto x : tmp)
-						{
-							DeleteAWord(VieEngDef, x, 0, tmp2);
-						}
-					}
-					else
-					if (DictType == "SLANG")
-					{
-						DeleteAWord(Slang, str, 0,tmp);
-						vector <string> tmp2 = tmp;
-						for (auto x : tmp)
-						{
-							DeleteAWord(SlangDef, x, 0, tmp2);
-						}
-					}
-					else
-					if (DictType == "EMOJI")
-					{
-						DeleteAWord(Emoji, str, 0,tmp);
-						vector <string> tmp2 = tmp;
-						for (auto x : tmp)
-						{
-							DeleteAWord(EmojiDef, x, 0, tmp2);
-						}
-					}
-					confirmDelete = false;
-				}
-			}
-
-		}
-		else {
-			DrawTextEx(bold, "No Data Available", {20+450, (520) }, 100, 0, RED);
-			DrawTextEx(bold, "Please try again", { 20+50+450, (600) }, 90, 0, RED);
-		};
+		
 		if (CheckCollisionPointRec(mousePoint, { 1369,12,120,20 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			resetData = true;
 		}
