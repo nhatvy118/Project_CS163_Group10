@@ -105,6 +105,9 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	Texture2D randomBtn = LoadTexture("../resources/RandomBtn.png");
 	bool isFavorite = false;
 	bool confirmDelete = false;
+
+	vector <string> tmpdef;
+
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -310,9 +313,23 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 
 			DrawTextEx(bold, ActualSearchBar.text, { 72, 470 }, 30, 0, navy);
 
+			int newDefMark = 0;
 			for (int i = 0; i < ans.size(); ++i) {
-				DrawTextEx(bold, ans[i].c_str(), { 72, (590 + 50 * (float)i) }, 30, 0, navy);
+				if (ans[i].size() > 130) {
+					tmpdef = divideString(ans[i]);
+					for (int j = 0; j < tmpdef.size(); ++j) {
+						if(j == 0) DrawTextEx(bold,"*", {50, (595 + 50 * (float)(i + newDefMark + j))}, 30, 0, navy);
+						DrawTextEx(bold, tmpdef[j].c_str(), { 72, (590 + 50 * (float)(i+newDefMark+j)) }, 30, 0, navy);
+					}
+					newDefMark += tmpdef.size()-1;
+				}
+				else {
+					DrawTextEx(bold, "*", {50, (595 + 50 * (float)(i + newDefMark))}, 30, 0, navy);
+					DrawTextEx(bold, ans[i].c_str(), {72, (590 + 50 * (float)(i + newDefMark))}, 30, 0, navy);
+					//newDefMark += 1;
+				}
 			}
+
 			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 1365, Vocab.y, 49, 49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			{
 				confirmDelete = true;
@@ -393,9 +410,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 
 		}
 		else {
-			DrawTextEx(bold, "No Data Available", { 30+450, (520) }, 100, 0, RED);
-			DrawTextEx(bold, "Please try again", { 30+50+450, (600) }, 90, 0, RED);
-
+			DrawTextEx(bold, "No Data Available", {20+450, (520) }, 100, 0, RED);
+			DrawTextEx(bold, "Please try again", { 20+50+450, (600) }, 90, 0, RED);
 		};
 		if (CheckCollisionPointRec(mousePoint, { 1369,12,120,20 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			resetData = true;

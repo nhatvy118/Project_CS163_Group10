@@ -103,3 +103,24 @@ void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector
 		}
 	}
 }
+
+vector <string> divideString(string def) {
+	vector <string> save;
+	int i = 0;
+	int j = 130;
+	string tmp;
+	while (j < def.size()) {
+		while (def[j] != ' ') {
+			--j;
+		}
+		tmp = def.substr(i, j - i);
+		save.push_back(tmp);
+		i = j + 1;
+		j += 130;
+	}
+	j -= 130;
+	tmp = def.substr(j + 1, def.size());
+	save.push_back(tmp);
+
+	return save;
+}
