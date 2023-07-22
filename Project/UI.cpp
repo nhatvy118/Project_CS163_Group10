@@ -82,7 +82,7 @@ void NewPageButton::workbutton(Vector2 mousePoint, void(*func)(const int screenW
 	trieNode* Emoji,
 	trieNode* EmojiDef,
 	trieNode* Slang,
-	trieNode* SlangDef), 
+	trieNode* SlangDef, Node* favor[], Node* history[]),
 	trieNode* VieEng,
 	trieNode* EngVie,
 	trieNode* EngEng,
@@ -92,7 +92,7 @@ void NewPageButton::workbutton(Vector2 mousePoint, void(*func)(const int screenW
 	trieNode* Emoji,
 	trieNode* EmojiDef,
 	trieNode* Slang,
-	trieNode* SlangDef) {
+	trieNode* SlangDef, Node* favor[], Node* history[]) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
 		//DrawRectangleLines((int)button.x, (int)button.y, (int)button.width, (int)button.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;
@@ -101,6 +101,6 @@ void NewPageButton::workbutton(Vector2 mousePoint, void(*func)(const int screenW
 	if (action)
 	{
 		EndDrawing();
-		func(screenWidth, screenHeight, VieEng,EngVie,EngEng,VieEngDef,EngVieDef,EngEngDef,Emoji,EmojiDef,Slang,SlangDef);
+		func(screenWidth, screenHeight, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 	}
 }

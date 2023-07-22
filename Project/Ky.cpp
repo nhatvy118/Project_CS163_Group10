@@ -1,6 +1,6 @@
 #include"function.h"
 
-void DeleteAWord(trieNode*& root, string word, int depth, vector<string> &meaning) {
+void DeleteAWord(trieNode*& root, string word, int depth, vector<string>& meaning) {
 	if (root == nullptr)
 		return;
 	if (depth == word.size()) {
@@ -22,7 +22,7 @@ void DeleteAWord(trieNode*& root, string word, int depth, vector<string> &meanin
 		return;
 	}
 	int index = tolower(word[depth]) - 32;
-	DeleteAWord(root->c[index], word, depth + 1,meaning);
+	DeleteAWord(root->c[index], word, depth + 1, meaning);
 	bool hasChild = false;
 	for (trieNode* i : root->c)
 		if (i != nullptr) {
@@ -69,7 +69,7 @@ void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector
 	mt19937 gen(rd());
 	uniform_int_distribution<> dist(0, 95);
 	int count = 0;
-	while (count!=4) {
+	while (count != 4) {
 		trieNode* node = root;
 		string temp = "";
 		while (node != nullptr) {
@@ -88,7 +88,7 @@ void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector
 				}
 				else {
 					bool duplicate = false;
-					for(string x : wrong_def)
+					for (string x : wrong_def)
 						if (x == node->mean[0]) {
 							duplicate = true;
 							break;
@@ -123,4 +123,26 @@ vector <string> divideString(string def) {
 	save.push_back(tmp);
 
 	return save;
+}
+
+void readNode2File(Node*& head, string path) {
+	ifstream fin;
+	fin.open("../Dataset/" + path);
+	if (!fin.good()) {
+		cout << "Read file error." << endl;
+		return;
+	}
+	string line;
+	Node* cur = nullptr;
+	while (getline(fin, line)) {
+		add(head, line);
+	}
+	fin.close();
+}
+
+void writeNode2File(Node* head, ofstream& fout) {
+	if (!head)
+		return;
+	writeNode2File(head->pNext, fout);
+	fout << head->data << endl;
 }

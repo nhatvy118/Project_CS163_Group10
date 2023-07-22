@@ -4,8 +4,7 @@
 #include "FrontEnd.h"
 #include <string>
 
-
-void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng,trieNode* EngVie,trieNode* EngEng,trieNode* VieEngDef,trieNode* EngVieDef,trieNode* EngEngDef,trieNode* Emoji,trieNode* EmojiDef,trieNode* Slang,trieNode* SlangDef) 
+void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[])
 {
 	// Set up the page
 	Vector2 mousePoint = { 0.0f, 0.0f };
@@ -23,9 +22,9 @@ void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 	Texture2D logo2 = LoadTexture("../resources/School Logo2.png");
 	Texture2D DrawStartBtn = LoadTexture("../resources/StartBtn.png");
 	NewPageButton StartBtn;
-	StartBtn.button = {655,700,200,100};
+	StartBtn.button = { 655,700,200,100 };
 	////---------------------------------------------------------------------------------------------------
-	
+
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 
@@ -36,12 +35,12 @@ void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 		DrawTextEx(italic, "by APCS K22 Group 10", { 644,611 }, 32, 0, white);
 
 		DrawTexture(DrawStartBtn, 655, 700, WHITE);
-		StartBtn.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
+		StartBtn.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 		EndDrawing();
 	}
 	CloseWindow();
 }
-void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef)
+void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[])
 {
 	// Set up the page
 	Vector2 mousePoint = { 0.0f, 0.0f };
@@ -69,7 +68,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	////---------------------------------------------------------------------------------------------------
 	// Set up Page component
 	NewPageButton AddWordBtn;
-	AddWordBtn.button = {188,12,166,31};
+	AddWordBtn.button = { 188,12,166,31 };
 	NewPageButton FavoriteList;
 	FavoriteList.button = { 15,9,131,31 };
 	NewPageButton RevisionBtn;
@@ -110,10 +109,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	vector <string> tmpdef;
 	int defPositionY = 590;
 	int StarPositionY = 595;
+
+	int index = 0;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
-		DrawRectangle(0, 0,screenWidth, screenHeight, white);
+		DrawRectangle(0, 0, screenWidth, screenHeight, white);
 
 		vector<string> ans;
 		ans.resize(0);
@@ -152,8 +153,6 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 
 		if (isDisplayingResult) {
 
-			if (defPositionY > 590) defPositionY = 590;
-			if (StarPositionY > 595) StarPositionY = 595;
 			defPositionY += (GetMouseWheelMove() * scrollSpeed);
 			StarPositionY += (GetMouseWheelMove() * scrollSpeed);
 			int newDefMark = 0;
@@ -188,16 +187,40 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			DrawTextEx(bold, "Vocab", { 69,412 }, 43, 0, navy);
 			DrawTextEx(bold, "Definition", { 67,530 }, 43, 0, navy);
 
-			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-				if (isFavorite) isFavorite = false;
-				else if (!isFavorite) isFavorite = true;
+
+			if (chooseEE) index = 0;
+			if (chooseEV) index = 1;
+			if (chooseVE) index = 2;
+			if (chooseSlang) index = 3;
+			if (chooseEmo) index = 4;
+			if (!checkExistFavor(favor[index], ActualSearchBar.text)) {
+				isFavorite = false;
+				if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					isFavorite = true;
+					add(favor[index], ActualSearchBar.text);
+				}
 			}
-			if (!isFavorite) DrawTexture(whiteStar, Vocab.x + 167, Vocab.y + 8, GRAY);
-			else DrawTexture(blueStar, Vocab.x + 167, Vocab.y + 8, GRAY);
+			else {
+				isFavorite = true;
+				if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					isFavorite = false;
+					remove(favor[index], ActualSearchBar.text);
+				}
+			}
+			//if ((CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) || checkExistFavor()) {
+			//	if (isFavorite) isFavorite = false;
+			//	else if (!isFavorite) isFavorite = true;
+			//}
+			if (!isFavorite) {
+				DrawTexture(whiteStar, Vocab.x + 167, Vocab.y + 8, GRAY);
+				//remove(favorList, ActualSearchBar.text);
+			}
+			else {
+				DrawTexture(blueStar, Vocab.x + 167, Vocab.y + 8, GRAY);
+			}
+
 
 			DrawTextEx(bold, ActualSearchBar.text, { 72, 470 }, 30, 0, navy);
-
-
 			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 1365, Vocab.y, 49, 49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			{
 				confirmDelete = true;
@@ -280,8 +303,6 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		else {
 			DrawTextEx(bold, "No Data Available", { 20 + 450, (520) }, 100, 0, RED);
 			DrawTextEx(bold, "Please try again", { 20 + 50 + 450, (600) }, 90, 0, RED);
-			defPositionY = 590;
-			StarPositionY = 595;
 		};
 
 		DrawRectangle(0, 0, 1512, 340, navy);
@@ -290,7 +311,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		DrawTexture(logo, 15, 100, WHITE);
 
 		DrawTexture(randomBtn, 550, 227, WHITE);
-		DrawRectangleRounded(SearchBar , 60, 0, white);
+		DrawRectangleRounded(SearchBar, 60, 0, white);
 		if (!isSearching) {
 			if (!SearchDefMode) DrawTextEx(italic, "Search for a word...", { 774,138 }, 28, 0, navy);
 			else DrawTextEx(italic, "Search for a definition...", { 774,138 }, 28, 0, navy);
@@ -304,8 +325,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		//DrawCircle(1426.5, 149.5, 20.5, {253, 190, 52, 255});
 		DrawTextEx(bold, "Favorite List", { 15,12 }, 24, 0, white);
 		DrawTextEx(bold, "Add new words", { 188,12 }, 24, 0, white);
-		AddWordBtn.workbutton(mousePoint, AddWordPage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
-		FavoriteList.workbutton(mousePoint, FavoriteListPage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
+		AddWordBtn.workbutton(mousePoint, AddWordPage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
+		FavoriteList.workbutton(mousePoint, FavoriteListPage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 		DrawTextEx(bold, "Revision", { 388,12 }, 24, 0, white);
 		DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, white);
 		DrawTextEx(bold, "or", { 634,189 }, 30, 0, white);
@@ -341,10 +362,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			DrawRectangle(551, 182 + 240, 185, 60, white);
 
 			DrawRectangleLines(550, 182, 187, 301, blue);
-			DrawLine(551, 182+60, 736, 182+60, blue);
-			DrawLine(551, 182+120, 736, 182+120, blue);
-			DrawLine(551, 182+180, 736, 182+180, blue);
-			DrawLine(551, 182+240, 736, 182+240, blue);
+			DrawLine(551, 182 + 60, 736, 182 + 60, blue);
+			DrawLine(551, 182 + 120, 736, 182 + 120, blue);
+			DrawLine(551, 182 + 180, 736, 182 + 180, blue);
+			DrawLine(551, 182 + 240, 736, 182 + 240, blue);
 
 			DrawTextEx(bold, "ENG-ENG", { 595,200 }, 30, 0, navy);
 			DrawTextEx(bold, "ENG-VIE", { 600,200 + 60 }, 30, 0, navy);
@@ -356,7 +377,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
 		}
 		if (chooseEE) {
-			DrawRectangle(575, 128, 160, 40,white);
+			DrawRectangle(575, 128, 160, 40, white);
 			DrawTextEx(bold, "ENG-ENG", { 585, 132 }, 40, 0, navy);
 			choose = false;
 			DictType = "ENG-ENG";
@@ -400,9 +421,9 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			choose = false;
 		}
-		
 
-		RevisionBtn.workbutton(mousePoint, RevisionPage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
+
+		RevisionBtn.workbutton(mousePoint, RevisionPage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 
 		if (SearchDefMode) DrawTexture(SearchDefModeBtn, 1405, 132, WHITE);
 		else DrawTexture(SearchWordModeBtn, 1405, 132, WHITE);
@@ -411,8 +432,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			else SearchDefMode = true;
 		}
 		DrawTexture(SearchBtn, 1345, 132, WHITE);
-		
-		
+
+
 		if (CheckCollisionPointRec(mousePoint, { 1369,12,120,20 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			resetData = true;
 		}
@@ -435,7 +456,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			{
 				resetData = false;
 				DeleteAllTree(EngEng);
-				DeleteAllTree(EngVie); 
+				DeleteAllTree(EngVie);
 				DeleteAllTree(VieEng);
 				DeleteAllTree(Slang);
 				DeleteAllTree(Emoji);
@@ -455,7 +476,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	}
 	CloseWindow();
 }
-void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef) {
+void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[]) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
@@ -502,17 +523,17 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
-		DrawRectangle(0, 0, screenWidth, screenHeight,navy);
+		DrawRectangle(0, 0, screenWidth, screenHeight, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
 		DrawTexture(logo, 265, 126, WHITE);
 		DrawTextEx(bold, "DICTIONARY", { 255,331 }, 49, 0, white);
 		DrawTextEx(italic, "by APCS K22 Group 10", { 212,392 }, 41, 0, white);
 
 		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
-		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
+		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 
-		DrawRectangleRounded({ 667,295,125,90 },0.18, 0, yellow);
-		DrawRectangleRounded({ 667,487,199,90 },0.18, 0, yellow);
+		DrawRectangleRounded({ 667,295,125,90 }, 0.18, 0, yellow);
+		DrawRectangleRounded({ 667,487,199,90 }, 0.18, 0, yellow);
 		DrawTextEx(bold, "Word", { 689,295 }, 44, 0, navy);
 		DrawTextEx(bold, "Definition", { 689,491 }, 44, 0, navy);
 
@@ -528,9 +549,9 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 			DrawTextEx(italic, "Type in its definition...", { 690,550 }, 28, 0, navy);
 		}
 		DefBar.worktextbox(isTypingDef);
-		DrawTextEx(bold, DefBar.text, { 690,550}, 28, 0, navy);
+		DrawTextEx(bold, DefBar.text, { 690,550 }, 28, 0, navy);
 
-		DrawTextEx(bold, "Please choose the dictionary",{132,522},43,0, yellow);
+		DrawTextEx(bold, "Please choose the dictionary", { 132,522 }, 43, 0, yellow);
 		DrawTextEx(bold, "you want to update", { 205, 564 }, 43, 0, yellow);
 
 
@@ -548,24 +569,24 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 		}
 		if (choose) { //{ 217,627,261,60 };
 			DrawRectangle(217, 687, 261, 60, yellow);
-			DrawRectangle(217, 687+60, 261, 60, yellow);
-			DrawRectangle(217, 687+120, 261, 60, yellow);
-			DrawRectangle(217, 687+180, 261, 60, yellow);
-			DrawRectangle(217, 687+ 240, 261, 60, yellow);
+			DrawRectangle(217, 687 + 60, 261, 60, yellow);
+			DrawRectangle(217, 687 + 120, 261, 60, yellow);
+			DrawRectangle(217, 687 + 180, 261, 60, yellow);
+			DrawRectangle(217, 687 + 240, 261, 60, yellow);
 
-			DrawLine(217, 747, 478, 747,navy);
-			DrawLine(217, 747+60, 478, 747+60,navy);
-			DrawLine(217, 747+120, 478, 747+120,navy);
-			DrawLine(217, 747+180, 478, 747+180,navy);
-			DrawLine(217, 747+240, 478, 747+240,navy);
+			DrawLine(217, 747, 478, 747, navy);
+			DrawLine(217, 747 + 60, 478, 747 + 60, navy);
+			DrawLine(217, 747 + 120, 478, 747 + 120, navy);
+			DrawLine(217, 747 + 180, 478, 747 + 180, navy);
+			DrawLine(217, 747 + 240, 478, 747 + 240, navy);
 
 			DrawTextEx(bold, "ENG-ENG", { 285,697 }, 40, 0, navy);
-			DrawTextEx(bold, "ENG-VIE", { 292,697+60 }, 40, 0, navy);
-			DrawTextEx(bold, "VIE-ENG", { 293,697+120 }, 40, 0, navy);
-			DrawTextEx(bold, "SLANG", { 293+10,697+180 }, 40, 0, navy);
-			DrawTextEx(bold, "EMOJI", { 293+15,697+240 }, 40, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 292,697 + 60 }, 40, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 293,697 + 120 }, 40, 0, navy);
+			DrawTextEx(bold, "SLANG", { 293 + 10,697 + 180 }, 40, 0, navy);
+			DrawTextEx(bold, "EMOJI", { 293 + 15,697 + 240 }, 40, 0, navy);
 		}
-		if (CheckCollisionPointRec(mousePoint, {217,687,261,60}) && choose) {
+		if (CheckCollisionPointRec(mousePoint, { 217,687,261,60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
 		}
 		if (chooseEE) {
@@ -574,7 +595,7 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 			choose = false;
 			//semesternametmp = (char*)"Fall";
 		}
-		if (CheckCollisionPointRec(mousePoint, { 217,687+60,261,60 }) && choose) {
+		if (CheckCollisionPointRec(mousePoint, { 217,687 + 60,261,60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEV = true;
 		}
 		if (chooseEV) {
@@ -583,7 +604,7 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 			choose = false;
 			//semesternametmp = (char*)"Fall";
 		}
-		if (CheckCollisionPointRec(mousePoint, { 217,687+120,261,60 }) && choose) {
+		if (CheckCollisionPointRec(mousePoint, { 217,687 + 120,261,60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseVE = true;
 		}
 		if (chooseVE) {
@@ -597,7 +618,7 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 		}
 		if (chooseSlang) {
 			DrawRectangleRec(chooseDictBox, yellow);
-			DrawTextEx(bold, "SLANG", { 285+20, 637 }, 40, 0, navy);
+			DrawTextEx(bold, "SLANG", { 285 + 20, 637 }, 40, 0, navy);
 			choose = false;
 			//semesternametmp = (char*)"Fall";
 		}
@@ -606,19 +627,19 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 		}
 		if (chooseEmo) {
 			DrawRectangleRec(chooseDictBox, yellow);
-			DrawTextEx(bold, "EMOJI", { 285+20, 637 }, 40, 0, navy);
+			DrawTextEx(bold, "EMOJI", { 285 + 20, 637 }, 40, 0, navy);
 			choose = false;
 			//semesternametmp = (char*)"Fall";
 		}
 		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose = false;
-		
+
 		DrawTexture(confirm, 969, 643, WHITE);
 		if (CheckCollisionPointRec(mousePoint, { 969,643,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
 			if (WordBar.text[0] == '\0' || DefBar.text[0] == '\0' || choose == true) {
 				addSuccessfully = 2;
 			}
-			else 
+			else
 			{
 				if (chooseEE)
 				{
@@ -651,21 +672,21 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 					addSuccessfully = 3;
 				}
 			}
-		}	
-		if (addSuccessfully==3) DrawText("Successful !", 1036, 827, 40, yellow);
-		else if(addSuccessfully==2) DrawText("Failed ! ", 1036, 827, 40, yellow);
+		}
+		if (addSuccessfully == 3) DrawText("Successful !", 1036, 827, 40, yellow);
+		else if (addSuccessfully == 2) DrawText("Failed ! ", 1036, 827, 40, yellow);
 		EndDrawing();
 	}
 	CloseWindow();
 }
-void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef)
+void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[])
 
 {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 
 	Textbox SearchBar;
-	SearchBar.textbox = { 766, 171, 911-200, 60 };
+	SearchBar.textbox = { 766, 171, 911 - 200, 60 };
 	bool isSearching = false;
 
 	//Textbox SearchBar2;
@@ -705,7 +726,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 	NewPageButton Back;
 	Back.button = { 1431,9,61,31 };
 
-	while (!WindowShouldClose()) 
+	while (!WindowShouldClose())
 	{
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -715,7 +736,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 		DrawRectangleRounded({ 856,496,220,54 }, 0.18, 0, yellow);
 		DrawRectangleRounded({ 438,496,218,54 }, 0.18, 0, yellow);
 		//DrawRectangleRounded({ 133,382, 522, 60 }, 1.047, 0, white);
-		DrawRectangleRounded({ 570, 171, 911, 60  }, 1.047, 0, white);
+		DrawRectangleRounded({ 570, 171, 911, 60 }, 1.047, 0, white);
 		DrawRectangleRounded(SearchBar.textbox, 60, 0, white);
 		//DrawRectangleRounded(SearchBar2.textbox, 60, 0, white);
 		DrawLineEx({ 763,184 }, { 763, 219 }, 4.0, { 16,49,107,255 });
@@ -736,7 +757,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 		DrawTextEx(bold, "Definition", { 890,496 }, 44, 0, navy);
 		DrawTextEx(bold, "FAVORITE", { 234,143 }, 54, 0, white);
 		DrawTextEx(bold, "LIST", { 287,193 }, 54, 0, white);
-		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
+		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 		DrawTexture(logo, 15, 100, white);
 		//DrawCircle(611.5, 412.5, 20.5, yellow);
 		DrawCircle(1448.5, 200.5, 20.5, yellow);
@@ -769,9 +790,9 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			DrawLine(570, 231 + 180, 755, 231 + 180, blue);
 			DrawLine(570, 231 + 240, 755, 231 + 240, blue);
 
-			DrawTextEx(bold, "ENG-ENG", { 595+19,200+49 }, 30, 0, navy);
-			DrawTextEx(bold, "ENG-VIE", { 620,200+49 + 60 }, 30, 0, navy);
-			DrawTextEx(bold, "VIE-ENG", { 620,200+49 + 120 }, 30, 0, navy);
+			DrawTextEx(bold, "ENG-ENG", { 595 + 19,200 + 49 }, 30, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 620,200 + 49 + 60 }, 30, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 620,200 + 49 + 120 }, 30, 0, navy);
 			DrawTextEx(bold, "SLANG", { 628,200 + 49 + 180 }, 30, 0, navy);
 			DrawTextEx(bold, "EMOJI", { 628,200 + 49 + 240 }, 30, 0, navy);
 		}
@@ -779,24 +800,24 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
 		}
 		if (chooseEE) {
-			DrawRectangle(575+19, 128+49, 160, 40, white);
-			DrawTextEx(bold, "ENG-ENG", { 585+19, 132+49 }, 40, 0, navy);
+			DrawRectangle(575 + 19, 128 + 49, 160, 40, white);
+			DrawTextEx(bold, "ENG-ENG", { 585 + 19, 132 + 49 }, 40, 0, navy);
 			choose = false;
 		}
-		if (CheckCollisionPointRec(mousePoint, { 551+19, 182+49 + 60, 185, 60 }) && choose) {
+		if (CheckCollisionPointRec(mousePoint, { 551 + 19, 182 + 49 + 60, 185, 60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEV = true;
 		}
 		if (chooseEV) {
-			DrawRectangle(575+19, 128+49, 160, 40, white);
-			DrawTextEx(bold, "ENG-VIE", { 585+19, 132+49 }, 40, 0, navy);
+			DrawRectangle(575 + 19, 128 + 49, 160, 40, white);
+			DrawTextEx(bold, "ENG-VIE", { 585 + 19, 132 + 49 }, 40, 0, navy);
 			choose = false;
 		}
-		if (CheckCollisionPointRec(mousePoint, { 551+19, 182+49 + 120, 185, 60 }) && choose) {
+		if (CheckCollisionPointRec(mousePoint, { 551 + 19, 182 + 49 + 120, 185, 60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseVE = true;
 		}
 		if (chooseVE) {
-			DrawRectangle(575+19, 128+49, 160, 40, white);
-			DrawTextEx(bold, "VIE-ENG", { 585+19, 132+49 }, 40, 0, navy);
+			DrawRectangle(575 + 19, 128 + 49, 160, 40, white);
+			DrawTextEx(bold, "VIE-ENG", { 585 + 19, 132 + 49 }, 40, 0, navy);
 			choose = false;
 		}
 		if (CheckCollisionPointRec(mousePoint, { 551 + 19, 182 + 49 + 180, 185, 60 }) && choose) {
@@ -840,36 +861,36 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			DrawLine(438, 538 + 120, 657, 538 + 120, blue);
 			DrawLine(438, 538 + 180, 657, 538 + 180, blue);
 			DrawLine(438, 538 + 240, 657, 538 + 240, blue);
-			
 
-			DrawTextEx(bold, "ENG-ENG", { 595 -112,175 + 374 }, 40, 0, navy);
-			DrawTextEx(bold, "ENG-VIE", { 595 -112+5,175 + 374 + 60 }, 40, 0, navy);
-			DrawTextEx(bold, "VIE-ENG", { 595 -112+5,175 + 374 + 120 }, 40, 0, navy);
-			DrawTextEx(bold, "SLANG", { 595 - 112+15,175 + 374 + 180 }, 40, 0, navy);
-			DrawTextEx(bold, "EMOJI", { 595 - 112+15,175 + 374 + 240 }, 40, 0, navy);
+
+			DrawTextEx(bold, "ENG-ENG", { 595 - 112,175 + 374 }, 40, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 595 - 112 + 5,175 + 374 + 60 }, 40, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 595 - 112 + 5,175 + 374 + 120 }, 40, 0, navy);
+			DrawTextEx(bold, "SLANG", { 595 - 112 + 15,175 + 374 + 180 }, 40, 0, navy);
+			DrawTextEx(bold, "EMOJI", { 595 - 112 + 15,175 + 374 + 240 }, 40, 0, navy);
 		}
 		if (CheckCollisionPointRec(mousePoint, { 438, 534, 218, 60 }) && choose2) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE2 = true;
 		}
 		if (chooseEE2) {
-			DrawRectangle(575 -112, 124 + 374, 160, 40, yellow);
-			DrawTextEx(bold, "ENG-ENG", { 585 -112, 124 + 374 }, 40, 0, navy);
+			DrawRectangle(575 - 112, 124 + 374, 160, 40, yellow);
+			DrawTextEx(bold, "ENG-ENG", { 585 - 112, 124 + 374 }, 40, 0, navy);
 			choose2 = false;
 		}
 		if (CheckCollisionPointRec(mousePoint, { 438, 534 + 60, 218, 60 }) && choose2) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEV2 = true;
 		}
 		if (chooseEV2) {
-			DrawRectangle(575 -112, 124 + 374, 160, 40, yellow);
-			DrawTextEx(bold, "ENG-VIE", { 585 -112+5, 124 + 374 }, 40, 0, navy);
+			DrawRectangle(575 - 112, 124 + 374, 160, 40, yellow);
+			DrawTextEx(bold, "ENG-VIE", { 585 - 112 + 5, 124 + 374 }, 40, 0, navy);
 			choose2 = false;
 		}
 		if (CheckCollisionPointRec(mousePoint, { 438, 534 + 120, 218, 60 }) && choose2) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseVE2 = true;
 		}
 		if (chooseVE2) {
-			DrawRectangle(575 -112, 124 + 374, 160, 40, yellow);
-			DrawTextEx(bold, "VIE-ENG", { 585 -112+5, 124 + 374 }, 40, 0, navy);
+			DrawRectangle(575 - 112, 124 + 374, 160, 40, yellow);
+			DrawTextEx(bold, "VIE-ENG", { 585 - 112 + 5, 124 + 374 }, 40, 0, navy);
 			choose2 = false;
 		}
 		if (CheckCollisionPointRec(mousePoint, { 438, 534 + 180, 218, 60 }) && choose2) {
@@ -880,12 +901,12 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 		}
 		if (chooseSlang2) {
 			DrawRectangle(575 - 112, 124 + 374, 160, 40, yellow);
-			DrawTextEx(bold, "SLANG", { 585 - 112+15, 124 + 374 }, 40, 0, navy);
+			DrawTextEx(bold, "SLANG", { 585 - 112 + 15, 124 + 374 }, 40, 0, navy);
 			choose2 = false;
 		}
 		if (chooseEmoji2) {
 			DrawRectangle(575 - 112, 124 + 374, 160, 40, yellow);
-			DrawTextEx(bold, "EMOJI", { 585 - 112+15, 124 + 374 }, 40, 0, navy);
+			DrawTextEx(bold, "EMOJI", { 585 - 112 + 15, 124 + 374 }, 40, 0, navy);
 			choose2 = false;
 		}
 		if (!CheckCollisionPointRec(mousePoint, chooseDictBox2) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose2 = false;
@@ -894,19 +915,19 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 	}
 	CloseWindow();
 }
-void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef) {
+void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[]) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 
-	Rectangle ChooseModeBox{ 1036,148-30,218,54 };
-	Rectangle wordRevision{ 818,148-30,218,54 };
-	Rectangle defRevision{ 818,202-30,218,54 };
+	Rectangle ChooseModeBox{ 1036,148 - 30,218,54 };
+	Rectangle wordRevision{ 818,148 - 30,218,54 };
+	Rectangle defRevision{ 818,202 - 30,218,54 };
 	Rectangle ChooseDictBox{ 1036, 230, 218, 54 };
 	Rectangle ChooseEEbox{ 818, 230, 218, 54 };
-	Rectangle ChooseEVbox{ 818, 230+54, 218, 54 };
-	Rectangle ChooseVEbox{ 818, 230+54*2, 218, 54 };
-	Rectangle ChooseSlangbox{ 818, 230+54*3, 218, 54 };
-	Rectangle ChooseEmobox{ 818, 230+54*4, 218, 54 };
+	Rectangle ChooseEVbox{ 818, 230 + 54, 218, 54 };
+	Rectangle ChooseVEbox{ 818, 230 + 54 * 2, 218, 54 };
+	Rectangle ChooseSlangbox{ 818, 230 + 54 * 3, 218, 54 };
+	Rectangle ChooseEmobox{ 818, 230 + 54 * 4, 218, 54 };
 
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
 	Font regular = LoadFontEx("../Fonts/SourceSansPro-Regular.ttf", 96, 0, 0);
@@ -963,19 +984,19 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 		DrawRectangle(270, 753, 984, 17, skin);
 		DrawRectangle(270, 878, 984, 17, skin);
 		DrawRectangle(270, 292, 61, 49, yellow);
-		DrawRectangle(1036, 148-30, 218, 54, yellow);
+		DrawRectangle(1036, 148 - 30, 218, 54, yellow);
 		DrawRectangleRec(ChooseDictBox, yellow);
 		//Refresh button
 		DrawTexture(refreshBtn, 283, 300, WHITE);
 		DrawTexture(logo, 270, 80, WHITE);
-		DrawTexture(arrow, 1057, 168 - 33 + 58*2, WHITE);
-		DrawTexture(arrow, 1057, 168-30, WHITE);
+		DrawTexture(arrow, 1057, 168 - 33 + 58 * 2, WHITE);
+		DrawTexture(arrow, 1057, 168 - 30, WHITE);
 		DrawTextEx(bold, "Revision", { 492,127 }, 54, 0, white);
 		DrawTextEx(bold, "Tool", { 530,179 }, 54, 0, white);
 		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
-		DrawTextEx(bold, "MODE", { 1098,154-30 }, 44, 0, navy);
+		DrawTextEx(bold, "MODE", { 1098,154 - 30 }, 44, 0, navy);
 		DrawTextEx(bold, "DICT", { 1108, 237 }, 44, 0, navy);
-		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
+		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 
 		if (CheckCollisionPointRec(mousePoint, ChooseModeBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
@@ -985,11 +1006,11 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 		}
 		if (ChooseMode)
 		{
-			DrawRectangle(818, 148-30, 218, 54, white);
-			DrawRectangle(818, 202-30, 218, 54, white);
-			DrawLine(818, 203-30, 818 + 218, 203-30, navy);
-			DrawTextEx(bold, "Word revision", { 856,162-30 }, 30, 0, navy);
-			DrawTextEx(bold, "Definition revision", { 829,213-30 }, 30, 0, navy);
+			DrawRectangle(818, 148 - 30, 218, 54, white);
+			DrawRectangle(818, 202 - 30, 218, 54, white);
+			DrawLine(818, 203 - 30, 818 + 218, 203 - 30, navy);
+			DrawTextEx(bold, "Word revision", { 856,162 - 30 }, 30, 0, navy);
+			DrawTextEx(bold, "Definition revision", { 829,213 - 30 }, 30, 0, navy);
 		}
 		if (CheckCollisionPointRec(mousePoint, wordRevision) && ChooseMode)
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) ChooseWord = true;
@@ -998,13 +1019,13 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 		if (ChooseWord)
 		{
 			DrawRectangleRec(ChooseModeBox, yellow);
-			DrawTextEx(bold, "Word revision", { 1078,159-30 }, 30, 0, navy);
+			DrawTextEx(bold, "Word revision", { 1078,159 - 30 }, 30, 0, navy);
 			ChooseMode = false;
 		}
 		if (ChooseDef)
 		{
 			DrawRectangleRec(ChooseModeBox, yellow);
-			DrawTextEx(bold, "Definition revision", { 1047,162-30 }, 30, 0, navy);
+			DrawTextEx(bold, "Definition revision", { 1047,162 - 30 }, 30, 0, navy);
 			ChooseMode = false;
 		}
 		if (!CheckCollisionPointRec(mousePoint, ChooseModeBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) ChooseMode = false;
@@ -1024,11 +1045,11 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 			DrawRectangleRec(ChooseSlangbox, white);
 			DrawRectangleRec(ChooseEmobox, white);
 
-			DrawTextEx(bold, "ENG-ENG", { 876, 242}, 30, 0, navy);
-			DrawTextEx(bold, "ENG-VIE", { 876+1, 242 +54 }, 30, 0, navy);
-			DrawTextEx(bold, "VIE-ENG", { 876+2, 242+108 }, 30, 0, navy);
-			DrawTextEx(bold, "SLANG", { 876+3, 242 +54*3}, 30, 0, navy);
-			DrawTextEx(bold, "EMOJI", { 876+4, 242 +54*4}, 30, 0, navy);
+			DrawTextEx(bold, "ENG-ENG", { 876, 242 }, 30, 0, navy);
+			DrawTextEx(bold, "ENG-VIE", { 876 + 1, 242 + 54 }, 30, 0, navy);
+			DrawTextEx(bold, "VIE-ENG", { 876 + 2, 242 + 108 }, 30, 0, navy);
+			DrawTextEx(bold, "SLANG", { 876 + 3, 242 + 54 * 3 }, 30, 0, navy);
+			DrawTextEx(bold, "EMOJI", { 876 + 4, 242 + 54 * 4 }, 30, 0, navy);
 
 
 			DrawLine(ChooseEEbox.x, ChooseEEbox.y + 54, ChooseEEbox.x + ChooseEEbox.width, ChooseEEbox.y + 54, navy);
@@ -1078,7 +1099,7 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 			chooseDict = false;
 		}
 
-		
+
 		if (chooseEE && ChooseWord) {
 			if (CheckCollisionPointRec(mousePoint, { 270,292,61,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				random1Word4Def(EngEng, trueWord, trueDef, wrongdef);
@@ -1090,7 +1111,7 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387}, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
 			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
@@ -1490,7 +1511,7 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 				DrawRectangle(270, 503 + 125 * randomNum, 984, 17, GREEN);
 			}
 		}
-		
+
 		EndDrawing();
 	}
 	CloseWindow();

@@ -21,7 +21,7 @@ struct NewPageButton {
 	Rectangle button = { 0, 0, 0, 0 };
 	bool mouseonbutton = false;
 	bool action = false;
-	void workbutton(Vector2 mousePoint, void(*func)(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef),
+	void workbutton(Vector2 mousePoint, void(*func)(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[]),
 		trieNode* VieEng,
 		trieNode* EngVie,
 		trieNode* EngEng,
@@ -31,7 +31,8 @@ struct NewPageButton {
 		trieNode* Emoji,
 		trieNode* EmojiDef,
 		trieNode* Slang,
-		trieNode* SlangDef);
+		trieNode* SlangDef,
+		Node* favor[], Node* history[]);
 };
 
 void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng,
@@ -43,7 +44,7 @@ void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 	trieNode* Emoji,
 	trieNode* EmojiDef,
 	trieNode* Slang,
-	trieNode* SlangDef);
+	trieNode* SlangDef, Node* favor[], Node* history[]);
 void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,
 	trieNode* EngVie,
 	trieNode* EngEng,
@@ -53,7 +54,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng,
 	trieNode* Emoji,
 	trieNode* EmojiDef,
 	trieNode* Slang,
-	trieNode* SlangDef);
+	trieNode* SlangDef, Node* favor[], Node* history[]);
 void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng,
 	trieNode* EngVie,
 	trieNode* EngEng,
@@ -63,7 +64,7 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 	trieNode* Emoji,
 	trieNode* EmojiDef,
 	trieNode* Slang,
-	trieNode* SlangDef);
+	trieNode* SlangDef, Node* favor[], Node* history[]);
 void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* VieEng,
 	trieNode* EngVie,
 	trieNode* EngEng,
@@ -73,7 +74,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 	trieNode* Emoji,
 	trieNode* EmojiDef,
 	trieNode* Slang,
-	trieNode* SlangDef);
+	trieNode* SlangDef, Node* favor[], Node* history[]);
 void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEng,
 	trieNode* EngVie,
 	trieNode* EngEng,
@@ -83,4 +84,4 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEn
 	trieNode* Emoji,
 	trieNode* EmojiDef,
 	trieNode* Slang,
-	trieNode* SlangDef);
+	trieNode* SlangDef, Node* favor[], Node* history[]);

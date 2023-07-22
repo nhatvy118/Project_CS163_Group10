@@ -7,18 +7,18 @@
 using namespace std;
 
 
-	trieNode* VieEng = nullptr;
-	trieNode* EngVie = nullptr;
-	trieNode* EngEng = nullptr;
-	trieNode* VieEngDef = nullptr;
-	trieNode* EngVieDef = nullptr;
-	trieNode* EngEngDef = nullptr;
-	trieNode* Emoji = nullptr;
-	trieNode* EmojiDef = nullptr;
-	trieNode* Slang = nullptr;
-	trieNode* SlangDef = nullptr;
-	Node* favor = nullptr;
-	Node* history = nullptr;
+trieNode* VieEng = nullptr;
+trieNode* EngVie = nullptr;
+trieNode* EngEng = nullptr;
+trieNode* VieEngDef = nullptr;
+trieNode* EngVieDef = nullptr;
+trieNode* EngEngDef = nullptr;
+trieNode* Emoji = nullptr;
+trieNode* EmojiDef = nullptr;
+trieNode* Slang = nullptr;
+trieNode* SlangDef = nullptr;
+Node* favor[5] = { nullptr };
+Node* history[5] = { nullptr };
 int main() {
 	const int screenW = 1512;
 	const int screenH = 982;
@@ -28,26 +28,11 @@ int main() {
 	readFileToTree(EngVie, EngVieDef, "EngVie.txt");
 	readFileToTree(Emoji, EmojiDef, "Emoji.txt");
 	readFileToTree(Slang, SlangDef, "Slang.txt");
-	/*vector<string> ans;
-	ans.resize(0);
-	string s = "";
-	string def = "";
-	random1Word4Def(VieEng, s, def, ans);
-	cout << s << endl << def << endl;
-	for (auto x : ans) {
-		cout << x << endl;
-	}*/
 
-	/*vector<string> ans;
-	ans.resize(0);
-	trieNode* tmp = find(VieEng, "anh");
-	rcmFunc(tmp, "anh", ans);*/
-	
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
-	//HomePage(screenW, screenH);
-	WaitingPage(screenW, screenH, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef);
-	
-	
+	WaitingPage(screenW, screenH, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
+
+
 	return 0;
 }
 

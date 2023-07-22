@@ -52,7 +52,7 @@ void insert(trieNode*& root, string s, vector<string> meaning) {
 	}
 }
 
-void readFileToTree(trieNode*& root,trieNode*& rootDef, string direction) {
+void readFileToTree(trieNode*& root, trieNode*& rootDef, string direction) {
 	ifstream fin;
 	fin.open("../Dataset/" + direction);
 	string s = "";
@@ -64,8 +64,8 @@ void readFileToTree(trieNode*& root,trieNode*& rootDef, string direction) {
 		int sz = s.size();
 		meaning.resize(0);
 		string tmp = "";
-		while (i < s.size()){
-			if (s[i]!='|') tmp += s[i];
+		while (i < s.size()) {
+			if (s[i] != '|') tmp += s[i];
 			else {
 				if (tmp.size() != 0) {
 					meaning.push_back(tmp);
@@ -77,7 +77,7 @@ void readFileToTree(trieNode*& root,trieNode*& rootDef, string direction) {
 		vector<string> word;
 		word.resize(0);
 		word.push_back(str);
-		insert(root, str,meaning);
+		insert(root, str, meaning);
 		for (auto x : meaning) {
 			insert(rootDef, x, word);
 		}
@@ -144,7 +144,7 @@ void remove(Node*& pHead, string s) {
 	}
 }
 
- vector<string> viewList(Node* pHead) {
+vector<string> viewList(Node* pHead) {
 	Node* cur = pHead;
 	vector<string> ans;
 	ans.resize(0);
@@ -213,4 +213,14 @@ void rcmFunc(trieNode* root, string s, vector<string>& ans) {
 		}
 	}
 }
-	
+
+bool checkExistFavor(Node* favor, string s) {
+	Node* tmp = favor;
+	while (favor) {
+		if (favor->data == s) {
+			return true;
+		}
+		favor = favor->pNext;
+	}
+	return false;
+}

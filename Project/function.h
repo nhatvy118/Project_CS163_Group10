@@ -12,13 +12,13 @@ void insert(trieNode*& root, string s, vector<string> meaning);
 
 void standardWord(string& S);
 
-void readFileToTree(trieNode*& root,trieNode*& rootDef, string direction);
+void readFileToTree(trieNode*& root, trieNode*& rootDef, string direction);
 
 void DeleteAWord(trieNode*& root, string word, int depth, vector<string>& meaning);
 
 void DeleteAllTree(trieNode*& root);
 
-void WriteDictionaryToFile(trieNode* root, string prefix, ofstream &fout);
+void WriteDictionaryToFile(trieNode* root, string prefix, ofstream& fout);
 
 bool search(trieNode* root, string s, vector<string>& ans);
 
@@ -39,3 +39,8 @@ trieNode* find(trieNode* root, string s);
 void rcmFunc(trieNode* root, string s, vector<string>& ans);
 
 vector <string> divideString(string def);
+
+void readNode2File(Node*& head, string path);
+
+void writeNode2File(Node* head, ofstream& fout);
+bool checkExistFavor(Node* favor, string s);
