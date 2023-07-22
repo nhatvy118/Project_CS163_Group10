@@ -124,3 +124,25 @@ vector <string> divideString(string def) {
 
 	return save;
 }
+
+void readNode2File(Node*& head, string path) {
+	ifstream fin;
+	fin.open("../Dataset/" + path);
+	if (!fin.good()) {
+		cout << "Read file error." << endl;
+		return;
+	}
+	string line;
+	Node* cur = nullptr;
+	while (getline(fin, line)) {
+		add(head, line);
+	}
+	fin.close();
+}
+
+void writeNode2File(Node* head, ofstream& fout) {
+	if (!head)
+		return;
+	writeNode2File(head->pNext, fout);
+	fout << head->data << endl;
+}

@@ -39,3 +39,7 @@ trieNode* find(trieNode* root, string s);
 void rcmFunc(trieNode* root, string s, vector<string>& ans);
 
 vector <string> divideString(string def);
+
+void readNode2File(Node*& head, string path);
+
+void writeNode2File(Node* head, ofstream &fout);
