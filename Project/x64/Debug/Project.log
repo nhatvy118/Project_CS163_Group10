@@ -1,1 +1,81 @@
-﻿
+﻿  FrontEnd.cpp
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(157,41): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(158,42): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(167,34): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(177,32): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(178,37): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(179,94): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(179,63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(179,50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(179,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(180,94): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(180,63): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(180,50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(180,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(181,124): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(181,83): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(181,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(181,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(182,124): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(182,83): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(182,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(182,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(183,58): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(184,60): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(185,69): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(186,50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(186,34): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(187,64): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(187,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(216,51): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(216,36): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(220,50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(220,35): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(231,47): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(232,46): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(233,47): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(444,46): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(445,45): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(446,46): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(538,44): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(539,44): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(543,41): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(550,40): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(738,44): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(739,44): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(740,44): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(742,47): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(766,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(766,14): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(772,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(773,22): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1058,97): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1058,62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1058,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1058,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1059,97): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1059,62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1059,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1059,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1060,97): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1060,62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1060,42): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1060,24): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1061,112): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1061,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1061,48): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1061,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1062,102): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1062,65): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1062,44): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\FrontEnd.cpp(1062,25): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Ky.cpp
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\Ky.cpp(52,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  main.cpp
+  Trie.cpp
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\Trie.cpp(23,9): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\Trie.cpp(62,9): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\Trie.cpp(64,10): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  UI.cpp
+  Generating Code...
+  Project.vcxproj -> C:\Users\Admin\Documents\GitHub\Project_CS163_Group10\Project\x64\Debug\Project.exe
