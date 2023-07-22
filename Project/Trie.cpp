@@ -214,3 +214,13 @@ void rcmFunc(trieNode* root, string s, vector<string>& ans) {
 	}
 }
 	
+bool checkExistFavor(Node* favor, string s) {
+	Node* tmp = favor;
+	while (favor) {
+		if (favor->data == s) {
+			return true;
+		}
+		favor = favor->pNext;
+	}
+	return false;
+}

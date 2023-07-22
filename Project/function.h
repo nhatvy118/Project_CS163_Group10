@@ -40,6 +40,10 @@ void rcmFunc(trieNode* root, string s, vector<string>& ans);
 
 vector <string> divideString(string def);
 
+<<<<<<< Updated upstream
 void readNode2File(Node*& head, string path);
 
 void writeNode2File(Node* head, ofstream &fout);
+=======
+bool checkExistFavor(Node* favor, string s);
+>>>>>>> Stashed changes
