@@ -208,13 +208,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 					remove(favor[index], ActualSearchBar.text);
 				}
 			}
-			//if ((CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) || checkExistFavor()) {
-			//	if (isFavorite) isFavorite = false;
-			//	else if (!isFavorite) isFavorite = true;
-			//}
 			if (!isFavorite) {
 				DrawTexture(whiteStar, Vocab.x + 167, Vocab.y + 8, GRAY);
-				//remove(favorList, ActualSearchBar.text);
 			}
 			else {
 				DrawTexture(blueStar, Vocab.x + 167, Vocab.y + 8, GRAY);
@@ -247,6 +242,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				vector <string> tmp;
 				tmp.resize(0);
 				if (CheckCollisionPointRec(mousePoint, { 542,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					remove(favor[index], ActualSearchBar.text);
+
 					if (DictType == "ENG-ENG")
 					{
 						DeleteAWord(EngEng, str, 0, tmp);
