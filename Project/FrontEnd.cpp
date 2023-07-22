@@ -152,6 +152,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 
 		if (isDisplayingResult) {
 
+			if (defPositionY > 590) defPositionY = 590;
+			if (StarPositionY > 595) StarPositionY = 595;
 			defPositionY += (GetMouseWheelMove() * scrollSpeed);
 			StarPositionY += (GetMouseWheelMove() * scrollSpeed);
 			int newDefMark = 0;
@@ -278,6 +280,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		else {
 			DrawTextEx(bold, "No Data Available", { 20 + 450, (520) }, 100, 0, RED);
 			DrawTextEx(bold, "Please try again", { 20 + 50 + 450, (600) }, 90, 0, RED);
+			defPositionY = 590;
+			StarPositionY = 595;
 		};
 
 		DrawRectangle(0, 0, 1512, 340, navy);
