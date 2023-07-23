@@ -719,48 +719,37 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 	Back.button = { 1431,9,61,31 };
 
 	vector <string> listFavorite;
-	vector <string> favoriteDef;
 	listFavorite.resize(0);
-	favoriteDef.resize(0);
+
 	int scrollSpeed = 20;
 	int listFavoritePosY = 494;
-
+	int listFavoriteLinePosY = 539;
 
 	while (!WindowShouldClose())
 	{
 		mousePoint = GetMousePosition();
 		BeginDrawing();
 		DrawRectangle(0, 0, 1512, 982, navy);
-		DrawRectangle(0, 0, 1512, 48, blue);
-		DrawRectangleRounded({ 134,442,222,54 }, 0.18, 0, yellow);
-		DrawRectangleRounded({ 859,442,220,54 }, 0.18, 0, yellow);
-		//DrawRectangleRounded({ 133,382, 522, 60 }, 1.047, 0, white);
-		//DrawRectangleRounded({ 570, 171, 911, 60 }, 1.047, 0, white);
+		//--------------------------------------------------------------------------------------------------------------------------------------------
+
 		DrawRectangleRounded(SearchBar2.textbox, 60, 0, white);
 		DrawLineEx({ 510,320 }, { 510, 320+35 }, 4.0, { 16,49,107,255 });
-		/*if (!isSearching) {
-			DrawTextEx(italic, "Add a word to your favorite list...", { 793,189 }, 28, 0, navy);
-		}
-		SearchBar.worktextbox(isSearching);*/
+
 		if (!isSearching2) {
 			DrawTextEx(italic, "Search for your favorite word...", { 525, 324 }, 28, 0, navy);
 		}
 		ActualSearchBar.worktextbox(isSearching2);
 		DrawTextEx(bold, ActualSearchBar.text, { 525+195,324 - 150 }, 28, 0, navy);
+
 		DrawRectangle(134, 485, 523, 283, white);
 		DrawRectangle(859, 485, 523, 283, white);
-		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
-		DrawTextEx(bold, "List of Words", { 149,442 }, 44, 0, navy);
-		DrawTextEx(bold, "Definition", { 893,442 }, 44, 0, navy);
-		DrawTextEx(bold, "FAVORITE", { 242,292 }, 54, 0, white);
-		DrawTextEx(bold, "LIST", { 295,342 }, 54, 0, white);
-		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
-		DrawTexture(logo, 245, 91, white);
 		DrawCircle(1132+20.5+195, 317+20.5-150, 20.5, yellow);
 		DrawTexture(glass, 1143+195, 328-150, white);
 		DrawLineEx({ 702,170 }, { 702,170+35 }, 4.0, navy);
 		DrawTextEx(bold, "NONE", { 378+195,318-150 }, 37, 0, navy);
 		DrawTexture(arrow, 474.41+195, 332-150, WHITE);
+
+
 		if (CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			choose = true;
 			chooseEE = false;
@@ -790,62 +779,98 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			DrawTextEx(bold, "SLANG", { 327 + 25 + 19 + 195,306 + 29 + 49 + 180 - 150 }, 35, 0, navy);
 			DrawTextEx(bold, "EMOJI", { 327 + 25 + 19 + 195,306 + 29 + 49 + 240 - 150 }, 35, 0, navy);
 		}
+		//------------------------------------------------------------------------------------------
+		vector <string> favoriteDef;
+		favoriteDef.resize(0);
+		//------------------------------------------------------------------------------------------
 		if (CheckCollisionPointRec(mousePoint, { 327+195, 306 + 60-150, 174, 60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEE = true;
+			listFavoritePosY = 494;
+			listFavoriteLinePosY = 539;
 		}
 		if (chooseEE) {
 			DrawRectangle(338+195,314-150,122,44, white);
 			DrawTextEx(bold, "ENG-ENG", { 349+195, 319-150 }, 35, 0, navy);
 			choose = false;
 			listFavorite = viewList(favor[0]);
+			listFavoritePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoritePosY > 494) listFavoritePosY = 494;
+			listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
 				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
+				DrawLine(134, listFavoriteLinePosY +54*i, 134 + 522 , listFavoriteLinePosY +54*i, navy);
 			}
-			if (checkExistFavor(favor[0], ActualSearchBar.text))
-			{
+			if (checkExistFavor(favor[0], ActualSearchBar.text)){
 				search(EngEng, ActualSearchBar.text, favoriteDef);
 				for (int i = 0; i < favoriteDef.size(); i++)
 				{
 					DrawTextEx(bold, favoriteDef[i].c_str(), { 873,494 + 54 * (float)i }, 28, 0, navy);
 				}
 			}
-			else
+			if (listFavorite.size() == 0)
 			{
 				DrawTextEx(italic, "There are no favorite words yet :( Please add one", { 204,613 }, 25, 0, navy);
 			}
 		}
 		if (CheckCollisionPointRec(mousePoint, { 327+195, 306 + 120-150, 174, 60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEV = true;
+			listFavoritePosY = 494;
+			listFavoriteLinePosY = 539;
 		}
 		if (chooseEV) {
 			DrawRectangle(338+195, 314-150, 122, 44, white);
 			DrawTextEx(bold, "ENG-VIE", { 355 + 195, 319 - 150 }, 35, 0, navy);
 			choose = false;
 			listFavorite = viewList(favor[1]);
+			listFavoritePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoritePosY > 494) listFavoritePosY = 494;
+			listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
 				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
+				DrawLine(134, listFavoriteLinePosY + 54 * i, 134 + 522, listFavoriteLinePosY + 54 * i, navy);
+			}
+			if (listFavorite.size() == 0)
+			{
+				DrawTextEx(italic, "There are no favorite words yet :( Please add one", { 204,613 }, 25, 0, navy);
 			}
 		}
 		if (CheckCollisionPointRec(mousePoint, { 327+195, 306 + 180-150, 174, 60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseVE = true;
+			listFavoritePosY = 494;
+			listFavoriteLinePosY = 539;
 		}
 		if (chooseVE) {
 			DrawRectangle(338+195, 314 - 150, 122, 44, white);
 			DrawTextEx(bold, "VIE-ENG", { 355+ 195, 319 -150 }, 35, 0, navy);
 			choose = false;
 			listFavorite = viewList(favor[2]);
+			listFavoritePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoritePosY > 494) listFavoritePosY = 494;
+			listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
-				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54*(float)i }, 28, 0, navy);
+				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
+				DrawLine(134, listFavoriteLinePosY + 54 * i, 134 + 522, listFavoriteLinePosY + 54 * i, navy);
+			}
+			if (listFavorite.size() == 0)
+			{
+				DrawTextEx(italic, "There are no favorite words yet :( Please add one", { 204,613 }, 25, 0, navy);
 			}
 		}
 		if (CheckCollisionPointRec(mousePoint, { 327+195, 306 - 150 + 240, 174, 60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseSlang = true;
+			listFavoritePosY = 494;
+			listFavoriteLinePosY = 539;
 		}
 		if (CheckCollisionPointRec(mousePoint, { 327 + 195, 306 - 150 + 300, 174, 60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEmoji = true;
+			listFavoritePosY = 494;
+			listFavoriteLinePosY = 539;
 		}
 		if (chooseSlang)
 		{
@@ -853,9 +878,18 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			DrawTextEx(bold, "SLANG", { 369 + 195, 319 - 150 }, 35, 0, navy);
 			choose = false;
 			listFavorite = viewList(favor[3]);
+			listFavoritePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoritePosY > 494) listFavoritePosY = 494;
+			listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
 				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
+				DrawLine(134, listFavoriteLinePosY + 54 * i, 134 + 522, listFavoriteLinePosY + 54 * i, navy);
+			}
+			if (listFavorite.size() == 0)
+			{
+				DrawTextEx(italic, "There are no favorite words yet :( Please add one", { 204,613 }, 25, 0, navy);
 			}
 		}
 		if (chooseEmoji)
@@ -864,13 +898,32 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			DrawTextEx(bold, "EMOJI", { 369+195, 319 - 150 }, 35, 0, navy);
 			choose = false;
 			listFavorite = viewList(favor[4]);
+			listFavoritePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoritePosY > 494) listFavoritePosY = 494;
+			listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
+			if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
 				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
+				DrawLine(134, listFavoriteLinePosY + 54 * i, 134 + 522, listFavoriteLinePosY + 54 * i, navy);
+			}
+			if (listFavorite.size() == 0)
+			{
+				DrawTextEx(italic, "There are no favorite words yet :( Please add one", { 204,613 }, 25, 0, navy);
 			}
 		}
 		if (!CheckCollisionPointRec(mousePoint, chooseDictBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) choose = false;
 
+		DrawRectangle(0, 0, 1512, 48, blue);
+		DrawTextEx(bold, "Back", { 1431,9 }, 33, 0, white);
+		Back.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
+		DrawTextEx(bold, "FAVORITE", { 242,292 }, 54, 0, white);
+		DrawTextEx(bold, "LIST", { 295,342 }, 54, 0, white);
+		DrawTexture(logo, 245, 91, white);
+		DrawRectangleRounded({ 134,442,222,54 }, 0.18, 0, yellow);
+		DrawRectangleRounded({ 859,442,220,54 }, 0.18, 0, yellow);
+		DrawTextEx(bold, "List of Words", { 149,442 }, 44, 0, navy);
+		DrawTextEx(bold, "Definition", { 893,442 }, 44, 0, navy);
 		EndDrawing();
 	}
 	CloseWindow();
