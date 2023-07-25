@@ -43,4 +43,7 @@ vector <string> divideString(string def, int part);
 void readNode2File(Node*& head, string path);
 
 void writeNode2File(Node* head, ofstream& fout);
+
 bool checkExistFavor(Node* favor, string s);
+
+bool checkExistHis(Node*& his, string s);

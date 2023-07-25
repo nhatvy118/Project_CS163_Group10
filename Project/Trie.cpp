@@ -223,3 +223,26 @@ bool checkExistFavor(Node* favor, string s) {
 	}
 	return false;
 }
+
+bool checkExistHis(Node*& his, string s) {
+	if (!his) return false;
+	Node* tmp = his;
+	if (his->data == s) {
+		tmp = his;
+		his = his->pNext;
+		delete tmp;
+		return true;
+	}
+	while (tmp->pNext) {
+		if (tmp->pNext->data == s) {
+			Node* cur = tmp->pNext;
+			tmp = tmp->pNext->pNext;
+			delete cur;
+			return true;
+		}
+		tmp = tmp->pNext;
+	}
+	return false;
+}
+
+
