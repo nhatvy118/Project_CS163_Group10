@@ -86,6 +86,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	Texture2D arrow = LoadTexture("../resources/Arrow.png");
 	Texture2D trashcan = LoadTexture("../resources/TrashCan.png");
 	Texture2D hisIcon = LoadTexture("../resources/historyicon.png");
+	Texture2D hisDelIcon = LoadTexture("../resources/deleteHisIcon.png");
 	////---------------------------------------------------------------------------------------------------
 	// Set up choose Dict
 	Rectangle chooseDictBox = { 551,122,180,60 };
@@ -119,6 +120,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	hisList.resize(0);
 	int hisPosY = 195;
 	bool isDisplayHis = false;
+	int delHisPosY = 205;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -129,7 +131,13 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				if (!SearchDefMode) {
 					ans.resize(0);
 					isDisplayingResult = search(EngEng, ActualSearchBar.text, ans);
-					if (isDisplayingResult) add(history[0], ActualSearchBar.text);
+					if (isDisplayingResult) {
+						if(!checkExistHis(history[0],ActualSearchBar.text))	add(history[0], ActualSearchBar.text);
+						else {
+							remove(history[0], ActualSearchBar.text);
+							add(history[0], ActualSearchBar.text);
+						}
+					}
 					hisList.resize(0);
 					hisList = viewList(history[0]);
 				}
@@ -344,8 +352,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		DrawTexture(logo, 15, 100, WHITE);
 
 		//----------------------------------------------------------------------------------------------------
-		if (CheckCollisionPointRec(mousePoint, { 754, 182, 708, 216 })) hisPosY += (GetMouseWheelMove() * scrollSpeed);
+		if (CheckCollisionPointRec(mousePoint, { 754, 182, 708, 216 })) {
+			hisPosY += (GetMouseWheelMove() * scrollSpeed);
+			delHisPosY += (GetMouseWheelMove() * scrollSpeed);
+		}
 		if (hisPosY > 195) hisPosY = 195;
+		if (delHisPosY > 205) delHisPosY = 205;
 		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			isDisplayHis = true;
 		}
@@ -357,12 +369,19 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				DrawLine(754, hisPosY - 13 + 54 * i, 1462, hisPosY - 13 + 54 * i, blue);
 				DrawLine(754, hisPosY - 13 + 54 + 54 * i, 1462, hisPosY - 13 + 54 + 54 * i, blue);
 				DrawTexture(hisIcon, 764, hisPosY - 5 + 54 * i, WHITE);
+				DrawTexture(hisDelIcon, 1420, delHisPosY + 54 * i, WHITE);
+				if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					remove(history[0], hisList[i]);
+					hisList.resize(0);
+					hisList = viewList(history[0]);
+				}
 			}
+			DrawRectangle(0, 388, 1512, 594, white);
 		}
-		if (!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		if (!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, {754,182,708,258}) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			isDisplayHis = false;
 		}
-		//////
+		//////-----------------------------------------------------------------------------------------------------
 		DrawRectangle(754, 48, 704, 74, navy);
 		DrawRectangle(754, 0, 604, 48, blue);
 		DrawTexture(randomBtn, 550, 227, WHITE);
@@ -776,6 +795,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 	vector <string> tmpdef;
 	int defPosY = 494;
 	int starPosY = 497;
+	int trashCanPosY = 494;
 
 	vector <bool> displayListDef;
 	displayListDef.resize(0);
@@ -829,6 +849,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			listFavoriteLinePosY = 539;
 			defPosY = 494;
 			starPosY = 497;
+			trashCanPosY = 494;
 		}
 		if (chooseEE) {
 			/*DrawRectangle(338+195,314-150,122,44, white);
@@ -840,12 +861,17 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 				if (listFavoritePosY > 494) listFavoritePosY = 494;
 				listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
 				if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
+				trashCanPosY += (GetMouseWheelMove() * scrollSpeed);
+				if (trashCanPosY > 494) trashCanPosY = 494;
 			}
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
 				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
 				DrawLine(134, listFavoriteLinePosY + 54 * i, 134 + 522, listFavoriteLinePosY + 54 * i, navy);
-				if (CheckCollisionPointRec(mousePoint, { 134,485 + 54 * (float)i ,523,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				DrawTexture(trashCan, 600, trashCanPosY + 54 * (float)i, WHITE);
+				DrawRectangle(600, 217, 30, 268, navy);
+				DrawRectangle(600, 48, 30, 109, navy);
+				if (CheckCollisionPointRec(mousePoint, { 134,485 + 54 * (float)i ,457,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					displayListDef.resize(0);
 					for (int j = 0; j < listFavorite.size(); ++j) {
 						displayListDef.push_back(false);
@@ -853,6 +879,9 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 					displayListDef[i] = true;
 					ActualSearchBar.lettercount = 0;
 					ActualSearchBar.text[0] = '\0';
+				}
+				if (CheckCollisionPointRec(mousePoint, { 600, trashCanPosY + 54 * (float)i ,30,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					remove(favor[0], listFavorite[i]);
 				}
 			}
 			if (displayListDef.size() > 0) {
