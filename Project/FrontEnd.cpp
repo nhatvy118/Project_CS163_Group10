@@ -406,7 +406,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		}
 		if (isDisplayHis) {
 			DrawRectangle(1432, 182 - 30, 30, 30, white);
-			DrawRectangle(754, 182, 708, 216, white);
+			DrawRectangle(754, 182, 708, 1103, white);
 			for (int i = 0; i < hisList.size(); ++i) {
 				DrawTextEx(bold, hisList[i].c_str(), { 820,hisPosY + 54 * (float)i }, 26, 0, navy);
 				DrawLine(754, hisPosY - 13 + 54 * i, 1462, hisPosY - 13 + 54 * i, blue);
@@ -418,8 +418,13 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 					hisList.resize(0);
 					hisList = viewList(history[0]);
 				}
+				if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY -22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					ans.resize(0);
+					tmpWord = hisList[i];
+					isDisplayingResult = search(EngEng,tmpWord , ans);
+				}
 			}
-			DrawRectangle(0, 388, 1512, 594, white);
+			//DrawRectangle(0, 388, 1512, 594, white);
 		}
 		if (!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, {754,182,708,258}) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			isDisplayHis = false;
