@@ -86,6 +86,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	Texture2D trashcan = LoadTexture("../resources/TrashCan.png");
 	Texture2D hisIcon = LoadTexture("../resources/historyicon.png");
 	Texture2D hisDelIcon = LoadTexture("../resources/deleteHisIcon.png");
+	Texture2D confirmBtn = LoadTexture("../resources/confirmBtn.png");
 	////---------------------------------------------------------------------------------------------------
 	// Set up choose Dict
 	Rectangle chooseDictBox = { 551,122,180,60 };
@@ -130,6 +131,17 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	int hisPosY = 195;
 	bool isDisplayHis = false;
 	int delHisPosY = 205;
+
+	bool isUpdatingDef = false;
+	Textbox updateDefIndex;
+	updateDefIndex.textbox = { 566,348,55,48 };
+	bool chooseIndexDef = false;
+
+	Textbox changeDef;
+	changeDef.textbox = { 165,505,1191,331 };
+	bool isChangingDef = false;
+	string s = "";
+	int UpdateIndex = 0;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -419,6 +431,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 						confirmDelete = false;
 					}
 				}
+				if (CheckCollisionPointRec(mousePoint, { Definition.x + 1370 + 3, Definition.y + 5, 37,37 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					isUpdatingDef = true;
+				}
 			}
 			else {
 
@@ -458,6 +474,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			defPositionY = 590;
 			StarPositionY = 595;
 		};
+		
 
 		DrawRectangle(0, 0, 1512, 340, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
@@ -550,6 +567,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			isDisplayHis = false;
 		}
 		//////-----------------------------------------------------------------------------------------------------
+		//----------------------------------------------------------------------------------------------------------------
 		DrawRectangle(754, 48, 704, 74, navy);
 		DrawRectangle(754, 0, 604, 48, blue);
 		DrawTexture(randomBtn, 550, 227, WHITE);
@@ -568,14 +586,55 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		DrawTextEx(bold, "Revision", { 388,12 }, 24, 0, white);
 		DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, white);
 		DrawTextEx(bold, "or", { 634,189 }, 30, 0, white);
-		//DrawTextEx(bold, "Random a word", { 565,242 }, 31, 0, WHITE);// 581, 245
 
 		DrawTextEx(bold, "DICTIONARY", { 248,146 }, 49, 0, white);
 		DrawTextEx(italic, "by APCS K22 Group 10", { 219, 196 }, 41, 0, white);
 		DrawLineEx({ 155, 10 }, { 155, 38 }, 3.0, white);
 		DrawLineEx({ 355, 10 }, { 355, 38 }, 3.0, white);
 		DrawLineEx({ 744,133 }, { 744, 168 }, 4.0, { 16,49,107,255 });
+		//------------------------------------------------------------------------------------------------------------------------
+		if (isUpdatingDef) {
+			if (chooseEE) {
+				DrawRectangle(108, 236, 1312, 710, blue);
+				DrawRectangle(108, 452, 1312, 494, navy);
+				DrawRectangleRoundedLines({ 137,491,1253,367 }, 0.349, 0, 4.0, blue);
+				DrawRectangleRounded({ 108,236,1312,31 }, 0.26, 0, yellow);
+				DrawRectangle(108, 254, 1312, 19, yellow);
+				DrawTexture(confirmBtn, 667, 872, white);
+				DrawTexture(hisDelIcon, 1379, 244, WHITE);
 
+				DrawTextEx(bold, "There are     definitions for this word. You want to update the",{190,298}, 55, 0, yellow);
+				DrawTextEx(bold, "definition number:", { 190,343 }, 55, 0, yellow);
+				DrawTextEx(bold, to_string(ans.size()).c_str(), {382,300}, 55, 0, yellow);
+				if (CheckCollisionPointRec(mousePoint, { 1379,244,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					isUpdatingDef = false;
+				}
+				DrawRectangleRec(updateDefIndex.textbox, yellow);
+				updateDefIndex.worktextbox(chooseIndexDef);
+				DrawTextEx(bold, updateDefIndex.text, { 583,342 }, 55, 0, navy);
+
+				if (IsKeyPressed(KEY_ENTER)) {
+					UpdateIndex = atoi(updateDefIndex.text)-1;
+					for (int i = 0; i < ans[UpdateIndex].size(); ++i) {
+						changeDef.text[i] = ans[UpdateIndex][i];
+					}
+					changeDef.lettercount = ans[UpdateIndex].size();
+				}
+				changeDef.worktextbox(isChangingDef);
+				s = changeDef.text;
+				if (s.size() > 70) {
+					tmpdef = divideString(s, 70);
+					for (int j = 0; j < tmpdef.size(); ++j) {
+						DrawTextEx(bold, tmpdef[j].c_str(), { 175,515 + 50 * (float)(j) }, 45, 0, white);
+					}
+				}
+				else {
+					DrawTextEx(bold, s.c_str(), {175, 515}, 45, 0, white);
+				}
+
+
+			}
+		}
 
 		//Choose Dictionary
 		DrawTextEx(bold, "None", { 610,132 }, 40, 0, navy);

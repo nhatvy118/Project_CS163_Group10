@@ -3,7 +3,7 @@
 #include <raylib.h>
 using namespace std;
 
-const int MAX_INPUT_CHARS = 200;
+const int MAX_INPUT_CHARS = 400;
 const float BACKSPACE_DELAY = 0.5f;
 
 struct Textbox {
