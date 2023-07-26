@@ -74,7 +74,6 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	NewPageButton RevisionBtn;
 	RevisionBtn.button = { 388,12,120,31 };
 
-	Rectangle randomWordBox = { 551, 227, 197, 60 };
 	Rectangle Vocab = { 41,411,150,49 };
 	Rectangle Definition = { 41, 530,207,49 };
 	Rectangle VocabBox = { 639,391,49,49 };
@@ -107,7 +106,17 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	Texture2D randomBtn = LoadTexture("../resources/RandomBtn.png");
 	bool isFavorite = false;
 	bool confirmDelete = false;
+	Rectangle randomWordBox = { 551, 227, 197, 60 };
+	string randomWord = "";
+	string randomWordDef = "";
+	vector<string> wrongdef(3);
+	for (int i = 0; i < 3; ++i) {
+		wrongdef[i] = "";
+	}
+	int randomNum = 0;
+	//=================================================================================================
 
+	string tmpWord = "";
 	vector <string> tmpdef;
 	int defPositionY = 590;
 	int StarPositionY = 595;
@@ -125,12 +134,46 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		mousePoint = GetMousePosition();
 		BeginDrawing();
 		DrawRectangle(0, 0, screenWidth, screenHeight, white);
-
+		//---------------------------------------------------------------------------------------------------------------------------------
+		if (CheckCollisionPointRec(mousePoint, randomWordBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			if (chooseEE) {
+				random1Word4Def(EngEng, randomWord, randomWordDef, wrongdef);
+				ans.resize(0);
+				isDisplayingResult = search(EngEng, randomWord, ans);
+				tmpWord = randomWord;
+			}
+			if (chooseEV) {
+				random1Word4Def(EngVie, randomWord, randomWordDef, wrongdef);
+				ans.resize(0);
+				isDisplayingResult = search(EngVie, randomWord, ans);
+				tmpWord = randomWord;
+			}
+			if (chooseVE) {
+				random1Word4Def(VieEng, randomWord, randomWordDef, wrongdef);
+				ans.resize(0);
+				isDisplayingResult = search(VieEng, randomWord, ans);
+				tmpWord = randomWord;
+			}
+			if (chooseSlang) {
+				random1Word4Def(Slang, randomWord, randomWordDef, wrongdef);
+				ans.resize(0);
+				isDisplayingResult = search(Slang, randomWord, ans);
+				tmpWord = randomWord;
+			}
+			if (chooseEmo) {
+				random1Word4Def(Emoji, randomWord, randomWordDef, wrongdef);
+				ans.resize(0);
+				isDisplayingResult = search(Emoji, randomWord, ans);
+				tmpWord = randomWord;
+			}		
+		}
+		//---------------------------------------------------------------------------------------------------------------------------------
 		if (ActualSearchBar.text[0] != '\0' && (IsKeyPressed(KEY_ENTER) || (CheckCollisionPointRec(mousePoint, { 1345,132,41,41 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))) {
 			if (DictType == "ENG-ENG") {
 				if (!SearchDefMode) {
 					ans.resize(0);
 					isDisplayingResult = search(EngEng, ActualSearchBar.text, ans);
+					tmpWord = ActualSearchBar.text;
 					if (isDisplayingResult) {
 						if(!checkExistHis(history[0],ActualSearchBar.text))	add(history[0], ActualSearchBar.text);
 						else {
@@ -236,18 +279,18 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			if (chooseVE) index = 2;
 			if (chooseSlang) index = 3;
 			if (chooseEmo) index = 4;
-			if (!checkExistFavor(favor[index], ActualSearchBar.text)) {
+			if (!checkExistFavor(favor[index], tmpWord)) {
 				isFavorite = false;
 				if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					isFavorite = true;
-					add(favor[index], ActualSearchBar.text);
+					add(favor[index], tmpWord);
 				}
 			}
 			else {
 				isFavorite = true;
 				if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					isFavorite = false;
-					remove(favor[index], ActualSearchBar.text);
+					remove(favor[index], tmpWord);
 				}
 			}
 			if (!isFavorite) {
@@ -256,7 +299,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			else {
 				DrawTexture(blueStar, Vocab.x + 167, Vocab.y + 8, GRAY);
 			}
-			DrawTextEx(bold, ActualSearchBar.text, { 72, 470 }, 30, 0, navy);
+			DrawTextEx(bold, tmpWord.c_str(), {72, 470}, 30, 0, navy);
 
 			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 1365, Vocab.y, 49, 49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			{
