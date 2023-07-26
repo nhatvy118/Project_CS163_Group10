@@ -165,7 +165,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				ans.resize(0);
 				isDisplayingResult = search(Emoji, randomWord, ans);
 				tmpWord = randomWord;
-			}		
+			}
 		}
 		//---------------------------------------------------------------------------------------------------------------------------------
 		if (ActualSearchBar.text[0] != '\0' && (IsKeyPressed(KEY_ENTER) || (CheckCollisionPointRec(mousePoint, { 1345,132,41,41 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))) {
@@ -175,7 +175,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 					isDisplayingResult = search(EngEng, ActualSearchBar.text, ans);
 					tmpWord = ActualSearchBar.text;
 					if (isDisplayingResult) {
-						if(!checkExistHis(history[0],ActualSearchBar.text))	add(history[0], ActualSearchBar.text);
+						if (!checkExistHis(history[0], ActualSearchBar.text))	add(history[0], ActualSearchBar.text);
 						else {
 							remove(history[0], ActualSearchBar.text);
 							add(history[0], ActualSearchBar.text);
@@ -186,14 +186,25 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				}
 				else {
 					ans.resize(0);
+					tmpWord = ActualSearchBar.text;
 					isDisplayingResult = search(EngEngDef, ActualSearchBar.text, ans);
-					if (isDisplayingResult) add(history[0], ActualSearchBar.text);
+					//if (isDisplayingResult) add(history[0], ActualSearchBar.text);
 				}
 			}
 			if (DictType == "ENG-VIE") {
 				if (!SearchDefMode) {
 					ans.resize(0);
 					isDisplayingResult = search(EngVie, ActualSearchBar.text, ans);
+					tmpWord = ActualSearchBar.text;
+					if (isDisplayingResult) {
+						if (!checkExistHis(history[1], ActualSearchBar.text))	add(history[1], ActualSearchBar.text);
+						else {
+							remove(history[1], ActualSearchBar.text);
+							add(history[1], ActualSearchBar.text);
+						}
+					}
+					hisList.resize(0);
+					hisList = viewList(history[1]);
 				}
 				else {
 					ans.resize(0);
@@ -204,6 +215,16 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				if (!SearchDefMode) {
 					ans.resize(0);
 					isDisplayingResult = search(VieEng, ActualSearchBar.text, ans);
+					tmpWord = ActualSearchBar.text;
+					if (isDisplayingResult) {
+						if (!checkExistHis(history[2], ActualSearchBar.text))	add(history[2], ActualSearchBar.text);
+						else {
+							remove(history[2], ActualSearchBar.text);
+							add(history[2], ActualSearchBar.text);
+						}
+					}
+					hisList.resize(0);
+					hisList = viewList(history[2]);
 				}
 				else {
 					ans.resize(0);
@@ -214,6 +235,16 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				if (!SearchDefMode) {
 					ans.resize(0);
 					isDisplayingResult = search(Slang, ActualSearchBar.text, ans);
+					tmpWord = ActualSearchBar.text;
+					if (isDisplayingResult) {
+						if (!checkExistHis(history[3], ActualSearchBar.text))	add(history[3], ActualSearchBar.text);
+						else {
+							remove(history[3], ActualSearchBar.text);
+							add(history[3], ActualSearchBar.text);
+						}
+					}
+					hisList.resize(0);
+					hisList = viewList(history[3]);
 				}
 				else {
 					ans.resize(0);
@@ -224,6 +255,16 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				if (!SearchDefMode) {
 					ans.resize(0);
 					isDisplayingResult = search(Emoji, ActualSearchBar.text, ans);
+					tmpWord = ActualSearchBar.text;
+					if (isDisplayingResult) {
+						if (!checkExistHis(history[4], ActualSearchBar.text))	add(history[4], ActualSearchBar.text);
+						else {
+							remove(history[4], ActualSearchBar.text);
+							add(history[4], ActualSearchBar.text);
+						}
+					}
+					hisList.resize(0);
+					hisList = viewList(history[4]);
 				}
 				else {
 					ans.resize(0);
@@ -236,109 +277,109 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		}
 
 		if (isDisplayingResult) {
-			if (CheckCollisionPointRec(mousePoint, { 0,338,1512,644 })) {
-				defPositionY += (GetMouseWheelMove() * scrollSpeed);
-				StarPositionY += (GetMouseWheelMove() * scrollSpeed);
-			}
-			if (defPositionY > 590) defPositionY = 590;
-			if (StarPositionY > 595) StarPositionY = 595;
-			int newDefMark = 0;
-			for (int i = 0; i < ans.size(); ++i) {
-				if (ans[i].size() > 130) {
-					tmpdef = divideString(ans[i], 130);
-					for (int j = 0; j < tmpdef.size(); ++j) {
-						if (j == 0) DrawTextEx(bold, "*", { 50, (StarPositionY + 50 * (float)(i + newDefMark + j)) }, 30, 0, navy);
-						DrawTextEx(bold, tmpdef[j].c_str(), { 72, (defPositionY + 50 * (float)(i + newDefMark + j)) }, 30, 0, navy);
+			if (!SearchDefMode) {
+				if (CheckCollisionPointRec(mousePoint, { 0,338,1512,644 })) {
+					defPositionY += (GetMouseWheelMove() * scrollSpeed);
+					StarPositionY += (GetMouseWheelMove() * scrollSpeed);
+				}
+				if (defPositionY > 590) defPositionY = 590;
+				if (StarPositionY > 595) StarPositionY = 595;
+				int newDefMark = 0;
+				for (int i = 0; i < ans.size(); ++i) {
+					if (ans[i].size() > 130) {
+						tmpdef = divideString(ans[i], 130);
+						for (int j = 0; j < tmpdef.size(); ++j) {
+							if (j == 0) DrawTextEx(bold, "*", { 50, (StarPositionY + 50 * (float)(i + newDefMark + j)) }, 30, 0, navy);
+							DrawTextEx(bold, tmpdef[j].c_str(), { 72, (defPositionY + 50 * (float)(i + newDefMark + j)) }, 30, 0, navy);
+						}
+						newDefMark += tmpdef.size() - 1;
 					}
-					newDefMark += tmpdef.size() - 1;
+					else {
+						DrawTextEx(bold, "*", { 50, (StarPositionY + 50 * (float)(i + newDefMark)) }, 30, 0, navy);
+						DrawTextEx(bold, ans[i].c_str(), { 72, (defPositionY + 50 * (float)(i + newDefMark)) }, 30, 0, navy);
+						//newDefMark += 1;
+					}
+				}
+
+				DrawRectangle(10, 388, 1492, 200, white);
+				DrawRectangleRounded(Definition, 0.3, 0, yellow);
+				DrawRectangleRounded(Vocab, 0.3, 0, yellow);
+				DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 2, Vocab.x + 1400, Vocab.y + Vocab.height - 2, yellow);
+				DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 1, Vocab.x + 1400, Vocab.y + Vocab.height - 1, yellow);
+				DrawLine(Definition.x + 10, Definition.y + Definition.height - 2, Definition.x + 1400, Definition.y + Definition.height - 2, yellow);
+				DrawLine(Definition.x + 10, Definition.y + Definition.height - 1, Definition.x + 1400, Definition.y + Definition.height - 1, yellow);
+				DrawRectangleRounded({ Vocab.x + 158,Vocab.y,49,49 }, 0.3, 0, yellow);
+				DrawRectangleRounded({ Vocab.x + 1365 ,Vocab.y,49,49 }, 0.3, 0, yellow);
+				DrawRectangleRounded({ Definition.x + 1365,Definition.y,49,49 }, 0.3, 0, yellow);
+				DrawTexture(trashcan, Vocab.x + 1376, Vocab.y + 10, WHITE);
+				DrawTexture(editIcon, Definition.x + 1370 + 3, Definition.y + 5, WHITE);
+				DrawTextEx(bold, "Vocab", { 69,412 }, 43, 0, navy);
+				DrawTextEx(bold, "Definition", { 67,530 }, 43, 0, navy);
+
+				if (chooseEE) index = 0;
+				if (chooseEV) index = 1;
+				if (chooseVE) index = 2;
+				if (chooseSlang) index = 3;
+				if (chooseEmo) index = 4;
+				if (!checkExistFavor(favor[index], tmpWord)) {
+					isFavorite = false;
+					if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						isFavorite = true;
+						add(favor[index], tmpWord);
+					}
 				}
 				else {
-					DrawTextEx(bold, "*", { 50, (StarPositionY + 50 * (float)(i + newDefMark)) }, 30, 0, navy);
-					DrawTextEx(bold, ans[i].c_str(), { 72, (defPositionY + 50 * (float)(i + newDefMark)) }, 30, 0, navy);
-					//newDefMark += 1;
-				}
-			}
-
-			DrawRectangle(10, 388, 1492, 200, white);
-			DrawRectangleRounded(Vocab, 0.3, 0, yellow);
-			DrawRectangleRounded(Definition, 0.3, 0, yellow);
-			DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 2, Vocab.x + 1400, Vocab.y + Vocab.height - 2, yellow);
-			DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 1, Vocab.x + 1400, Vocab.y + Vocab.height - 1, yellow);
-			DrawLine(Definition.x + 10, Definition.y + Definition.height - 2, Definition.x + 1400, Definition.y + Definition.height - 2, yellow);
-			DrawLine(Definition.x + 10, Definition.y + Definition.height - 1, Definition.x + 1400, Definition.y + Definition.height - 1, yellow);
-			DrawRectangleRounded({ Vocab.x + 158,Vocab.y,49,49 }, 0.3, 0, yellow);
-			DrawRectangleRounded({ Vocab.x + 1365 ,Vocab.y,49,49 }, 0.3, 0, yellow);
-			DrawRectangleRounded({ Definition.x + 1365,Definition.y,49,49 }, 0.3, 0, yellow);
-			DrawTexture(trashcan, Vocab.x + 1376, Vocab.y + 10, WHITE);
-			DrawTexture(editIcon, Definition.x + 1370 + 3, Definition.y + 5, WHITE);
-			DrawTextEx(bold, "Vocab", { 69,412 }, 43, 0, navy);
-			DrawTextEx(bold, "Definition", { 67,530 }, 43, 0, navy);
-
-			if (chooseEE) index = 0;
-			if (chooseEV) index = 1;
-			if (chooseVE) index = 2;
-			if (chooseSlang) index = 3;
-			if (chooseEmo) index = 4;
-			if (!checkExistFavor(favor[index], tmpWord)) {
-				isFavorite = false;
-				if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					isFavorite = true;
-					add(favor[index], tmpWord);
-				}
-			}
-			else {
-				isFavorite = true;
-				if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-					isFavorite = false;
-					remove(favor[index], tmpWord);
-				}
-			}
-			if (!isFavorite) {
-				DrawTexture(whiteStar, Vocab.x + 167, Vocab.y + 8, GRAY);
-			}
-			else {
-				DrawTexture(blueStar, Vocab.x + 167, Vocab.y + 8, GRAY);
-			}
-			DrawTextEx(bold, tmpWord.c_str(), {72, 470}, 30, 0, navy);
-
-			if (CheckCollisionPointRec(mousePoint, { Vocab.x + 1365, Vocab.y, 49, 49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-			{
-				confirmDelete = true;
-			}
-			if (confirmDelete)
-			{
-				DrawRectangleRounded({ 501,375,511,243 }, 0.08, 0, blue);
-				DrawRectangleRounded({ 542,534,161,49 }, 0.08, 0, yellow);
-				DrawRectangleRounded({ 811,534,161, 49 }, 0.08, 0, yellow);
-				DrawTexture(closeIcon, 966, 393, WHITE);
-				DrawTextEx(bold, "Delete Confirmation", { 585,448 }, 48, 0, white);
-				DrawTextEx(bold, "Yes", { 597,537 }, 44, 0, navy);
-				DrawTextEx(bold, "No", { 874,537 }, 44, 0, navy);
-				if (CheckCollisionPointRec(mousePoint, { 965,389,31,27 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-				{
-					confirmDelete = false;
-				}
-				if (CheckCollisionPointRec(mousePoint, { 811,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-				{
-					confirmDelete = false;
-				}
-				string str(ActualSearchBar.text);
-				vector <string> tmp;
-				tmp.resize(0);
-				if (CheckCollisionPointRec(mousePoint, { 542,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-					remove(favor[index], ActualSearchBar.text);
-
-					if (DictType == "ENG-ENG")
-					{
-						DeleteAWord(EngEng, str, 0, tmp);
-						vector <string> tmp2 = tmp;
-						for (auto x : tmp)
-						{
-							DeleteAWord(EngEngDef, x, 0, tmp2);
-						}
+					if (CheckCollisionPointRec(mousePoint, { Vocab.x + 167, Vocab.y + 8, 32,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						isFavorite = false;
+						remove(favor[index], tmpWord);
 					}
-					else
-						if (DictType == "ENG-VIE")
+				}
+				if (!isFavorite) {
+					DrawTexture(whiteStar, Vocab.x + 167, Vocab.y + 8, GRAY);
+				}
+				else {
+					DrawTexture(blueStar, Vocab.x + 167, Vocab.y + 8, GRAY);
+				}
+				DrawTextEx(bold, tmpWord.c_str(), { 72, 470 }, 30, 0, navy);
+
+				if (CheckCollisionPointRec(mousePoint, { Vocab.x + 1365, Vocab.y, 49, 49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					confirmDelete = true;
+				}
+				if (confirmDelete)
+				{
+					DrawRectangleRounded({ 501,395,511,243 }, 0.08, 0, blue);
+					DrawRectangleRounded({ 542,554,161,49 }, 0.08, 0, yellow);
+					DrawRectangleRounded({ 811,554,161, 49 }, 0.08, 0, yellow);
+					DrawTexture(closeIcon, 966, 413, WHITE);
+					DrawTextEx(bold, "Delete Confirmation", { 585,468 }, 48, 0, white);
+					DrawTextEx(bold, "Yes", { 597,557 }, 44, 0, navy);
+					DrawTextEx(bold, "No", { 874,557 }, 44, 0, navy);
+					if (CheckCollisionPointRec(mousePoint, { 965,413,31,27 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+					{
+						confirmDelete = false;
+					}
+					if (CheckCollisionPointRec(mousePoint, { 811,554,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+					{
+						confirmDelete = false;
+					}
+					string str(ActualSearchBar.text);
+					vector <string> tmp;
+					tmp.resize(0);
+					if (CheckCollisionPointRec(mousePoint, { 542,554,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						remove(favor[index], ActualSearchBar.text);
+
+						if (DictType == "ENG-ENG")
+						{
+							DeleteAWord(EngEng, str, 0, tmp);
+							vector <string> tmp2 = tmp;
+							for (auto x : tmp)
+							{
+								DeleteAWord(EngEngDef, x, 0, tmp2);
+							}
+						}
+						else if (DictType == "ENG-VIE")
 						{
 							DeleteAWord(EngVie, str, 0, tmp);
 							vector <string> tmp2 = tmp;
@@ -347,40 +388,69 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 								DeleteAWord(EngVieDef, x, 0, tmp2);
 							}
 						}
-						else
-							if (DictType == "VIE-ENG")
+						else if (DictType == "VIE-ENG")
+						{
+							DeleteAWord(VieEng, str, 0, tmp);
+							vector <string> tmp2 = tmp;
+							for (auto x : tmp)
 							{
-								DeleteAWord(VieEng, str, 0, tmp);
-								vector <string> tmp2 = tmp;
-								for (auto x : tmp)
-								{
-									DeleteAWord(VieEngDef, x, 0, tmp2);
-								}
+								DeleteAWord(VieEngDef, x, 0, tmp2);
 							}
-							else
-								if (DictType == "SLANG")
-								{
-									DeleteAWord(Slang, str, 0, tmp);
-									vector <string> tmp2 = tmp;
-									for (auto x : tmp)
-									{
-										DeleteAWord(SlangDef, x, 0, tmp2);
-									}
-								}
-								else
-									if (DictType == "EMOJI")
-									{
-										DeleteAWord(Emoji, str, 0, tmp);
-										vector <string> tmp2 = tmp;
-										for (auto x : tmp)
-										{
-											DeleteAWord(EmojiDef, x, 0, tmp2);
-										}
-									}
-					confirmDelete = false;
+						}
+						else if (DictType == "SLANG")
+						{
+							DeleteAWord(Slang, str, 0, tmp);
+							vector <string> tmp2 = tmp;
+							for (auto x : tmp)
+							{
+								DeleteAWord(SlangDef, x, 0, tmp2);
+							}
+						}
+						else if (DictType == "EMOJI")
+						{
+							DeleteAWord(Emoji, str, 0, tmp);
+							vector <string> tmp2 = tmp;
+							for (auto x : tmp)
+							{
+								DeleteAWord(EmojiDef, x, 0, tmp2);
+							}
+						}
+						isDisplayingResult = false;
+						confirmDelete = false;
+					}
 				}
 			}
+			else {
 
+				if (CheckCollisionPointRec(mousePoint, { 0,338,1512,644 })) {
+					defPositionY += (GetMouseWheelMove() * scrollSpeed);
+					StarPositionY += (GetMouseWheelMove() * scrollSpeed);
+				}
+				if (defPositionY > 470) defPositionY = 470;
+				if (StarPositionY > 475) StarPositionY = 475;
+				int newDefMark = 0;
+				for (int i = 0; i < ans.size(); ++i) {
+					if (ans[i].size() > 130) {
+						tmpdef = divideString(ans[i], 130);
+						for (int j = 0; j < tmpdef.size(); ++j) {
+							if (j == 0) DrawTextEx(bold, "*", { 50, (StarPositionY + 50 * (float)(i + newDefMark + j)) }, 30, 0, navy);
+							DrawTextEx(bold, tmpdef[j].c_str(), { 72, (defPositionY + 50 * (float)(i + newDefMark + j)) }, 30, 0, navy);
+						}
+						newDefMark += tmpdef.size() - 1;
+					}
+					else {
+						DrawTextEx(bold, "*", { 50, (StarPositionY + 50 * (float)(i + newDefMark)) }, 30, 0, navy);
+						DrawTextEx(bold, ans[i].c_str(), { 72, (defPositionY + 50 * (float)(i + newDefMark)) }, 30, 0, navy);
+						//newDefMark += 1;
+					}
+				}
+
+				DrawRectangle(10, 388, 1492, 80, white);
+				DrawRectangleRounded(Vocab, 0.3, 0, yellow);
+				DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 2, Vocab.x + 1400, Vocab.y + Vocab.height - 2, yellow);
+				DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 1, Vocab.x + 1400, Vocab.y + Vocab.height - 1, yellow);
+				DrawTextEx(bold, "Vocab", { 69,412 }, 43, 0, navy);
+			}
 		}
 		else {
 			DrawTextEx(bold, "No Data Available", { 20 + 450, (520) }, 100, 0, RED);
@@ -413,20 +483,70 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				DrawLine(754, hisPosY - 13 + 54 + 54 * i, 1462, hisPosY - 13 + 54 + 54 * i, blue);
 				DrawTexture(hisIcon, 764, hisPosY - 5 + 54 * i, WHITE);
 				DrawTexture(hisDelIcon, 1420, delHisPosY + 54 * i, WHITE);
-				if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-					remove(history[0], hisList[i]);
-					hisList.resize(0);
-					hisList = viewList(history[0]);
+
+				if (chooseEE) {
+					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						remove(history[0], hisList[i]);
+						hisList.resize(0);
+						hisList = viewList(history[0]);
+					}
+					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						ans.resize(0);
+						tmpWord = hisList[i];
+						isDisplayingResult = search(EngEng, tmpWord, ans);
+					}
 				}
-				if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY -22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-					ans.resize(0);
-					tmpWord = hisList[i];
-					isDisplayingResult = search(EngEng,tmpWord , ans);
+				if (chooseEV) {
+					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						remove(history[1], hisList[i]);
+						hisList.resize(0);
+						hisList = viewList(history[1]);
+					}
+					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						ans.resize(0);
+						tmpWord = hisList[i];
+						isDisplayingResult = search(EngVie, tmpWord, ans);
+					}
+				}
+				if (chooseVE) {
+					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						remove(history[2], hisList[i]);
+						hisList.resize(0);
+						hisList = viewList(history[2]);
+					}
+					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						ans.resize(0);
+						tmpWord = hisList[i];
+						isDisplayingResult = search(VieEng, tmpWord, ans);
+					}
+				}
+				if (chooseSlang) {
+					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						remove(history[3], hisList[i]);
+						hisList.resize(0);
+						hisList = viewList(history[3]);
+					}
+					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						ans.resize(0);
+						tmpWord = hisList[i];
+						isDisplayingResult = search(Slang, tmpWord, ans);
+					}
+				}
+				if (chooseEmo) {
+					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						remove(history[4], hisList[i]);
+						hisList.resize(0);
+						hisList = viewList(history[4]);
+					}
+					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						ans.resize(0);
+						tmpWord = hisList[i];
+						isDisplayingResult = search(Emoji, tmpWord, ans);
+					}
 				}
 			}
-			//DrawRectangle(0, 388, 1512, 594, white);
 		}
-		if (!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, {754,182,708,258}) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		if (!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, { 754,182,708,258 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			isDisplayHis = false;
 		}
 		//////-----------------------------------------------------------------------------------------------------
@@ -456,7 +576,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		DrawLineEx({ 355, 10 }, { 355, 38 }, 3.0, white);
 		DrawLineEx({ 744,133 }, { 744, 168 }, 4.0, { 16,49,107,255 });
 
-		
+
 		//Choose Dictionary
 		DrawTextEx(bold, "None", { 610,132 }, 40, 0, navy);
 		DrawTexture(arrow, 710, 145, WHITE);
@@ -900,8 +1020,6 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			trashCanPosY = 494;
 		}
 		if (chooseEE) {
-			/*DrawRectangle(338+195,314-150,122,44, white);
-			DrawTextEx(bold, "ENG-ENG", { 349+195, 319-150 }, 35, 0, navy);*/
 			choose = false;
 			listFavorite = viewList(favor[0]);
 			if (CheckCollisionPointRec(mousePoint, { 134, 485, 523, 283 })) {
@@ -919,12 +1037,13 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 				DrawTexture(trashCan, 600, trashCanPosY + 54 * (float)i, WHITE);
 				DrawRectangle(600, 217, 30, 268, navy);
 				DrawRectangle(600, 48, 30, 109, navy);
-				if (CheckCollisionPointRec(mousePoint, { 134,485 + 54 * (float)i ,457,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				if (CheckCollisionPointRec(mousePoint, { 134,listFavoritePosY -14 + 54 * (float)i ,457,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					displayListDef.resize(0);
 					for (int j = 0; j < listFavorite.size(); ++j) {
 						displayListDef.push_back(false);
 					}
 					displayListDef[i] = true;
+
 					ActualSearchBar.lettercount = 0;
 					ActualSearchBar.text[0] = '\0';
 				}
@@ -1001,10 +1120,9 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			listFavoriteLinePosY = 539;
 			defPosY = 494;
 			starPosY = 497;
+			trashCanPosY = 494;
 		}
 		if (chooseEV) {
-			/*DrawRectangle(338+195, 314-150, 122, 44, white);
-			DrawTextEx(bold, "ENG-VIE", { 355 + 195, 319 - 150 }, 35, 0, navy);*/
 			choose = false;
 			listFavorite = viewList(favor[1]);
 			if (CheckCollisionPointRec(mousePoint, { 134, 485, 523, 283 })) {
@@ -1012,13 +1130,63 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 				if (listFavoritePosY > 494) listFavoritePosY = 494;
 				listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
 				if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
+				trashCanPosY += (GetMouseWheelMove() * scrollSpeed);
+				if (trashCanPosY > 494) trashCanPosY = 494;
 			}
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
 				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
 				DrawLine(134, listFavoriteLinePosY + 54 * i, 134 + 522, listFavoriteLinePosY + 54 * i, navy);
+				DrawTexture(trashCan, 600, trashCanPosY + 54 * i, WHITE);
+				DrawRectangle(600, 217, 30, 268, navy);
+				DrawRectangle(600, 48, 30, 109, navy);
+				if (CheckCollisionPointRec(mousePoint, { 134,listFavoritePosY - 14 + 54 * (float)i ,457,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					displayListDef.resize(0);
+					for (int j = 0; j < listFavorite.size(); ++j) {
+						displayListDef.push_back(false);
+					}
+					displayListDef[i] = true;
+					ActualSearchBar.lettercount = 0;
+					ActualSearchBar.text[0] = '\0';
+				}
+				if (CheckCollisionPointRec(mousePoint, { 600, trashCanPosY + 54 * (float)i ,30,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					remove(favor[1], listFavorite[i]);
+				}
+			}
+			if (displayListDef.size() > 0) {
+				for (int k = 0; k < listFavorite.size(); ++k) {
+					if (displayListDef[k]) {
+						if (defPosY > 494) defPosY = 494;
+						if (starPosY > 497) starPosY = 497;
+						if (CheckCollisionPointRec(mousePoint, { 859, 485, 523, 283 })) {
+							defPosY += (GetMouseWheelMove() * scrollSpeed);
+							starPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						int newDefMark = 0;
+						search(EngVie, listFavorite[k], favoriteDef);
+						for (int i = 0; i < favoriteDef.size(); i++)
+						{
+							if (favoriteDef[i].size() > 50) {
+								tmpdef = divideString(favoriteDef[i], 50);
+								for (int j = 0; j < tmpdef.size(); ++j) {
+									if (j == 0) DrawTextEx(bold, "*", { 861,starPosY + 54 * (float)(i + newDefMark + j) }, 28, 0, navy);
+									DrawTextEx(bold, tmpdef[j].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark + j) }, 28, 0, navy);
+								}
+								newDefMark += tmpdef.size() - 1;
+							}
+							else {
+								DrawTextEx(bold, "*", { 861,starPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
+								DrawTextEx(bold, favoriteDef[i].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
+							}
+						}
+					}
+				}
 			}
 			if (checkExistFavor(favor[1], ActualSearchBar.text)) {
+				displayListDef.resize(0);
+				for (int j = 0; j < listFavorite.size(); ++j) {
+					displayListDef.push_back(false);
+				}
 				if (defPosY > 494) defPosY = 494;
 				if (starPosY > 497) starPosY = 497;
 				if (CheckCollisionPointRec(mousePoint, { 859, 485, 523, 283 })) {
@@ -1026,7 +1194,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 					starPosY += (GetMouseWheelMove() * scrollSpeed);
 				}
 				int newDefMark = 0;
-				search(EngVie, ActualSearchBar.text, favoriteDef);
+				search(EngEng, ActualSearchBar.text, favoriteDef);
 				for (int i = 0; i < favoriteDef.size(); i++)
 				{
 					if (favoriteDef[i].size() > 50) {
@@ -1054,10 +1222,9 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			listFavoriteLinePosY = 539;
 			defPosY = 494;
 			starPosY = 497;
+			trashCanPosY = 494;
 		}
 		if (chooseVE) {
-			/*DrawRectangle(338+195, 314 - 150, 122, 44, white);
-			DrawTextEx(bold, "VIE-ENG", { 355+ 195, 319 -150 }, 35, 0, navy);*/
 			choose = false;
 			listFavorite = viewList(favor[2]);
 			if (CheckCollisionPointRec(mousePoint, { 134, 485, 523, 283 })) {
@@ -1065,13 +1232,63 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 				if (listFavoritePosY > 494) listFavoritePosY = 494;
 				listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
 				if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
+				trashCanPosY += (GetMouseWheelMove() * scrollSpeed);
+				if (trashCanPosY > 494) trashCanPosY = 494;
 			}
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
 				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
 				DrawLine(134, listFavoriteLinePosY + 54 * i, 134 + 522, listFavoriteLinePosY + 54 * i, navy);
+				DrawTexture(trashCan, 600, trashCanPosY + 54 * (float)i, WHITE);
+				DrawRectangle(600, 217, 30, 268, navy);
+				DrawRectangle(600, 48, 30, 109, navy);
+				if (CheckCollisionPointRec(mousePoint, { 134,listFavoritePosY - 14 + 54 * (float)i ,457,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					displayListDef.resize(0);
+					for (int j = 0; j < listFavorite.size(); ++j) {
+						displayListDef.push_back(false);
+					}
+					displayListDef[i] = true;
+					ActualSearchBar.lettercount = 0;
+					ActualSearchBar.text[0] = '\0';
+				}
+				if (CheckCollisionPointRec(mousePoint, { 600, trashCanPosY + 54 * (float)i ,30,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					remove(favor[2], listFavorite[i]);
+				}
+			}
+			if (displayListDef.size() > 0) {
+				for (int k = 0; k < listFavorite.size(); ++k) {
+					if (displayListDef[k]) {
+						if (defPosY > 494) defPosY = 494;
+						if (starPosY > 497) starPosY = 497;
+						if (CheckCollisionPointRec(mousePoint, { 859, 485, 523, 283 })) {
+							defPosY += (GetMouseWheelMove() * scrollSpeed);
+							starPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						int newDefMark = 0;
+						search(VieEng, listFavorite[k], favoriteDef);
+						for (int i = 0; i < favoriteDef.size(); i++)
+						{
+							if (favoriteDef[i].size() > 50) {
+								tmpdef = divideString(favoriteDef[i], 50);
+								for (int j = 0; j < tmpdef.size(); ++j) {
+									if (j == 0) DrawTextEx(bold, "*", { 861,starPosY + 54 * (float)(i + newDefMark + j) }, 28, 0, navy);
+									DrawTextEx(bold, tmpdef[j].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark + j) }, 28, 0, navy);
+								}
+								newDefMark += tmpdef.size() - 1;
+							}
+							else {
+								DrawTextEx(bold, "*", { 861,starPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
+								DrawTextEx(bold, favoriteDef[i].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
+							}
+						}
+					}
+				}
 			}
 			if (checkExistFavor(favor[2], ActualSearchBar.text)) {
+				displayListDef.resize(0);
+				for (int j = 0; j < listFavorite.size(); ++j) {
+					displayListDef.push_back(false);
+				}
 				if (defPosY > 494) defPosY = 494;
 				if (starPosY > 497) starPosY = 497;
 				if (CheckCollisionPointRec(mousePoint, { 859, 485, 523, 283 })) {
@@ -1079,7 +1296,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 					starPosY += (GetMouseWheelMove() * scrollSpeed);
 				}
 				int newDefMark = 0;
-				search(VieEng, ActualSearchBar.text, favoriteDef);
+				search(EngEng, ActualSearchBar.text, favoriteDef);
 				for (int i = 0; i < favoriteDef.size(); i++)
 				{
 					if (favoriteDef[i].size() > 50) {
@@ -1107,6 +1324,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			listFavoriteLinePosY = 539;
 			defPosY = 494;
 			starPosY = 497;
+			trashCanPosY = 494;
 		}
 		if (CheckCollisionPointRec(mousePoint, { 327 + 195, 306 - 150 + 300, 174, 60 }) && choose) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) chooseEmoji = true;
@@ -1114,11 +1332,10 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 			listFavoriteLinePosY = 539;
 			defPosY = 494;
 			starPosY = 497;
+			trashCanPosY = 494;
 		}
 		if (chooseSlang)
 		{
-			/*DrawRectangle(338 + 195, 314 - 150, 122, 44, white);
-			DrawTextEx(bold, "SLANG", { 369 + 195, 319 - 150 }, 35, 0, navy);*/
 			choose = false;
 			listFavorite = viewList(favor[3]);
 			if (CheckCollisionPointRec(mousePoint, { 134, 485, 523, 283 })) {
@@ -1126,13 +1343,63 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 				if (listFavoritePosY > 494) listFavoritePosY = 494;
 				listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
 				if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
+				trashCanPosY += (GetMouseWheelMove() * scrollSpeed);
+				if (trashCanPosY > 494) trashCanPosY = 494;
 			}
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
 				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
 				DrawLine(134, listFavoriteLinePosY + 54 * i, 134 + 522, listFavoriteLinePosY + 54 * i, navy);
+				DrawTexture(trashCan, 600, trashCanPosY + 54 * (float)i, WHITE);
+				DrawRectangle(600, 217, 30, 268, navy);
+				DrawRectangle(600, 48, 30, 109, navy);
+				if (CheckCollisionPointRec(mousePoint, { 134,listFavoritePosY - 14 + 54 * (float)i ,457,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					displayListDef.resize(0);
+					for (int j = 0; j < listFavorite.size(); ++j) {
+						displayListDef.push_back(false);
+					}
+					displayListDef[i] = true;
+					ActualSearchBar.lettercount = 0;
+					ActualSearchBar.text[0] = '\0';
+				}
+				if (CheckCollisionPointRec(mousePoint, { 600, trashCanPosY + 54 * (float)i ,30,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					remove(favor[3], listFavorite[i]);
+				}
+			}
+			if (displayListDef.size() > 0) {
+				for (int k = 0; k < listFavorite.size(); ++k) {
+					if (displayListDef[k]) {
+						if (defPosY > 494) defPosY = 494;
+						if (starPosY > 497) starPosY = 497;
+						if (CheckCollisionPointRec(mousePoint, { 859, 485, 523, 283 })) {
+							defPosY += (GetMouseWheelMove() * scrollSpeed);
+							starPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						int newDefMark = 0;
+						search(Slang, listFavorite[k], favoriteDef);
+						for (int i = 0; i < favoriteDef.size(); i++)
+						{
+							if (favoriteDef[i].size() > 50) {
+								tmpdef = divideString(favoriteDef[i], 50);
+								for (int j = 0; j < tmpdef.size(); ++j) {
+									if (j == 0) DrawTextEx(bold, "*", { 861,starPosY + 54 * (float)(i + newDefMark + j) }, 28, 0, navy);
+									DrawTextEx(bold, tmpdef[j].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark + j) }, 28, 0, navy);
+								}
+								newDefMark += tmpdef.size() - 1;
+							}
+							else {
+								DrawTextEx(bold, "*", { 861,starPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
+								DrawTextEx(bold, favoriteDef[i].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
+							}
+						}
+					}
+				}
 			}
 			if (checkExistFavor(favor[3], ActualSearchBar.text)) {
+				displayListDef.resize(0);
+				for (int j = 0; j < listFavorite.size(); ++j) {
+					displayListDef.push_back(false);
+				}
 				if (defPosY > 494) defPosY = 494;
 				if (starPosY > 497) starPosY = 497;
 				if (CheckCollisionPointRec(mousePoint, { 859, 485, 523, 283 })) {
@@ -1140,7 +1407,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 					starPosY += (GetMouseWheelMove() * scrollSpeed);
 				}
 				int newDefMark = 0;
-				search(Slang, ActualSearchBar.text, favoriteDef);
+				search(EngEng, ActualSearchBar.text, favoriteDef);
 				for (int i = 0; i < favoriteDef.size(); i++)
 				{
 					if (favoriteDef[i].size() > 50) {
@@ -1164,8 +1431,6 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 		}
 		if (chooseEmoji)
 		{
-			/*DrawRectangle(338 + 195, 314 - 150, 122, 44, white);
-			DrawTextEx(bold, "EMOJI", { 369+195, 319 - 150 }, 35, 0, navy);*/
 			choose = false;
 			listFavorite = viewList(favor[4]);
 			if (CheckCollisionPointRec(mousePoint, { 134, 485, 523, 283 })) {
@@ -1173,13 +1438,63 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 				if (listFavoritePosY > 494) listFavoritePosY = 494;
 				listFavoriteLinePosY += (GetMouseWheelMove() * scrollSpeed);
 				if (listFavoriteLinePosY > 539) listFavoriteLinePosY = 539;
+				trashCanPosY += (GetMouseWheelMove() * scrollSpeed);
+				if (trashCanPosY > 494) trashCanPosY = 494;
 			}
 			for (int i = 0; i < listFavorite.size(); i++)
 			{
 				DrawTextEx(bold, listFavorite[i].c_str(), { 149,listFavoritePosY + 54 * (float)i }, 28, 0, navy);
 				DrawLine(134, listFavoriteLinePosY + 54 * i, 134 + 522, listFavoriteLinePosY + 54 * i, navy);
+				DrawTexture(trashCan, 600, trashCanPosY + 54 * (float)i, WHITE);
+				DrawRectangle(600, 217, 30, 268, navy);
+				DrawRectangle(600, 48, 30, 109, navy);
+				if (CheckCollisionPointRec(mousePoint, { 134,listFavoritePosY - 14 + 54 * (float)i ,457,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					displayListDef.resize(0);
+					for (int j = 0; j < listFavorite.size(); ++j) {
+						displayListDef.push_back(false);
+					}
+					displayListDef[i] = true;
+					ActualSearchBar.lettercount = 0;
+					ActualSearchBar.text[0] = '\0';
+				}
+				if (CheckCollisionPointRec(mousePoint, { 600, trashCanPosY + 54 * (float)i ,30,30 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					remove(favor[4], listFavorite[i]);
+				}
+			}
+			if (displayListDef.size() > 0) {
+				for (int k = 0; k < listFavorite.size(); ++k) {
+					if (displayListDef[k]) {
+						if (defPosY > 494) defPosY = 494;
+						if (starPosY > 497) starPosY = 497;
+						if (CheckCollisionPointRec(mousePoint, { 859, 485, 523, 283 })) {
+							defPosY += (GetMouseWheelMove() * scrollSpeed);
+							starPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						int newDefMark = 0;
+						search(Emoji, listFavorite[k], favoriteDef);
+						for (int i = 0; i < favoriteDef.size(); i++)
+						{
+							if (favoriteDef[i].size() > 50) {
+								tmpdef = divideString(favoriteDef[i], 50);
+								for (int j = 0; j < tmpdef.size(); ++j) {
+									if (j == 0) DrawTextEx(bold, "*", { 861,starPosY + 54 * (float)(i + newDefMark + j) }, 28, 0, navy);
+									DrawTextEx(bold, tmpdef[j].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark + j) }, 28, 0, navy);
+								}
+								newDefMark += tmpdef.size() - 1;
+							}
+							else {
+								DrawTextEx(bold, "*", { 861,starPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
+								DrawTextEx(bold, favoriteDef[i].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
+							}
+						}
+					}
+				}
 			}
 			if (checkExistFavor(favor[4], ActualSearchBar.text)) {
+				displayListDef.resize(0);
+				for (int j = 0; j < listFavorite.size(); ++j) {
+					displayListDef.push_back(false);
+				}
 				if (defPosY > 494) defPosY = 494;
 				if (starPosY > 497) starPosY = 497;
 				if (CheckCollisionPointRec(mousePoint, { 859, 485, 523, 283 })) {
@@ -1187,7 +1502,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 					starPosY += (GetMouseWheelMove() * scrollSpeed);
 				}
 				int newDefMark = 0;
-				search(Emoji, ActualSearchBar.text, favoriteDef);
+				search(EngEng, ActualSearchBar.text, favoriteDef);
 				for (int i = 0; i < favoriteDef.size(); i++)
 				{
 					if (favoriteDef[i].size() > 50) {
