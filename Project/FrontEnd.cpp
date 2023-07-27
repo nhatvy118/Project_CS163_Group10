@@ -142,6 +142,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	bool isChangingDef = false;
 	string s = "";
 	int UpdateIndex = 0;
+
+	bool isDisplayRecommend = false;
+	vector <string> recommendResult;
+	int recommendBoxPosY = 182;
+	string recommendTmp = "";
+	trieNode* hehe = nullptr;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -290,7 +296,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 
 		if (isDisplayingResult) {
 			if (!SearchDefMode) {
-				if (CheckCollisionPointRec(mousePoint, { 0,338,1512,644 })) {
+				if (CheckCollisionPointRec(mousePoint, { 0,338,753,644 })) {
 					defPositionY += (GetMouseWheelMove() * scrollSpeed);
 					StarPositionY += (GetMouseWheelMove() * scrollSpeed);
 				}
@@ -489,7 +495,6 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		if (hisPosY > 195) hisPosY = 195;
 		if (delHisPosY > 205) delHisPosY = 205;
 		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] == '\0') {
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			isDisplayHis = true;
 		}
 		if (isDisplayHis) {
@@ -564,13 +569,42 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				}
 			}
 		}
-		if (!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, { 754,182,708,258 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		if (!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, { 754,182,708,1103 })) {
 			isDisplayHis = false;
+			isDisplayRecommend = false;
 		}
-		//////-----------------------------------------------------------------------------------------------------
+		//////----------------------------------------------------------------------------------------------------------------
+		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] != '\0') {
+			isDisplayRecommend = true;
+		}
+		if (isDisplayRecommend) {
+			if (chooseEE) {
+				recommendTmp = ActualSearchBar.text;
+				hehe = find(EngEng, recommendTmp);
+				recommendResult.resize(0);
+				rcmFunc(hehe, recommendTmp, recommendResult);
+				DrawRectangle(1432, 182 - 30, 30, 30, white);
+				for (int i = 0; i < recommendResult.size(); ++i) {
+					DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+					DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+					DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+					DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+
+					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						ans.resize(0);
+						tmpWord = recommendResult[i];
+						isDisplayingResult = search(EngEng, tmpWord, ans);
+					}
+					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+						recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+					}
+					if (recommendBoxPosY > 182) recommendBoxPosY = 182;
+				}
+			}
+		}
 		//----------------------------------------------------------------------------------------------------------------
-		DrawRectangle(754, 48, 704, 74, navy);
-		DrawRectangle(754, 0, 604, 48, blue);
+		DrawRectangle(754, 48, 715, 74, navy);
+		DrawRectangle(754, 0, 715, 48, blue);
 		DrawTexture(randomBtn, 550, 227, WHITE);
 		DrawRectangleRounded(SearchBar, 60, 0, white);
 		if (!isSearching) {

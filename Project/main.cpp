@@ -32,6 +32,14 @@ int main() {
 	InitWindow(screenW, screenH, "Group 10 Dictionary");
 	WaitingPage(screenW, screenH, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 
+	//vector <string> test;
+	//string a;
+	//cin >> a;
+	//trieNode* hehe = find(EngEng, a);
+	//rcmFunc(hehe, a, test);
+	//for (int i = 0; i < test.size(); ++i) {
+	//	cout << test[i] << endl;
+	//}
 
 	return 0;
 }
