@@ -488,7 +488,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 		}
 		if (hisPosY > 195) hisPosY = 195;
 		if (delHisPosY > 205) delHisPosY = 205;
-		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] == '\0') {
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			isDisplayHis = true;
 		}
 		if (isDisplayHis) {
@@ -631,7 +632,26 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				else {
 					DrawTextEx(bold, s.c_str(), {175, 515}, 45, 0, white);
 				}
-
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					updateDef(EngEng, tmpWord, UpdateIndex, changeDef.text);
+					trieNode* oldDef = find(EngEngDef, ans[UpdateIndex]); 
+					vector <string> trash;
+					if (oldDef->mean.size() == 1) 
+						DeleteAWord(EngEngDef, ans[UpdateIndex], 0, trash);
+					else
+					{
+						for (int i = 0; i < oldDef->mean.size(); i++)
+						{
+							if (oldDef->mean[i] == tmpWord)
+							{
+								oldDef->mean.erase(oldDef->mean.begin()+i);							
+							}
+						}
+					}
+					insert(EngEngDef, changeDef.text, { tmpWord });
+					isUpdatingDef = false;
+				}
 
 			}
 		}

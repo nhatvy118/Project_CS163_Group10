@@ -181,7 +181,9 @@ bool updateDef(trieNode*& root, string s, int t, string def) {
 				break;
 			}
 		}
-		if (ok) cur->mean[t] = def;
+		if (ok) {
+			cur->mean[t] = def;
+		}
 		return true;
 	}
 	return false;
