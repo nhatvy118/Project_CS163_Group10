@@ -73,26 +73,17 @@ void Textbox::worktextbox(bool& isSearching) {
 	else isSearching = false;
 
 }
-void NewPageButton::workbutton(Vector2 mousePoint, void(*func)(const int screenWidth, const int screenHeight, trieNode* VieEng,
-	trieNode* EngVie,
-	trieNode* EngEng,
-	trieNode* VieEngDef,
-	trieNode* EngVieDef,
-	trieNode* EngEngDef,
-	trieNode* Emoji,
-	trieNode* EmojiDef,
-	trieNode* Slang,
-	trieNode* SlangDef, Node* favor[], Node* history[]),
-	trieNode* VieEng,
-	trieNode* EngVie,
-	trieNode* EngEng,
-	trieNode* VieEngDef,
-	trieNode* EngVieDef,
-	trieNode* EngEngDef,
-	trieNode* Emoji,
-	trieNode* EmojiDef,
-	trieNode* Slang,
-	trieNode* SlangDef, Node* favor[], Node* history[]) {
+void NewPageButton::workbutton(Vector2 mousePoint, void(*func)(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[]),
+	trieNode*& VieEng,
+	trieNode*& EngVie,
+	trieNode*& EngEng,
+	trieNode*& VieEngDef,
+	trieNode*& EngVieDef,
+	trieNode*& EngEngDef,
+	trieNode*& Emoji,
+	trieNode*& EmojiDef,
+	trieNode*& Slang,
+	trieNode*& SlangDef, Node* favor[], Node* history[]) {
 	if (CheckCollisionPointRec(mousePoint, button)) {          // Check button state
 		//DrawRectangleLines((int)button.x, (int)button.y, (int)button.width, (int)button.height, BLACK);
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) action = true;

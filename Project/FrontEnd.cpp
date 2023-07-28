@@ -4,7 +4,7 @@
 #include "FrontEnd.h"
 #include <string>
 
-void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[])
+void WaitingPage(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[])
 {
 	// Set up the page
 	Vector2 mousePoint = { 0.0f, 0.0f };
@@ -40,7 +40,7 @@ void WaitingPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 	}
 	CloseWindow();
 }
-void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[])
+void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[])
 {
 	// Set up the page
 	Vector2 mousePoint = { 0.0f, 0.0f };
@@ -982,7 +982,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 	}
 	CloseWindow();
 }
-void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[]) {
+void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[]) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 	Font bold = LoadFontEx("../Fonts/SourceSansPro-Bold.ttf", 96, 0, 0);
@@ -1185,7 +1185,7 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode* VieEng
 	}
 	CloseWindow();
 }
-void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[])
+void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[])
 
 {
 
@@ -1846,7 +1846,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode* V
 	}
 	CloseWindow();
 }
-void RevisionPage(const int screenWidth, const int screenHeight, trieNode* VieEng, trieNode* EngVie, trieNode* EngEng, trieNode* VieEngDef, trieNode* EngVieDef, trieNode* EngEngDef, trieNode* Emoji, trieNode* EmojiDef, trieNode* Slang, trieNode* SlangDef, Node* favor[], Node* history[]) {
+void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[]) {
 	Vector2 mousePoint = { 0.0f, 0.0f };
 	SetTargetFPS(60);
 
