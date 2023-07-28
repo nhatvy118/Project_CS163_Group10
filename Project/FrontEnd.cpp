@@ -38,6 +38,50 @@ void WaitingPage(const int screenWidth, const int screenHeight, trieNode*& VieEn
 		StartBtn.workbutton(mousePoint, HomePage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 		EndDrawing();
 	}
+	ofstream fout;
+	fout.open("../Dataset/EngEng.txt");
+	WriteDictionaryToFile(EngEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/EngVie.txt");
+	WriteDictionaryToFile(EngVie, "", fout);
+	fout.close();
+	fout.open("../Dataset/VieEng.txt");
+	WriteDictionaryToFile(VieEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/Slang.txt");
+	WriteDictionaryToFile(Slang, "", fout);
+	fout.close();
+	fout.open("../Dataset/Emoji.txt");
+	WriteDictionaryToFile(Emoji, "", fout);
+	fout.close();
+
+	fout.open("../Dataset/Favor.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(favor[i], fout);
+	}
+	fout.close();
+	fout.open("../Dataset/History.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(history[i], fout);
+	}
+	fout.close();
+
+	for (int i = 0; i < 5; ++i) {
+		deleteLL(history[i]);
+		deleteLL(favor[i]);
+	}
+	DeleteAllTree(EngEng);
+	DeleteAllTree(EngEngDef);
+	DeleteAllTree(EngVie);
+	DeleteAllTree(EngVieDef);
+	DeleteAllTree(VieEng);
+	DeleteAllTree(VieEngDef);
+	DeleteAllTree(Slang);
+	DeleteAllTree(SlangDef);
+	DeleteAllTree(Emoji);
+	DeleteAllTree(EmojiDef);
 	CloseWindow();
 }
 void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[])
@@ -73,6 +117,9 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 	FavoriteList.button = { 15,9,131,31 };
 	NewPageButton RevisionBtn;
 	RevisionBtn.button = { 388,12,120,31 };
+
+	NewPageButton exit;
+	exit.button = { 15,923,38,38 };
 
 	Rectangle Vocab = { 41,411,150,49 };
 	Rectangle Definition = { 41, 530,207,49 };
@@ -186,7 +233,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			}
 		}
 		//---------------------------------------------------------------------------------------------------------------------------------
-		if ((ActualSearchBar.text[0] != '\0' && IsKeyPressed(KEY_ENTER)) || (CheckCollisionPointRec(mousePoint, { 1345,132,41,41 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
+		if ((ActualSearchBar.text[0] != '\0' && (IsKeyPressed(KEY_ENTER)) || CheckCollisionPointRec(mousePoint, { 1345,132,41,41 })) || CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 			if (DictType == "ENG-ENG") {
 				if (!SearchDefMode) {
 					ans.resize(0);
@@ -480,7 +527,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			defPositionY = 590;
 			StarPositionY = 595;
 		};
-		
+
 
 		DrawRectangle(0, 0, 1512, 340, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
@@ -500,7 +547,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 		if (isDisplayHis) {
 			DrawRectangle(1432, 182 - 30, 30, 30, white);
 			for (int i = 0; i < hisList.size(); ++i) {
-				DrawRectangle(754, hisPosY-13 + 54 * i, 708, 54, white);
+				DrawRectangle(754, hisPosY - 13 + 54 * i, 708, 54, white);
 				DrawTextEx(bold, hisList[i].c_str(), { 820,hisPosY + 54 * (float)i }, 26, 0, navy);
 				DrawLine(754, hisPosY - 13 + 54 * i, 1462, hisPosY - 13 + 54 * i, blue);
 				DrawLine(754, hisPosY - 13 + 54 + 54 * i, 1462, hisPosY - 13 + 54 + 54 * i, blue);
@@ -589,7 +636,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 				}
 			}
 		}
-		if ((!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, { 754,182,708,1103 })) || ActualSearchBar.lettercount >0) {
+		if ((!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, { 754,182,708,1103 })) || ActualSearchBar.lettercount > 0) {
 			isDisplayHis = false;
 		}
 		if ((!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, { 754,182,708,1103 })) || ActualSearchBar.lettercount == 0) {
@@ -770,6 +817,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 		DrawTextEx(bold, "Add new words", { 188,12 }, 24, 0, white);
 		AddWordBtn.workbutton(mousePoint, AddWordPage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 		FavoriteList.workbutton(mousePoint, FavoriteListPage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
+		exit.workbutton(mousePoint, WaitingPage, VieEng, EngVie, EngEng, VieEngDef, EngVieDef, EngEngDef, Emoji, EmojiDef, Slang, SlangDef, favor, history);
 		DrawTextEx(bold, "Revision", { 388,12 }, 24, 0, white);
 		DrawTextEx(bold, "Reset Data", { 1369,12 }, 24, 0, white);
 		DrawTextEx(bold, "or", { 634,189 }, 30, 0, white);
@@ -790,9 +838,9 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 				DrawTexture(confirmBtn, 667, 872, white);
 				DrawTexture(hisDelIcon, 1379, 244, WHITE);
 
-				DrawTextEx(bold, "There are     definitions for this word. You want to update the",{190,298}, 55, 0, yellow);
+				DrawTextEx(bold, "There are     definitions for this word. You want to update the", { 190,298 }, 55, 0, yellow);
 				DrawTextEx(bold, "definition number:", { 190,343 }, 55, 0, yellow);
-				DrawTextEx(bold, to_string(ans.size()).c_str(), {382,300}, 55, 0, yellow);
+				DrawTextEx(bold, to_string(ans.size()).c_str(), { 382,300 }, 55, 0, yellow);
 				if (CheckCollisionPointRec(mousePoint, { 1379,244,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					isUpdatingDef = false;
 				}
@@ -801,7 +849,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 				DrawTextEx(bold, updateDefIndex.text, { 583,342 }, 55, 0, navy);
 
 				if (IsKeyPressed(KEY_ENTER)) {
-					UpdateIndex = atoi(updateDefIndex.text)-1;
+					UpdateIndex = atoi(updateDefIndex.text) - 1;
 					for (int i = 0; i < ans[UpdateIndex].size(); ++i) {
 						changeDef.text[i] = ans[UpdateIndex][i];
 					}
@@ -816,14 +864,14 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					}
 				}
 				else {
-					DrawTextEx(bold, s.c_str(), {175, 515}, 45, 0, white);
+					DrawTextEx(bold, s.c_str(), { 175, 515 }, 45, 0, white);
 				}
 				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 				{
 					updateDef(EngEng, tmpWord, UpdateIndex, changeDef.text);
-					trieNode* oldDef = find(EngEngDef, ans[UpdateIndex]); 
+					trieNode* oldDef = find(EngEngDef, ans[UpdateIndex]);
 					vector <string> trash;
-					if (oldDef->mean.size() == 1) 
+					if (oldDef->mean.size() == 1)
 						DeleteAWord(EngEngDef, ans[UpdateIndex], 0, trash);
 					else
 					{
@@ -831,7 +879,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						{
 							if (oldDef->mean[i] == tmpWord)
 							{
-								oldDef->mean.erase(oldDef->mean.begin()+i);							
+								oldDef->mean.erase(oldDef->mean.begin() + i);
 							}
 						}
 					}
@@ -969,6 +1017,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 				readFileToTree(EngVie, EngVieDef, "EngVie.txt");
 				readFileToTree(Emoji, EmojiDef, "Emoji.txt");
 				readFileToTree(Slang, SlangDef, "Slang.txt");
+
 				for (int i = 0; i < 5; ++i) {
 					deleteLL(history[i]);
 					deleteLL(favor[i]);
@@ -980,6 +1029,52 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 		}
 		EndDrawing();
 	}
+
+	ofstream fout;
+	fout.open("../Dataset/EngEng.txt");
+	WriteDictionaryToFile(EngEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/EngVie.txt");
+	WriteDictionaryToFile(EngVie, "", fout);
+	fout.close();
+	fout.open("../Dataset/VieEng.txt");
+	WriteDictionaryToFile(VieEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/Slang.txt");
+	WriteDictionaryToFile(Slang, "", fout);
+	fout.close();
+	fout.open("../Dataset/Emoji.txt");
+	WriteDictionaryToFile(Emoji, "", fout);
+	fout.close();
+
+	fout.open("../Dataset/Favor.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(favor[i], fout);
+	}
+	fout.close();
+	fout.open("../Dataset/History.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(history[i], fout);
+	}
+	fout.close();
+	
+	for (int i = 0; i < 5; ++i) {
+		deleteLL(history[i]);
+		deleteLL(favor[i]);
+	}
+	DeleteAllTree(EngEng);
+	DeleteAllTree(EngEngDef);
+	DeleteAllTree(EngVie);
+	DeleteAllTree(EngVieDef);
+	DeleteAllTree(VieEng);
+	DeleteAllTree(VieEngDef);
+	DeleteAllTree(Slang);
+	DeleteAllTree(SlangDef);
+	DeleteAllTree(Emoji);
+	DeleteAllTree(EmojiDef);
+
 	CloseWindow();
 }
 void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[]) {
@@ -1183,6 +1278,50 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEn
 		else if (addSuccessfully == 2) DrawText("Failed ! ", 1036, 827, 40, yellow);
 		EndDrawing();
 	}
+	ofstream fout;
+	fout.open("../Dataset/EngEng.txt");
+	WriteDictionaryToFile(EngEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/EngVie.txt");
+	WriteDictionaryToFile(EngVie, "", fout);
+	fout.close();
+	fout.open("../Dataset/VieEng.txt");
+	WriteDictionaryToFile(VieEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/Slang.txt");
+	WriteDictionaryToFile(Slang, "", fout);
+	fout.close();
+	fout.open("../Dataset/Emoji.txt");
+	WriteDictionaryToFile(Emoji, "", fout);
+	fout.close();
+
+	fout.open("../Dataset/Favor.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(favor[i], fout);
+	}
+	fout.close();
+	fout.open("../Dataset/History.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(history[i], fout);
+	}
+	fout.close();
+
+	for (int i = 0; i < 5; ++i) {
+		deleteLL(history[i]);
+		deleteLL(favor[i]);
+	}
+	DeleteAllTree(EngEng);
+	DeleteAllTree(EngEngDef);
+	DeleteAllTree(EngVie);
+	DeleteAllTree(EngVieDef);
+	DeleteAllTree(VieEng);
+	DeleteAllTree(VieEngDef);
+	DeleteAllTree(Slang);
+	DeleteAllTree(SlangDef);
+	DeleteAllTree(Emoji);
+	DeleteAllTree(EmojiDef);
 	CloseWindow();
 }
 void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[])
@@ -1308,7 +1447,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 				DrawTexture(trashCan, 600, trashCanPosY + 54 * (float)i, WHITE);
 				DrawRectangle(600, 217, 30, 268, navy);
 				DrawRectangle(600, 48, 30, 109, navy);
-				if (CheckCollisionPointRec(mousePoint, { 134,listFavoritePosY -14 + 54 * (float)i ,457,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				if (CheckCollisionPointRec(mousePoint, { 134,listFavoritePosY - 14 + 54 * (float)i ,457,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					displayListDef.resize(0);
 					for (int j = 0; j < listFavorite.size(); ++j) {
 						displayListDef.push_back(false);
@@ -1465,7 +1604,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 					starPosY += (GetMouseWheelMove() * scrollSpeed);
 				}
 				int newDefMark = 0;
-				search(EngEng, ActualSearchBar.text, favoriteDef);
+				search(EngVie, ActualSearchBar.text, favoriteDef);
 				for (int i = 0; i < favoriteDef.size(); i++)
 				{
 					if (favoriteDef[i].size() > 50) {
@@ -1567,7 +1706,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 					starPosY += (GetMouseWheelMove() * scrollSpeed);
 				}
 				int newDefMark = 0;
-				search(EngEng, ActualSearchBar.text, favoriteDef);
+				search(VieEng, ActualSearchBar.text, favoriteDef);
 				for (int i = 0; i < favoriteDef.size(); i++)
 				{
 					if (favoriteDef[i].size() > 50) {
@@ -1678,7 +1817,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 					starPosY += (GetMouseWheelMove() * scrollSpeed);
 				}
 				int newDefMark = 0;
-				search(EngEng, ActualSearchBar.text, favoriteDef);
+				search(Slang, ActualSearchBar.text, favoriteDef);
 				for (int i = 0; i < favoriteDef.size(); i++)
 				{
 					if (favoriteDef[i].size() > 50) {
@@ -1773,7 +1912,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 					starPosY += (GetMouseWheelMove() * scrollSpeed);
 				}
 				int newDefMark = 0;
-				search(EngEng, ActualSearchBar.text, favoriteDef);
+				search(Emoji, ActualSearchBar.text, favoriteDef);
 				for (int i = 0; i < favoriteDef.size(); i++)
 				{
 					if (favoriteDef[i].size() > 50) {
@@ -1844,6 +1983,50 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 		}
 		EndDrawing();
 	}
+	ofstream fout;
+	fout.open("../Dataset/EngEng.txt");
+	WriteDictionaryToFile(EngEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/EngVie.txt");
+	WriteDictionaryToFile(EngVie, "", fout);
+	fout.close();
+	fout.open("../Dataset/VieEng.txt");
+	WriteDictionaryToFile(VieEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/Slang.txt");
+	WriteDictionaryToFile(Slang, "", fout);
+	fout.close();
+	fout.open("../Dataset/Emoji.txt");
+	WriteDictionaryToFile(Emoji, "", fout);
+	fout.close();
+
+	fout.open("../Dataset/Favor.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(favor[i], fout);
+	}
+	fout.close();
+	fout.open("../Dataset/History.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(history[i], fout);
+	}
+	fout.close();
+
+	for (int i = 0; i < 5; ++i) {
+		deleteLL(history[i]);
+		deleteLL(favor[i]);
+	}
+	DeleteAllTree(EngEng);
+	DeleteAllTree(EngEngDef);
+	DeleteAllTree(EngVie);
+	DeleteAllTree(EngVieDef);
+	DeleteAllTree(VieEng);
+	DeleteAllTree(VieEngDef);
+	DeleteAllTree(Slang);
+	DeleteAllTree(SlangDef);
+	DeleteAllTree(Emoji);
+	DeleteAllTree(EmojiDef);
 	CloseWindow();
 }
 void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieEng, trieNode*& EngVie, trieNode*& EngEng, trieNode*& VieEngDef, trieNode*& EngVieDef, trieNode*& EngEngDef, trieNode*& Emoji, trieNode*& EmojiDef, trieNode*& Slang, trieNode*& SlangDef, Node* favor[], Node* history[]) {
@@ -2445,5 +2628,49 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 
 		EndDrawing();
 	}
+	ofstream fout;
+	fout.open("../Dataset/EngEng.txt");
+	WriteDictionaryToFile(EngEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/EngVie.txt");
+	WriteDictionaryToFile(EngVie, "", fout);
+	fout.close();
+	fout.open("../Dataset/VieEng.txt");
+	WriteDictionaryToFile(VieEng, "", fout);
+	fout.close();
+	fout.open("../Dataset/Slang.txt");
+	WriteDictionaryToFile(Slang, "", fout);
+	fout.close();
+	fout.open("../Dataset/Emoji.txt");
+	WriteDictionaryToFile(Emoji, "", fout);
+	fout.close();
+
+	fout.open("../Dataset/Favor.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(favor[i], fout);
+	}
+	fout.close();
+	fout.open("../Dataset/History.txt");
+	for (int i = 0; i < 5; ++i) {
+		fout << i << endl;
+		writeNode2File(history[i], fout);
+	}
+	fout.close();
+
+	for (int i = 0; i < 5; ++i) {
+		deleteLL(history[i]);
+		deleteLL(favor[i]);
+	}
+	DeleteAllTree(EngEng);
+	DeleteAllTree(EngEngDef);
+	DeleteAllTree(EngVie);
+	DeleteAllTree(EngVieDef);
+	DeleteAllTree(VieEng);
+	DeleteAllTree(VieEngDef);
+	DeleteAllTree(Slang);
+	DeleteAllTree(SlangDef);
+	DeleteAllTree(Emoji);
+	DeleteAllTree(EmojiDef);
 	CloseWindow();
 }

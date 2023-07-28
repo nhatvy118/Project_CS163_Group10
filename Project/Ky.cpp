@@ -125,7 +125,7 @@ vector <string> divideString(string def, int part ) {
 	return save;
 }
 
-void readNode2File(Node*& head, string path) {
+void readNode2File(Node* head[], string path) {
 	ifstream fin;
 	fin.open("../Dataset/" + path);
 	if (!fin.good()) {
@@ -134,8 +134,12 @@ void readNode2File(Node*& head, string path) {
 	}
 	string line;
 	Node* cur = nullptr;
+	int i;
 	while (getline(fin, line)) {
-		add(head, line);
+		if (line[0] >= '0' && line[0] <= '4') {
+			i = int(line[0] - '0');
+		}
+		else add(head[i], line);
 	}
 	fin.close();
 }
