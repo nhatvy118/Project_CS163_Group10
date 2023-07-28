@@ -241,4 +241,11 @@ bool checkExistHis(Node* his, string s) {
 	return false;
 }
 
-
+void deleteLL(Node*& pHead) {
+	if (!pHead) return;
+	while (pHead) {
+		Node* tmp = pHead;
+		pHead = pHead->pNext;
+		delete tmp;
+	}
+}

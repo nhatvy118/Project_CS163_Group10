@@ -47,3 +47,5 @@ void writeNode2File(Node* head, ofstream& fout);
 bool checkExistFavor(Node* favor, string s);
 
 bool checkExistHis(Node* his, string s);
+
+void deleteLL(Node*& pHead);

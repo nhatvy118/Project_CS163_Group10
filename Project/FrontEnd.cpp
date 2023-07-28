@@ -186,7 +186,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			}
 		}
 		//---------------------------------------------------------------------------------------------------------------------------------
-		if (ActualSearchBar.text[0] != '\0' && (IsKeyPressed(KEY_ENTER) || (CheckCollisionPointRec(mousePoint, { 1345,132,41,41 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))) {
+		if ((ActualSearchBar.text[0] != '\0' && IsKeyPressed(KEY_ENTER)) || (CheckCollisionPointRec(mousePoint, { 1345,132,41,41 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
 			if (DictType == "ENG-ENG") {
 				if (!SearchDefMode) {
 					ans.resize(0);
@@ -954,7 +954,6 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 			}
 			if (CheckCollisionPointRec(mousePoint, { 542,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 			{
-				resetData = false;
 				DeleteAllTree(EngEng);
 				DeleteAllTree(EngVie);
 				DeleteAllTree(VieEng);
@@ -970,6 +969,13 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode* VieEng, t
 				readFileToTree(EngVie, EngVieDef, "EngVie.txt");
 				readFileToTree(Emoji, EmojiDef, "Emoji.txt");
 				readFileToTree(Slang, SlangDef, "Slang.txt");
+				for (int i = 0; i < 5; ++i) {
+					deleteLL(history[i]);
+					deleteLL(favor[i]);
+				}
+				hisList.resize(0);
+				hisList = viewList(history[0]);
+				resetData = false;
 			}
 		}
 		EndDrawing();
