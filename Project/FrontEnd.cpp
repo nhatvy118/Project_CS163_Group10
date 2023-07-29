@@ -1059,7 +1059,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 		writeNode2File(history[i], fout);
 	}
 	fout.close();
-	
+
 	for (int i = 0; i < 5; ++i) {
 		deleteLL(history[i]);
 		deleteLL(favor[i]);
@@ -1237,7 +1237,7 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEn
 		DrawTexture(confirm, 969, 643, WHITE);
 		if (CheckCollisionPointRec(mousePoint, { 969,643,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
-			if (WordBar.text[0] == '\0' || DefBar.text[0] == '\0' || choose == true) {
+			if (WordBar.text[0] == '\0' || DefBar.text[0] == '\0' || choose == true ) {
 				addSuccessfully = 2;
 			}
 			else
@@ -1274,8 +1274,8 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEn
 				}
 			}
 		}
-		if (addSuccessfully == 3) DrawText("Successful !", 1036, 827, 40, yellow);
-		else if (addSuccessfully == 2) DrawText("Failed ! ", 1036, 827, 40, yellow);
+		if (addSuccessfully == 3) DrawTextEx(bold, "Successful !", { 1000-60, 800-30 }, 60,0, GREEN);
+		else if (addSuccessfully == 2) DrawTextEx(bold, "Failed !", { 1000-24, 800-30 }, 60, 0, RED);
 		EndDrawing();
 	}
 	ofstream fout;
@@ -1359,6 +1359,8 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 	bool chooseVE = false;
 	bool chooseEmoji = false;
 	bool chooseSlang = false;
+
+	bool isSearchingFav = false;
 
 	NewPageButton Back;
 	Back.button = { 1431,9,61,31 };
@@ -1490,7 +1492,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 					}
 				}
 			}
-			if (checkExistFavor(favor[0], ActualSearchBar.text)) {
+			if (checkExistFavor(favor[0], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0') {
 				displayListDef.resize(0);
 				for (int j = 0; j < listFavorite.size(); ++j) {
 					displayListDef.push_back(false);
@@ -1518,6 +1520,14 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 						DrawTextEx(bold, favoriteDef[i].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
 					}
 				}
+			}
+			if (!checkExistFavor(favor[0], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0')
+			{
+				displayListDef.resize(0);
+				for (int j = 0; j < listFavorite.size(); ++j) {
+					displayListDef.push_back(false);
+				}
+				DrawTextEx(italic, "Favorite word not found", { 988,595 }, 34, 0, navy);
 			}
 			if (listFavorite.size() == 0)
 			{
@@ -1592,7 +1602,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 					}
 				}
 			}
-			if (checkExistFavor(favor[1], ActualSearchBar.text)) {
+			if (checkExistFavor(favor[1], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0') {
 				displayListDef.resize(0);
 				for (int j = 0; j < listFavorite.size(); ++j) {
 					displayListDef.push_back(false);
@@ -1620,6 +1630,14 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 						DrawTextEx(bold, favoriteDef[i].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
 					}
 				}
+			}
+			if (!checkExistFavor(favor[1], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0')
+			{
+				displayListDef.resize(0);
+				for (int j = 0; j < listFavorite.size(); ++j) {
+					displayListDef.push_back(false);
+				}
+				DrawTextEx(italic, "Favorite word not found", { 988,595 }, 34, 0, navy);
 			}
 			if (listFavorite.size() == 0)
 			{
@@ -1694,7 +1712,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 					}
 				}
 			}
-			if (checkExistFavor(favor[2], ActualSearchBar.text)) {
+			if (checkExistFavor(favor[2], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0') {
 				displayListDef.resize(0);
 				for (int j = 0; j < listFavorite.size(); ++j) {
 					displayListDef.push_back(false);
@@ -1722,6 +1740,14 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 						DrawTextEx(bold, favoriteDef[i].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
 					}
 				}
+			}
+			if (!checkExistFavor(favor[2], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0')
+			{
+				displayListDef.resize(0);
+				for (int j = 0; j < listFavorite.size(); ++j) {
+					displayListDef.push_back(false);
+				}
+				DrawTextEx(italic, "Favorite word not found", { 988,595 }, 34, 0, navy);
 			}
 			if (listFavorite.size() == 0)
 			{
@@ -1805,7 +1831,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 					}
 				}
 			}
-			if (checkExistFavor(favor[3], ActualSearchBar.text)) {
+			if (checkExistFavor(favor[3], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0') {
 				displayListDef.resize(0);
 				for (int j = 0; j < listFavorite.size(); ++j) {
 					displayListDef.push_back(false);
@@ -1833,6 +1859,14 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 						DrawTextEx(bold, favoriteDef[i].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
 					}
 				}
+			}
+			if (!checkExistFavor(favor[3], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0')
+			{
+				displayListDef.resize(0);
+				for (int j = 0; j < listFavorite.size(); ++j) {
+					displayListDef.push_back(false);
+				}
+				DrawTextEx(italic, "Favorite word not found", { 988,595 }, 34, 0, navy);
 			}
 			if (listFavorite.size() == 0)
 			{
@@ -1900,7 +1934,7 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 					}
 				}
 			}
-			if (checkExistFavor(favor[4], ActualSearchBar.text)) {
+			if (checkExistFavor(favor[4], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0') {
 				displayListDef.resize(0);
 				for (int j = 0; j < listFavorite.size(); ++j) {
 					displayListDef.push_back(false);
@@ -1928,6 +1962,14 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 						DrawTextEx(bold, favoriteDef[i].c_str(), { 873,defPosY + 54 * (float)(i + newDefMark) }, 28, 0, navy);
 					}
 				}
+			}
+			if (!checkExistFavor(favor[4], ActualSearchBar.text) && ActualSearchBar.text[0] != '\0')
+			{
+				displayListDef.resize(0);
+				for (int j = 0; j < listFavorite.size(); ++j) {
+					displayListDef.push_back(false);
+				}
+				DrawTextEx(italic, "Favorite word not found", { 988,595 }, 34, 0, navy);
 			}
 			if (listFavorite.size() == 0)
 			{
