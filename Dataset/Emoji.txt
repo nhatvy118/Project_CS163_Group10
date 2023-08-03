@@ -19,7 +19,7 @@
 :'-(`user is crying.
 :'-)`user is so happy, s/he is crying.
 :(`sad.
-:)`happy.
+:)`sad.
 :*`kisses.
 :*)`user is drunk.
 :+1:`thumbs up sign

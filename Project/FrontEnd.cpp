@@ -233,7 +233,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			}
 		}
 		//---------------------------------------------------------------------------------------------------------------------------------
-		if ((ActualSearchBar.text[0] != '\0' && (IsKeyPressed(KEY_ENTER)) || CheckCollisionPointRec(mousePoint, { 1345,132,41,41 })) || CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+		if (CheckCollisionPointRec(mousePoint, { 1345,132,41,41 }) || CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 			if (DictType == "ENG-ENG") {
 				if (!SearchDefMode) {
 					ans.resize(0);
@@ -663,12 +663,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						ans.resize(0);
 						tmpWord = recommendResult[i];
 						isDisplayingResult = search(EngEng, tmpWord, ans);
-
-						if (!checkExistHis(history[0], recommendResult[i]))	add(history[0], recommendResult[i]);
-						else {
-							remove(history[0], recommendResult[i]);
-							add(history[0], recommendResult[i]);
-						}
+						remove(history[0], recommendResult[i]);
+						add(history[0], recommendResult[i]);
 						hisList.resize(0);
 						hisList = viewList(history[0]);
 					}
@@ -694,11 +690,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						ans.resize(0);
 						tmpWord = recommendResult[i];
 						isDisplayingResult = search(EngVie, tmpWord, ans);
-						if (!checkExistHis(history[1], recommendResult[i]))	add(history[1], recommendResult[i]);
-						else {
-							remove(history[1], recommendResult[i]);
-							add(history[1], recommendResult[i]);
-						}
+						remove(history[1], recommendResult[i]);
+						add(history[1], recommendResult[i]);
 						hisList.resize(0);
 						hisList = viewList(history[1]);
 					}
@@ -724,11 +717,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						ans.resize(0);
 						tmpWord = recommendResult[i];
 						isDisplayingResult = search(VieEng, tmpWord, ans);
-						if (!checkExistHis(history[2], recommendResult[i]))	add(history[2], recommendResult[i]);
-						else {
-							remove(history[2], recommendResult[i]);
-							add(history[2], recommendResult[i]);
-						}
+						remove(history[2], recommendResult[i]);
+						add(history[2], recommendResult[i]);
 						hisList.resize(0);
 						hisList = viewList(history[2]);
 					}
@@ -754,12 +744,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						ans.resize(0);
 						tmpWord = recommendResult[i];
 						isDisplayingResult = search(Slang, tmpWord, ans);
-
-						if (!checkExistHis(history[3], recommendResult[i]))	add(history[3], recommendResult[i]);
-						else {
-							remove(history[3], recommendResult[i]);
-							add(history[3], recommendResult[i]);
-						}
+						remove(history[3], recommendResult[i]);
+						add(history[3], recommendResult[i]);
 						hisList.resize(0);
 						hisList = viewList(history[3]);
 					}
@@ -785,12 +771,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						ans.resize(0);
 						tmpWord = recommendResult[i];
 						isDisplayingResult = search(Emoji, tmpWord, ans);
-
-						if (!checkExistHis(history[4], recommendResult[i]))	add(history[4], recommendResult[i]);
-						else {
-							remove(history[4], recommendResult[i]);
-							add(history[4], recommendResult[i]);
-						}
+						remove(history[4], recommendResult[i]);
+						add(history[4], recommendResult[i]);
 						hisList.resize(0);
 						hisList = viewList(history[4]);
 					}
@@ -829,33 +811,43 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 		DrawLineEx({ 744,133 }, { 744, 168 }, 4.0, { 16,49,107,255 });
 		//------------------------------------------------------------------------------------------------------------------------
 		if (isUpdatingDef) {
-			if (chooseEE) {
-				DrawRectangle(108, 236, 1312, 710, blue);
-				DrawRectangle(108, 452, 1312, 494, navy);
-				DrawRectangleRoundedLines({ 137,491,1253,367 }, 0.349, 0, 4.0, blue);
-				DrawRectangleRounded({ 108,236,1312,31 }, 0.26, 0, yellow);
-				DrawRectangle(108, 254, 1312, 19, yellow);
-				DrawTexture(confirmBtn, 667, 872, white);
-				DrawTexture(hisDelIcon, 1379, 244, WHITE);
+			DrawRectangle(108, 236, 1312, 710, blue);
+			DrawRectangle(108, 452, 1312, 494, navy);
+			DrawRectangleRoundedLines({ 137,491,1253,367 }, 0.349, 0, 4.0, blue);
+			DrawRectangleRounded({ 108,236,1312,31 }, 0.26, 0, yellow);
+			DrawRectangle(108, 254, 1312, 19, yellow);
+			DrawTexture(confirmBtn, 667, 872, white);
+			DrawTexture(hisDelIcon, 1379, 244, WHITE);
 
-				DrawTextEx(bold, "There are     definitions for this word. You want to update the", { 190,298 }, 55, 0, yellow);
-				DrawTextEx(bold, "definition number:", { 190,343 }, 55, 0, yellow);
-				DrawTextEx(bold, to_string(ans.size()).c_str(), { 382,300 }, 55, 0, yellow);
-				if (CheckCollisionPointRec(mousePoint, { 1379,244,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-					isUpdatingDef = false;
+			DrawTextEx(bold, "There are     definitions for this word. You want to update the", { 190,298 }, 55, 0, yellow);
+			DrawTextEx(bold, "definition number:", { 190,343 }, 55, 0, yellow);
+			DrawTextEx(bold, to_string(ans.size()).c_str(), { 382,300 }, 55, 0, yellow);
+			if (CheckCollisionPointRec(mousePoint, { 1379,244,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				for (int i = 0; i < updateDefIndex.lettercount; ++i) {
+					updateDefIndex.text[i] = '\0';
 				}
-				DrawRectangleRec(updateDefIndex.textbox, yellow);
-				updateDefIndex.worktextbox(chooseIndexDef);
-				DrawTextEx(bold, updateDefIndex.text, { 583,342 }, 55, 0, navy);
+				updateDefIndex.lettercount = 0;
+				for (int i = 0; i < changeDef.lettercount; ++i) {
+					changeDef.text[i] = '\0';
+				}
+				changeDef.lettercount = 0;
+				isUpdatingDef = false;
+			}
+			DrawRectangleRec(updateDefIndex.textbox, yellow);
+			updateDefIndex.worktextbox(chooseIndexDef);
+			DrawTextEx(bold, updateDefIndex.text, { 583,342 }, 55, 0, navy);
 
-				if (IsKeyPressed(KEY_ENTER)) {
-					UpdateIndex = atoi(updateDefIndex.text) - 1;
-					for (int i = 0; i < ans[UpdateIndex].size(); ++i) {
-						changeDef.text[i] = ans[UpdateIndex][i];
-					}
-					changeDef.lettercount = ans[UpdateIndex].size();
+			if (IsKeyPressed(KEY_ENTER) && atoi(updateDefIndex.text) >= 1 && atoi(updateDefIndex.text) <= ans.size()) {
+				UpdateIndex = atoi(updateDefIndex.text) - 1;
+				for (int i = 0; i < ans[UpdateIndex].size(); ++i) {
+					changeDef.text[i] = ans[UpdateIndex][i];
 				}
-				changeDef.worktextbox(isChangingDef);
+				changeDef.lettercount = ans[UpdateIndex].size();
+			}
+			changeDef.worktextbox(isChangingDef);
+
+			if (changeDef.text[0] == '\0') DrawTextEx(bold, "No Definition for this index !", { 175,515 }, 45, 0, RED);
+			else {
 				s = changeDef.text;
 				if (s.size() > 70) {
 					tmpdef = divideString(s, 70);
@@ -866,6 +858,9 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 				else {
 					DrawTextEx(bold, s.c_str(), { 175, 515 }, 45, 0, white);
 				}
+			}
+
+			if (chooseEE) {
 				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 				{
 					updateDef(EngEng, tmpWord, UpdateIndex, changeDef.text);
@@ -884,9 +879,156 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						}
 					}
 					insert(EngEngDef, changeDef.text, { tmpWord });
+
+					ans.resize(0);
+					isDisplayingResult = search(EngEng, tmpWord, ans);
+
+					for (int i = 0; i < updateDefIndex.lettercount; ++i) {
+						updateDefIndex.text[i] = '\0';
+					}
+					updateDefIndex.lettercount = 0;
+					for (int i = 0; i < changeDef.lettercount; ++i) {
+						changeDef.text[i] = '\0';
+					}
+					changeDef.lettercount = 0;
 					isUpdatingDef = false;
 				}
+			}
+			if (chooseEV) {
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					updateDef(EngVie, tmpWord, UpdateIndex, changeDef.text);
+					trieNode* oldDef = find(EngVieDef, ans[UpdateIndex]);
+					vector <string> trash;
+					if (oldDef->mean.size() == 1)
+						DeleteAWord(EngVieDef, ans[UpdateIndex], 0, trash);
+					else
+					{
+						for (int i = 0; i < oldDef->mean.size(); i++)
+						{
+							if (oldDef->mean[i] == tmpWord)
+							{
+								oldDef->mean.erase(oldDef->mean.begin() + i);
+							}
+						}
+					}
+					insert(EngVieDef, changeDef.text, { tmpWord });
 
+					ans.resize(0);
+					isDisplayingResult = search(EngVie, tmpWord, ans);
+
+					for (int i = 0; i < updateDefIndex.lettercount; ++i) {
+						updateDefIndex.text[i] = '\0';
+					}
+					updateDefIndex.lettercount = 0;
+					for (int i = 0; i < changeDef.lettercount; ++i) {
+						changeDef.text[i] = '\0';
+					}
+					changeDef.lettercount = 0;
+					isUpdatingDef = false;
+				}
+			}
+			if (chooseVE) {
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					updateDef(VieEng, tmpWord, UpdateIndex, changeDef.text);
+					trieNode* oldDef = find(VieEngDef, ans[UpdateIndex]);
+					vector <string> trash;
+					if (oldDef->mean.size() == 1)
+						DeleteAWord(VieEngDef, ans[UpdateIndex], 0, trash);
+					else
+					{
+						for (int i = 0; i < oldDef->mean.size(); i++)
+						{
+							if (oldDef->mean[i] == tmpWord)
+							{
+								oldDef->mean.erase(oldDef->mean.begin() + i);
+							}
+						}
+					}
+					insert(VieEngDef, changeDef.text, { tmpWord });
+
+					ans.resize(0);
+					isDisplayingResult = search(VieEng, tmpWord, ans);
+
+					for (int i = 0; i < updateDefIndex.lettercount; ++i) {
+						updateDefIndex.text[i] = '\0';
+					}
+					updateDefIndex.lettercount = 0;
+					for (int i = 0; i < changeDef.lettercount; ++i) {
+						changeDef.text[i] = '\0';
+					}
+					changeDef.lettercount = 0;
+					isUpdatingDef = false;
+				}
+			}
+			if (chooseSlang) {
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					updateDef(Slang, tmpWord, UpdateIndex, changeDef.text);
+					trieNode* oldDef = find(SlangDef, ans[UpdateIndex]);
+					vector <string> trash;
+					if (oldDef->mean.size() == 1)
+						DeleteAWord(SlangDef, ans[UpdateIndex], 0, trash);
+					else
+					{
+						for (int i = 0; i < oldDef->mean.size(); i++)
+						{
+							if (oldDef->mean[i] == tmpWord)
+							{
+								oldDef->mean.erase(oldDef->mean.begin() + i);
+							}
+						}
+					}
+					insert(SlangDef, changeDef.text, { tmpWord });
+
+					ans.resize(0);
+					isDisplayingResult = search(Slang, tmpWord, ans);
+
+					for (int i = 0; i < updateDefIndex.lettercount; ++i) {
+						updateDefIndex.text[i] = '\0';
+					}
+					updateDefIndex.lettercount = 0;
+					for (int i = 0; i < changeDef.lettercount; ++i) {
+						changeDef.text[i] = '\0';
+					}
+					changeDef.lettercount = 0;
+					isUpdatingDef = false;
+				}
+			}
+			if (chooseEmo) {
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					updateDef(Emoji, tmpWord, UpdateIndex, changeDef.text);
+					trieNode* oldDef = find(EmojiDef, ans[UpdateIndex]);
+					vector <string> trash;
+					if (oldDef->mean.size() == 1)
+						DeleteAWord(EmojiDef, ans[UpdateIndex], 0, trash);
+					else
+					{
+						for (int i = 0; i < oldDef->mean.size(); i++)
+						{
+							if (oldDef->mean[i] == tmpWord)
+							{
+								oldDef->mean.erase(oldDef->mean.begin() + i);
+							}
+						}
+					}
+					insert(EmojiDef, changeDef.text, { tmpWord });
+
+					ans.resize(0);
+					isDisplayingResult = search(Emoji, tmpWord, ans);
+
+					for (int i = 0; i < updateDefIndex.lettercount; ++i) {
+						updateDefIndex.text[i] = '\0';
+					}
+					updateDefIndex.lettercount = 0;
+					for (int i = 0; i < changeDef.lettercount; ++i) {
+						changeDef.text[i] = '\0';
+					}
+					changeDef.lettercount = 0;
+					isUpdatingDef = false;
+				}
 			}
 		}
 
