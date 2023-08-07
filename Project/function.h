@@ -40,6 +40,8 @@ void rcmFunc(trieNode* root, string s, vector<string>& ans);
 
 vector <string> divideString(string def, int part);
 
+string divideString1Part(string def, int part);
+
 void readNode2File(Node* head[], string path);
 
 void writeNode2File(Node* head, ofstream& fout);

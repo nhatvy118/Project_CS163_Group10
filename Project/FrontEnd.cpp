@@ -233,7 +233,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			}
 		}
 		//---------------------------------------------------------------------------------------------------------------------------------
-		if (CheckCollisionPointRec(mousePoint, { 1345,132,41,41 }) || CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+		if ((CheckCollisionPointRec(mousePoint, { 1345,132,41,41 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) || (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && IsKeyPressed(KEY_ENTER))) {
 			if (DictType == "ENG-ENG") {
 				if (!SearchDefMode) {
 					ans.resize(0);
@@ -491,7 +491,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			}
 			else {
 
-				if (CheckCollisionPointRec(mousePoint, { 0,338,1512,644 })) {
+				if (CheckCollisionPointRec(mousePoint, { 0,338,753,644 })) {
 					defPositionY += (GetMouseWheelMove() * scrollSpeed);
 					StarPositionY += (GetMouseWheelMove() * scrollSpeed);
 				}
@@ -643,143 +643,283 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			isDisplayRecommend = false;
 		}
 		//////----------------------------------------------------------------------------------------------------------------
-		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] != '\0' && !SearchDefMode) {
+		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] != '\0' /*&& !SearchDefMode*/) {
 			isDisplayRecommend = true;
 		}
 		if (isDisplayRecommend) {
 			if (chooseEE) {
-				recommendTmp = ActualSearchBar.text;
-				hehe = find(EngEng, recommendTmp);
-				recommendResult.resize(0);
-				rcmFunc(hehe, recommendTmp, recommendResult);
-				DrawRectangle(1432, 182 - 30, 30, 30, white);
-				for (int i = 0; i < recommendResult.size(); ++i) {
-					DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-					DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
-					DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
-					DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+				if (!SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(EngEng, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-						ans.resize(0);
-						tmpWord = recommendResult[i];
-						isDisplayingResult = search(EngEng, tmpWord, ans);
-						remove(history[0], recommendResult[i]);
-						add(history[0], recommendResult[i]);
-						hisList.resize(0);
-						hisList = viewList(history[0]);
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(EngEng, tmpWord, ans);
+							remove(history[0], recommendResult[i]);
+							add(history[0], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[0]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
-						recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+				}
+				if (SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(EngEngDef, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						if (recommendResult[i].size() > 75) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						}
+						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(EngEngDef, tmpWord, ans);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 				}
 			}
 			if (chooseEV) {
-				recommendTmp = ActualSearchBar.text;
-				hehe = find(EngVie, recommendTmp);
-				recommendResult.resize(0);
-				rcmFunc(hehe, recommendTmp, recommendResult);
-				DrawRectangle(1432, 182 - 30, 30, 30, white);
-				for (int i = 0; i < recommendResult.size(); ++i) {
-					DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-					DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
-					DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
-					DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+				if (!SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(EngVie, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-						ans.resize(0);
-						tmpWord = recommendResult[i];
-						isDisplayingResult = search(EngVie, tmpWord, ans);
-						remove(history[1], recommendResult[i]);
-						add(history[1], recommendResult[i]);
-						hisList.resize(0);
-						hisList = viewList(history[1]);
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(EngVie, tmpWord, ans);
+							remove(history[1], recommendResult[i]);
+							add(history[1], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[1]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
-						recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+				}
+				if (SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(EngVieDef, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						if (recommendResult[i].size() > 75) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						}
+						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(EngVieDef, tmpWord, ans);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 				}
 			}
 			if (chooseVE) {
-				recommendTmp = ActualSearchBar.text;
-				hehe = find(VieEng, recommendTmp);
-				recommendResult.resize(0);
-				rcmFunc(hehe, recommendTmp, recommendResult);
-				DrawRectangle(1432, 182 - 30, 30, 30, white);
-				for (int i = 0; i < recommendResult.size(); ++i) {
-					DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-					DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
-					DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
-					DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+				if (!SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(VieEng, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-						ans.resize(0);
-						tmpWord = recommendResult[i];
-						isDisplayingResult = search(VieEng, tmpWord, ans);
-						remove(history[2], recommendResult[i]);
-						add(history[2], recommendResult[i]);
-						hisList.resize(0);
-						hisList = viewList(history[2]);
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(VieEng, tmpWord, ans);
+							remove(history[2], recommendResult[i]);
+							add(history[2], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[2]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
-						recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+				}
+				if (SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(VieEngDef, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						if (recommendResult[i].size() > 75) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						}
+						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(VieEngDef, tmpWord, ans);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 				}
 			}
 			if (chooseSlang) {
-				recommendTmp = ActualSearchBar.text;
-				hehe = find(Slang, recommendTmp);
-				recommendResult.resize(0);
-				rcmFunc(hehe, recommendTmp, recommendResult);
-				DrawRectangle(1432, 182 - 30, 30, 30, white);
-				for (int i = 0; i < recommendResult.size(); ++i) {
-					DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-					DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
-					DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
-					DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+				if (!SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(Slang, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-						ans.resize(0);
-						tmpWord = recommendResult[i];
-						isDisplayingResult = search(Slang, tmpWord, ans);
-						remove(history[3], recommendResult[i]);
-						add(history[3], recommendResult[i]);
-						hisList.resize(0);
-						hisList = viewList(history[3]);
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(Slang, tmpWord, ans);
+							remove(history[3], recommendResult[i]);
+							add(history[3], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[3]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
-						recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+				}
+				if (SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(SlangDef, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						if (recommendResult[i].size() > 75) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						}
+						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(SlangDef, tmpWord, ans);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 				}
 			}
 			if (chooseEmo) {
-				recommendTmp = ActualSearchBar.text;
-				hehe = find(Emoji, recommendTmp);
-				recommendResult.resize(0);
-				rcmFunc(hehe, recommendTmp, recommendResult);
-				DrawRectangle(1432, 182 - 30, 30, 30, white);
-				for (int i = 0; i < recommendResult.size(); ++i) {
-					DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-					DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
-					DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
-					DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+				if (!SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(Emoji, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-						ans.resize(0);
-						tmpWord = recommendResult[i];
-						isDisplayingResult = search(Emoji, tmpWord, ans);
-						remove(history[4], recommendResult[i]);
-						add(history[4], recommendResult[i]);
-						hisList.resize(0);
-						hisList = viewList(history[4]);
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(Emoji, tmpWord, ans);
+							remove(history[4], recommendResult[i]);
+							add(history[4], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[4]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
-						recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+				}
+				if (SearchDefMode) {
+					recommendTmp = ActualSearchBar.text;
+					hehe = find(EmojiDef, recommendTmp);
+					recommendResult.resize(0);
+					rcmFunc(hehe, recommendTmp, recommendResult);
+					DrawRectangle(1432, 182 - 30, 30, 30, white);
+					for (int i = 0; i < recommendResult.size(); ++i) {
+						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
+						if (recommendResult[i].size() > 75) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						}
+						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
+						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
+
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+							ans.resize(0);
+							tmpWord = recommendResult[i];
+							isDisplayingResult = search(EmojiDef, tmpWord, ans);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
+							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
+						}
+						if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 					}
-					if (recommendBoxPosY > 182) recommendBoxPosY = 182;
 				}
 			}
 		}
@@ -1379,7 +1519,7 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEn
 		DrawTexture(confirm, 969, 643, WHITE);
 		if (CheckCollisionPointRec(mousePoint, { 969,643,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
-			if (WordBar.text[0] == '\0' || DefBar.text[0] == '\0' || choose == true ) {
+			if (WordBar.text[0] == '\0' || DefBar.text[0] == '\0' || choose == true) {
 				addSuccessfully = 2;
 			}
 			else
@@ -1416,8 +1556,8 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEn
 				}
 			}
 		}
-		if (addSuccessfully == 3) DrawTextEx(bold, "Successful !", { 1000-60, 800-30 }, 60,0, GREEN);
-		else if (addSuccessfully == 2) DrawTextEx(bold, "Failed !", { 1000-24, 800-30 }, 60, 0, RED);
+		if (addSuccessfully == 3) DrawTextEx(bold, "Successful !", { 1000 - 60, 800 - 30 }, 60, 0, GREEN);
+		else if (addSuccessfully == 2) DrawTextEx(bold, "Failed !", { 1000 - 24, 800 - 30 }, 60, 0, RED);
 		EndDrawing();
 	}
 	ofstream fout;

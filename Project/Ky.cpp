@@ -125,6 +125,17 @@ vector <string> divideString(string def, int part ) {
 	return save;
 }
 
+string divideString1Part(string def, int part) {
+	int i = 0;
+	int j = part;
+	string tmp;
+	while (def[j] != ' ') {
+		--j;
+	}
+	tmp = def.substr(i, j - i);
+
+	return tmp;
+}
 void readNode2File(Node* head[], string path) {
 	ifstream fin;
 	fin.open("../Dataset/" + path);
