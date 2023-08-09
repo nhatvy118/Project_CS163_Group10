@@ -202,30 +202,35 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 		//---------------------------------------------------------------------------------------------------------------------------------
 		if (CheckCollisionPointRec(mousePoint, randomWordBox) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			if (chooseEE) {
+				if (SearchDefMode) SearchDefMode = false;
 				random1Word4Def(EngEng, randomWord, randomWordDef, wrongdef);
 				ans.resize(0);
 				isDisplayingResult = search(EngEng, randomWord, ans);
 				tmpWord = randomWord;
 			}
 			if (chooseEV) {
+				if (SearchDefMode) SearchDefMode = false;
 				random1Word4Def(EngVie, randomWord, randomWordDef, wrongdef);
 				ans.resize(0);
 				isDisplayingResult = search(EngVie, randomWord, ans);
 				tmpWord = randomWord;
 			}
 			if (chooseVE) {
+				if (SearchDefMode) SearchDefMode = false;
 				random1Word4Def(VieEng, randomWord, randomWordDef, wrongdef);
 				ans.resize(0);
 				isDisplayingResult = search(VieEng, randomWord, ans);
 				tmpWord = randomWord;
 			}
 			if (chooseSlang) {
+				if (SearchDefMode) SearchDefMode = false;
 				random1Word4Def(Slang, randomWord, randomWordDef, wrongdef);
 				ans.resize(0);
 				isDisplayingResult = search(Slang, randomWord, ans);
 				tmpWord = randomWord;
 			}
 			if (chooseEmo) {
+				if (SearchDefMode) SearchDefMode = false;
 				random1Word4Def(Emoji, randomWord, randomWordDef, wrongdef);
 				ans.resize(0);
 				isDisplayingResult = search(Emoji, randomWord, ans);
