@@ -685,7 +685,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
 
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EngEng, tmpWord, ans);
@@ -716,7 +716,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
 
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EngEngDef, tmpWord, ans);
@@ -741,7 +741,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EngVie, tmpWord, ans);
@@ -771,7 +771,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EngVieDef, tmpWord, ans);
@@ -796,7 +796,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(VieEng, tmpWord, ans);
@@ -826,7 +826,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(VieEngDef, tmpWord, ans);
@@ -851,7 +851,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(Slang, tmpWord, ans);
@@ -881,7 +881,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(SlangDef, tmpWord, ans);
@@ -906,7 +906,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(Emoji, tmpWord, ans);
@@ -936,7 +936,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
 						DrawLine(754, recommendBoxPosY + 54 + 54 * i, 1462, recommendBoxPosY + 54 + 54 * i, blue);
 						DrawRectangle(1432, 122, 30, 60, white);
-						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i,708,54 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EmojiDef, tmpWord, ans);
