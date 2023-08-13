@@ -81,21 +81,23 @@ void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector
 			node = node->c[rand];
 			temp.push_back(rand + 32);
 			if (node->isEnd) {
-				if (count == 0) {
-					true_word = temp;
-					true_def = node->mean[0];
-					count++;
-				}
-				else {
-					bool duplicate = false;
-					for (string x : wrong_def)
-						if (x == node->mean[0]) {
-							duplicate = true;
-							break;
-						}
-					if (!duplicate) {
-						wrong_def[count - 1] = node->mean[0];
+				if (temp.size() <= 90 && node->mean[0].size() <= 90) {
+					if (count == 0) {
+						true_word = temp;
+						true_def = node->mean[0];
 						count++;
+					}
+					else {
+						bool duplicate = false;
+						for (string x : wrong_def)
+							if (x == node->mean[0]) {
+								duplicate = true;
+								break;
+							}
+						if (!duplicate) {
+							wrong_def[count - 1] = node->mean[0];
+							count++;
+						}
 					}
 				}
 				break;
