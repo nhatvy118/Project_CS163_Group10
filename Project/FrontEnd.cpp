@@ -195,6 +195,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 	int recommendBoxPosY = 182;
 	string recommendTmp = "";
 	trieNode* hehe = nullptr;
+
+	bool resetSuccesful = false;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -1334,6 +1336,15 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 				hisList.resize(0);
 				hisList = viewList(history[0]);
 				resetData = false;
+				resetSuccesful = true;
+			}
+		}
+		if (resetSuccesful) {
+			DrawRectangleRounded({ 501,375,511,230 }, 0.08, 0, blue);
+			DrawTextEx(bold, "Reset Data Succesfully", { 565,450 }, 48, 0, GREEN);
+			DrawTexture(closeIcon, 966, 393, WHITE);
+			if (CheckCollisionPointRec(mousePoint, { 966,393,24,24 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				resetSuccesful = false;
 			}
 		}
 		EndDrawing();
@@ -2576,12 +2587,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
@@ -2618,12 +2629,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
@@ -2659,12 +2670,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
@@ -2700,12 +2711,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
@@ -2741,12 +2752,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
@@ -2782,12 +2793,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
@@ -2823,12 +2834,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
@@ -2864,12 +2875,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
@@ -2905,12 +2916,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
@@ -2946,12 +2957,12 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 				wrongAns = false;
 				positionWrong = 0;
 			}
-			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 20, 0, navy);
-			DrawTextEx(bold, trueDef.c_str(), { 293,540 + 125 * (float)randomNum }, 20, 0, navy);
+			DrawTextEx(bold, trueWord.c_str(), { 293,387 }, 30, 0, navy);
+			DrawTextEx(bold, trueDef.c_str(), { 293,535 + 125 * (float)randomNum }, 30, 0, navy);
 			int j = 0;
 			for (int i = 0; i < 4; ++i) {
 				if (i != randomNum) {
-					DrawTextEx(bold, wrongdef[j].c_str(), { 293,540 + 125 * (float)i }, 20, 0, navy);
+					DrawTextEx(bold, wrongdef[j].c_str(), { 293,535 + 125 * (float)i }, 30, 0, navy);
 					++j;
 				}
 			}
