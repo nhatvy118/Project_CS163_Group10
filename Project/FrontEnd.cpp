@@ -594,6 +594,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						add(history[0], hisList[i]);
 						hisList.resize(0);
 						hisList = viewList(history[0]);
+						for (int i = 0; i < tmpWord.size(); ++i) {
+							ActualSearchBar.text[i] = tmpWord[i];
+						}
+						ActualSearchBar.lettercount = tmpWord.size();
 					}
 				}
 				if (chooseEV) {
@@ -610,6 +614,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						add(history[1], hisList[i]);
 						hisList.resize(0);
 						hisList = viewList(history[1]);
+						for (int i = 0; i < tmpWord.size(); ++i) {
+							ActualSearchBar.text[i] = tmpWord[i];
+						}
+						ActualSearchBar.lettercount = tmpWord.size();
 					}
 				}
 				if (chooseVE) {
@@ -626,6 +634,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						add(history[2], hisList[i]);
 						hisList.resize(0);
 						hisList = viewList(history[2]);
+						for (int i = 0; i < tmpWord.size(); ++i) {
+							ActualSearchBar.text[i] = tmpWord[i];
+						}
+						ActualSearchBar.lettercount = tmpWord.size();
 					}
 				}
 				if (chooseSlang) {
@@ -642,6 +654,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						add(history[3], hisList[i]);
 						hisList.resize(0);
 						hisList = viewList(history[3]);
+						for (int i = 0; i < tmpWord.size(); ++i) {
+							ActualSearchBar.text[i] = tmpWord[i];
+						}
+						ActualSearchBar.lettercount = tmpWord.size();
 					}
 				}
 				if (chooseEmo) {
@@ -658,6 +674,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						add(history[4], hisList[i]);
 						hisList.resize(0);
 						hisList = viewList(history[4]);
+						for (int i = 0; i < tmpWord.size(); ++i) {
+							ActualSearchBar.text[i] = tmpWord[i];
+						}
+						ActualSearchBar.lettercount = tmpWord.size();
 					}
 				}
 			}
@@ -669,7 +689,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			isDisplayRecommend = false;
 		}
 		//////----------------------------------------------------------------------------------------------------------------
-		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] != '\0' /*&& !SearchDefMode*/) {
+		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] != '\0') {
 			isDisplayRecommend = true;
 		}
 		if (isDisplayRecommend) {
@@ -695,6 +715,11 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							add(history[0], recommendResult[i]);
 							hisList.resize(0);
 							hisList = viewList(history[0]);
+							
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -751,6 +776,11 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							add(history[1], recommendResult[i]);
 							hisList.resize(0);
 							hisList = viewList(history[1]);
+
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -806,6 +836,11 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							add(history[2], recommendResult[i]);
 							hisList.resize(0);
 							hisList = viewList(history[2]);
+
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -861,6 +896,11 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							add(history[3], recommendResult[i]);
 							hisList.resize(0);
 							hisList = viewList(history[3]);
+
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -916,6 +956,11 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							add(history[4], recommendResult[i]);
 							hisList.resize(0);
 							hisList = viewList(history[4]);
+
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -1289,6 +1334,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 		if (CheckCollisionPointRec(mousePoint, { 1405,132,40,40 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			if (SearchDefMode) SearchDefMode = false;
 			else SearchDefMode = true;
+			isDisplayingResult = false;
 		}
 		DrawTexture(SearchBtn, 1345, 132, WHITE);
 
@@ -1307,8 +1353,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			if (CheckCollisionPointRec(mousePoint, { 966,393,24,24 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				resetData = false;
 			}
-			if (CheckCollisionPointRec(mousePoint, { 811,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-			{
+			if (CheckCollisionPointRec(mousePoint, { 811,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				resetData = false;
 			}
 			if (CheckCollisionPointRec(mousePoint, { 542,534,161,49 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
