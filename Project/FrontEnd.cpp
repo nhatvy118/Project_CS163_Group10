@@ -105,6 +105,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 	ActualSearchBar.textbox = { 731, 122, 616, 60 };
 	bool isSearching = false;
 	bool isDisplayingResult = false;
+	bool searchNoResult = false;
 	Texture2D SearchWordModeBtn = LoadTexture("../resources/SearchWordMode.png");
 	Texture2D SearchDefModeBtn = LoadTexture("../resources/SearchDefMode.png");
 	Texture2D SearchBtn = LoadTexture("../resources/searchBtn.png");
@@ -197,6 +198,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 	trieNode* hehe = nullptr;
 
 	bool resetSuccesful = false;
+	bool deleteSuccesful = false;
+	bool tooMuchChar = false;
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -252,6 +255,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							remove(history[0], ActualSearchBar.text);
 							add(history[0], ActualSearchBar.text);
 						}
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
 					}
 					hisList.resize(0);
 					hisList = viewList(history[0]);
@@ -260,7 +267,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					ans.resize(0);
 					tmpWord = ActualSearchBar.text;
 					isDisplayingResult = search(EngEngDef, ActualSearchBar.text, ans);
-					//if (isDisplayingResult) add(history[0], ActualSearchBar.text);
+					if (isDisplayingResult) {
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
+					}
 				}
 			}
 			if (DictType == "ENG-VIE") {
@@ -274,13 +286,24 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							remove(history[1], ActualSearchBar.text);
 							add(history[1], ActualSearchBar.text);
 						}
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
 					}
 					hisList.resize(0);
 					hisList = viewList(history[1]);
 				}
 				else {
 					ans.resize(0);
+					tmpWord = ActualSearchBar.text;
 					isDisplayingResult = search(EngVieDef, ActualSearchBar.text, ans);
+					if (isDisplayingResult) {
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
+					}
 				}
 			}
 			if (DictType == "VIE-ENG") {
@@ -294,13 +317,24 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							remove(history[2], ActualSearchBar.text);
 							add(history[2], ActualSearchBar.text);
 						}
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
 					}
 					hisList.resize(0);
 					hisList = viewList(history[2]);
 				}
 				else {
 					ans.resize(0);
+					tmpWord = ActualSearchBar.text;
 					isDisplayingResult = search(VieEngDef, ActualSearchBar.text, ans);
+					if (isDisplayingResult) {
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
+					}
 				}
 			}
 			if (DictType == "SLANG") {
@@ -314,13 +348,24 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							remove(history[3], ActualSearchBar.text);
 							add(history[3], ActualSearchBar.text);
 						}
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
 					}
 					hisList.resize(0);
 					hisList = viewList(history[3]);
 				}
 				else {
 					ans.resize(0);
+					tmpWord = ActualSearchBar.text;
 					isDisplayingResult = search(SlangDef, ActualSearchBar.text, ans);
+					if (isDisplayingResult) {
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
+					}
 				}
 			}
 			if (DictType == "EMOJI") {
@@ -334,13 +379,25 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							remove(history[4], ActualSearchBar.text);
 							add(history[4], ActualSearchBar.text);
 						}
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
 					}
 					hisList.resize(0);
+					tmpWord = ActualSearchBar.text;
 					hisList = viewList(history[4]);
 				}
 				else {
 					ans.resize(0);
+					tmpWord = ActualSearchBar.text;
 					isDisplayingResult = search(EmojiDef, ActualSearchBar.text, ans);
+					if (isDisplayingResult) {
+						searchNoResult = false;
+					}
+					else {
+						searchNoResult = true;
+					}
 				}
 			}
 		}
@@ -489,6 +546,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 						}
 						isDisplayingResult = false;
 						confirmDelete = false;
+						deleteSuccesful = true;
 					}
 				}
 				if (CheckCollisionPointRec(mousePoint, { Definition.x + 1370 + 3, Definition.y + 5, 37,37 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
@@ -529,12 +587,13 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			}
 		}
 		else {
-			DrawTextEx(bold, "No Data Available", { 20 + 450, (520) }, 100, 0, RED);
-			DrawTextEx(bold, "Please try again", { 20 + 50 + 450, (600) }, 90, 0, RED);
 			defPositionY = 590;
 			StarPositionY = 595;
 		};
-
+		if (searchNoResult) {
+			DrawTextEx(bold, "No Data Available", { 20 + 450, (520) }, 100, 0, RED);
+			DrawTextEx(bold, "Please try again", { 20 + 50 + 450, (600) }, 90, 0, RED);
+		}
 
 		DrawRectangle(0, 0, 1512, 340, navy);
 		DrawRectangle(0, 0, 1512, 48, blue);
@@ -598,6 +657,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ActualSearchBar.text[i] = tmpWord[i];
 						}
 						ActualSearchBar.lettercount = tmpWord.size();
+						searchNoResult = false;
 					}
 				}
 				if (chooseEV) {
@@ -618,6 +678,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ActualSearchBar.text[i] = tmpWord[i];
 						}
 						ActualSearchBar.lettercount = tmpWord.size();
+						searchNoResult = false;
 					}
 				}
 				if (chooseVE) {
@@ -638,6 +699,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ActualSearchBar.text[i] = tmpWord[i];
 						}
 						ActualSearchBar.lettercount = tmpWord.size();
+						searchNoResult = false;
 					}
 				}
 				if (chooseSlang) {
@@ -658,6 +720,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ActualSearchBar.text[i] = tmpWord[i];
 						}
 						ActualSearchBar.lettercount = tmpWord.size();
+						searchNoResult = false;
 					}
 				}
 				if (chooseEmo) {
@@ -678,6 +741,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ActualSearchBar.text[i] = tmpWord[i];
 						}
 						ActualSearchBar.lettercount = tmpWord.size();
+						searchNoResult = false;
 					}
 				}
 			}
@@ -720,6 +784,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 								ActualSearchBar.text[i] = tmpWord[i];
 							}
 							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -747,6 +812,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EngEngDef, tmpWord, ans);
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -781,6 +847,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 								ActualSearchBar.text[i] = tmpWord[i];
 							}
 							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -807,6 +874,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EngVieDef, tmpWord, ans);
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -841,6 +909,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 								ActualSearchBar.text[i] = tmpWord[i];
 							}
 							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -867,6 +936,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(VieEngDef, tmpWord, ans);
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -901,6 +971,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 								ActualSearchBar.text[i] = tmpWord[i];
 							}
 							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -927,6 +998,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(SlangDef, tmpWord, ans);
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -961,6 +1033,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 								ActualSearchBar.text[i] = tmpWord[i];
 							}
 							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -987,6 +1060,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EmojiDef, tmpWord, ans);
+							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
 							recommendBoxPosY += (GetMouseWheelMove() * scrollSpeed);
@@ -1063,8 +1137,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			if (changeDef.text[0] == '\0') DrawTextEx(bold, "No Definition for this index !", { 175,515 }, 45, 0, RED);
 			else {
 				s = changeDef.text;
-				if (s.size() > 70) {
-					tmpdef = divideString(s, 70);
+				if (s.size() > 60) {
+					tmpdef = divideString(s, 60);
 					for (int j = 0; j < tmpdef.size(); ++j) {
 						DrawTextEx(bold, tmpdef[j].c_str(), { 175,515 + 50 * (float)(j) }, 45, 0, white);
 					}
@@ -1075,7 +1149,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			}
 
 			if (chooseEE) {
-				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount <100)
 				{
 					updateDef(EngEng, tmpWord, UpdateIndex, changeDef.text);
 					trieNode* oldDef = find(EngEngDef, ans[UpdateIndex]);
@@ -1107,9 +1181,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					changeDef.lettercount = 0;
 					isUpdatingDef = false;
 				}
+				else if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount >= 100) {
+					tooMuchChar = true;
+				}
 			}
 			if (chooseEV) {
-				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount < 100)
 				{
 					updateDef(EngVie, tmpWord, UpdateIndex, changeDef.text);
 					trieNode* oldDef = find(EngVieDef, ans[UpdateIndex]);
@@ -1141,9 +1218,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					changeDef.lettercount = 0;
 					isUpdatingDef = false;
 				}
+				else if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount >= 100) {
+					tooMuchChar = true;
+				}
 			}
 			if (chooseVE) {
-				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount < 100)
 				{
 					updateDef(VieEng, tmpWord, UpdateIndex, changeDef.text);
 					trieNode* oldDef = find(VieEngDef, ans[UpdateIndex]);
@@ -1175,9 +1255,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					changeDef.lettercount = 0;
 					isUpdatingDef = false;
 				}
+				else if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount >= 100) {
+					tooMuchChar = true;
+				}
 			}
 			if (chooseSlang) {
-				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount < 100)
 				{
 					updateDef(Slang, tmpWord, UpdateIndex, changeDef.text);
 					trieNode* oldDef = find(SlangDef, ans[UpdateIndex]);
@@ -1209,9 +1292,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					changeDef.lettercount = 0;
 					isUpdatingDef = false;
 				}
+				else if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount >= 100) {
+					tooMuchChar = true;
+				}
 			}
 			if (chooseEmo) {
-				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount < 100)
 				{
 					updateDef(Emoji, tmpWord, UpdateIndex, changeDef.text);
 					trieNode* oldDef = find(EmojiDef, ans[UpdateIndex]);
@@ -1242,6 +1328,9 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					}
 					changeDef.lettercount = 0;
 					isUpdatingDef = false;
+				}
+				else if (CheckCollisionPointRec(mousePoint, { 675,877,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && changeDef.lettercount >= 100) {
+					tooMuchChar = true;
 				}
 			}
 		}
@@ -1382,6 +1471,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 				hisList = viewList(history[0]);
 				resetData = false;
 				resetSuccesful = true;
+				isDisplayingResult = false;
 			}
 		}
 		if (resetSuccesful) {
@@ -1390,6 +1480,23 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 			DrawTexture(closeIcon, 966, 393, WHITE);
 			if (CheckCollisionPointRec(mousePoint, { 966,393,24,24 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				resetSuccesful = false;
+			}
+		}
+		if (deleteSuccesful) {
+			DrawRectangleRounded({ 501,375,511,230 }, 0.08, 0, blue);
+			DrawTextEx(bold, "Delete Data Succesfully", { 565,450 }, 48, 0, GREEN);
+			DrawTexture(closeIcon, 966, 393, WHITE);
+			if (CheckCollisionPointRec(mousePoint, { 966,393,24,24 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				deleteSuccesful = false;
+			}
+		}
+		if (tooMuchChar) {
+			DrawRectangleRounded({ 501,375,511,230 }, 0.08, 0, blue);
+			DrawRectangleRoundedLines({ 501,375,511,230 }, 0.08, 0, 2, yellow);
+			DrawTextEx(bold, "New Def must < 100 chars", { 550,450 }, 48, 0, RED);
+			DrawTexture(closeIcon, 966, 393, WHITE);
+			if (CheckCollisionPointRec(mousePoint, { 966,393,24,24 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				tooMuchChar = false;
 			}
 		}
 		EndDrawing();
@@ -1602,8 +1709,14 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEn
 		DrawTexture(confirm, 969, 643, WHITE);
 		if (CheckCollisionPointRec(mousePoint, { 969,643,162,60 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
-			if (WordBar.text[0] == '\0' || DefBar.text[0] == '\0' || choose == true) {
+			if (WordBar.text[0] == '\0') {
 				addSuccessfully = 2;
+			}
+			else if (DefBar.text[0] == '\0') {
+				addSuccessfully = 4;
+			}
+			else if (!chooseEE && !chooseEV && !chooseVE && !chooseSlang && !chooseEE) {
+				addSuccessfully = 5;
 			}
 			else
 			{
@@ -1639,8 +1752,10 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEn
 				}
 			}
 		}
-		if (addSuccessfully == 3) DrawTextEx(bold, "Successful !", { 1000 - 60, 800 - 30 }, 60, 0, GREEN);
-		else if (addSuccessfully == 2) DrawTextEx(bold, "Failed !", { 1000 - 24, 800 - 30 }, 60, 0, RED);
+		if (addSuccessfully == 3) DrawTextEx(bold, "Successful !", { 1000 - 65, 800 - 30 }, 60, 0, GREEN);
+		else if (addSuccessfully == 2) DrawTextEx(bold, "Please input the word", { 840, 800 - 30 }, 60, 0, RED);
+		else if (addSuccessfully == 4) DrawTextEx(bold, "Please input the definition", { 800, 800 - 30 }, 60, 0, RED);
+		else if (addSuccessfully == 5) DrawTextEx(bold, "Please choose the dataset to add", { 730, 800 - 30 }, 60, 0, RED);
 		EndDrawing();
 	}
 	ofstream fout;
