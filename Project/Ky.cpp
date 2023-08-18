@@ -149,13 +149,14 @@ void readNode2File(Node* head[], string path) {
 	Node* cur = nullptr;
 	int i;
 	while (getline(fin, line)) {
-		if (line[0] >= '0' && line[0] <= '4') {
+		if (line[0] >= '0' && line[0] <= '9') {
 			i = int(line[0] - '0');
 		}
 		else add(head[i], line);
 	}
 	fin.close();
 }
+
 
 void writeNode2File(Node* head, ofstream& fout) {
 	if (!head)

@@ -18,7 +18,7 @@ trieNode* EmojiDef = nullptr;
 trieNode* Slang = nullptr;
 trieNode* SlangDef = nullptr;
 Node* favor[5] = { nullptr };
-Node* history[5] = { nullptr };
+Node* history[10] = { nullptr };
 int main() {
 	const int screenW = 1512;
 	const int screenH = 982;

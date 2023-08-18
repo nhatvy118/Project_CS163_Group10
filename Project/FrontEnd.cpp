@@ -167,8 +167,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 
 	string tmpWord = "";
 	vector <string> tmpdef;
-	int defPositionY = 590;
-	int StarPositionY = 595;
+	int defPositionY = 670;
+	int StarPositionY = 675;
 	int index = 0;
 
 	vector<string> ans;
@@ -200,6 +200,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 	bool resetSuccesful = false;
 	bool deleteSuccesful = false;
 	bool tooMuchChar = false;
+
+	Rectangle tmpVocab = { 41, 600,150,49 };
 	while (!WindowShouldClose()) {
 		mousePoint = GetMousePosition();
 		BeginDrawing();
@@ -268,11 +270,18 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					tmpWord = ActualSearchBar.text;
 					isDisplayingResult = search(EngEngDef, ActualSearchBar.text, ans);
 					if (isDisplayingResult) {
+						if (!checkExistHis(history[5], ActualSearchBar.text))	add(history[5], ActualSearchBar.text);
+						else {
+							remove(history[5], ActualSearchBar.text);
+							add(history[5], ActualSearchBar.text);
+						}
 						searchNoResult = false;
 					}
 					else {
 						searchNoResult = true;
 					}
+					hisList.resize(0);
+					hisList = viewList(history[5]);
 				}
 			}
 			if (DictType == "ENG-VIE") {
@@ -555,13 +564,12 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 				}
 			}
 			else {
-
 				if (CheckCollisionPointRec(mousePoint, { 0,338,753,644 })) {
 					defPositionY += (GetMouseWheelMove() * scrollSpeed);
 					StarPositionY += (GetMouseWheelMove() * scrollSpeed);
 				}
-				if (defPositionY > 470) defPositionY = 470;
-				if (StarPositionY > 475) StarPositionY = 475;
+				if (defPositionY > 670) defPositionY = 670;
+				if (StarPositionY > 675) StarPositionY = 675;
 				int newDefMark = 0;
 				for (int i = 0; i < ans.size(); ++i) {
 					if (ans[i].size() > 130) {
@@ -579,16 +587,27 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					}
 				}
 
-				DrawRectangle(10, 388, 1492, 80, white);
-				DrawRectangleRounded(Vocab, 0.3, 0, yellow);
+				DrawRectangle(10, 388, 1492,600-411+49, white);
+
+				DrawRectangleRounded({41, 411,207,49}, 0.3, 0, yellow);
+				DrawTextEx(bold, "Definition", { 67,412 }, 43, 0, navy);
+				DrawTextEx(bold, tmpWord.c_str(), {67,470}, 30, 0, navy);
 				DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 2, Vocab.x + 1400, Vocab.y + Vocab.height - 2, yellow);
 				DrawLine(Vocab.x + 10, Vocab.y + Vocab.height - 1, Vocab.x + 1400, Vocab.y + Vocab.height - 1, yellow);
-				DrawTextEx(bold, "Vocab", { 69,412 }, 43, 0, navy);
+
+				/*Rectangle Vocab = { 41,411,150,49 };
+				Rectangle Definition = { 41, 530,207,49 };*/
+
+				
+				DrawRectangleRounded(tmpVocab, 0.3, 0, yellow);
+				DrawLine(tmpVocab.x + 10, tmpVocab.y + tmpVocab.height - 2, tmpVocab.x + 1400, tmpVocab.y + tmpVocab.height - 2, yellow);
+				DrawLine(tmpVocab.x + 10, tmpVocab.y + tmpVocab.height - 1, tmpVocab.x + 1400, tmpVocab.y + tmpVocab.height - 1, yellow);
+				DrawTextEx(bold, "Vocab", { 69,601 }, 43, 0, navy);
 			}
 		}
 		else {
-			defPositionY = 590;
-			StarPositionY = 595;
+			defPositionY = 670;
+			StarPositionY = 675;
 		};
 		if (searchNoResult) {
 			DrawTextEx(bold, "No Data Available", { 20 + 450, (520) }, 100, 0, RED);
@@ -607,143 +626,282 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 		}
 		if (hisPosY > 195) hisPosY = 195;
 		if (delHisPosY > 205) delHisPosY = 205;
-		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] == '\0' && !SearchDefMode) {
+		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] == '\0') {
 			isDisplayHis = true;
 		}
 		if (isDisplayHis) {
-			if (chooseEE) {
-				hisList.resize(0);
-				hisList = viewList(history[0]);
+			if (!SearchDefMode) {
+				if (chooseEE) {
+					hisList.resize(0);
+					hisList = viewList(history[0]);
+				}
+				if (chooseEV) {
+					hisList.resize(0);
+					hisList = viewList(history[1]);
+				}
+				if (chooseVE) {
+					hisList.resize(0);
+					hisList = viewList(history[2]);
+				}
+				if (chooseSlang) {
+					hisList.resize(0);
+					hisList = viewList(history[3]);
+				}
+				if (chooseEmo) {
+					hisList.resize(0);
+					hisList = viewList(history[4]);
+				}
 			}
-			if (chooseEV) {
-				hisList.resize(0);
-				hisList = viewList(history[1]);
-			}
-			if (chooseVE) {
-				hisList.resize(0);
-				hisList = viewList(history[2]);
-			}
-			if (chooseSlang) {
-				hisList.resize(0);
-				hisList = viewList(history[3]);
-			}
-			if (chooseEmo) {
-				hisList.resize(0);
-				hisList = viewList(history[4]);
+			else {
+				if (chooseEE) {
+					hisList.resize(0);
+					hisList = viewList(history[5]);
+				}
+				if (chooseEV) {
+					hisList.resize(0);
+					hisList = viewList(history[6]);
+				}
+				if (chooseVE) {
+					hisList.resize(0);
+					hisList = viewList(history[7]);
+				}
+				if (chooseSlang) {
+					hisList.resize(0);
+					hisList = viewList(history[8]);
+				}
+				if (chooseEmo) {
+					hisList.resize(0);
+					hisList = viewList(history[9]);
+				}
 			}
 			for (int i = 0; i < hisList.size(); ++i) {
 				DrawRectangle(754, hisPosY - 13 + 54 * i, 708, 54, white);
-				DrawTextEx(bold, hisList[i].c_str(), { 820,hisPosY + 54 * (float)i }, 26, 0, navy);
+				//DrawTextEx(bold, hisList[i].c_str(), { 820,hisPosY + 54 * (float)i }, 26, 0, navy);
+				if (hisList[i].size() > 65) {
+					DrawTextEx(bold, divideString1Part(hisList[i], 65).c_str(), { 820,hisPosY + 54 * (float)i }, 26, 0, navy);
+				}
+				else DrawTextEx(bold, hisList[i].c_str(), { 820,hisPosY + 54 * (float)i }, 26, 0, navy);
+
 				DrawLine(754, hisPosY - 13 + 54 * i, 1462, hisPosY - 13 + 54 * i, blue);
 				DrawLine(754, hisPosY - 13 + 54 + 54 * i, 1462, hisPosY - 13 + 54 + 54 * i, blue);
 				DrawTexture(hisIcon, 764, hisPosY - 5 + 54 * i, WHITE);
 				DrawTexture(hisDelIcon, 1420, delHisPosY + 54 * i, WHITE);
 				DrawRectangle(1432, 122, 30, 60, white);
-				if (chooseEE) {
-					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						remove(history[0], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[0]);
-					}
-					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						ans.resize(0);
-						tmpWord = hisList[i];
-						isDisplayingResult = search(EngEng, tmpWord, ans);
-						remove(history[0], hisList[i]);
-						add(history[0], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[0]);
-						for (int i = 0; i < tmpWord.size(); ++i) {
-							ActualSearchBar.text[i] = tmpWord[i];
+				if (!SearchDefMode) {
+					if (chooseEE) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[0], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[0]);
 						}
-						ActualSearchBar.lettercount = tmpWord.size();
-						searchNoResult = false;
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(EngEng, tmpWord, ans);
+							remove(history[0], hisList[i]);
+							add(history[0], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[0]);
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
+						}
+					}
+					if (chooseEV) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[1], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[1]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(EngVie, tmpWord, ans);
+							remove(history[1], hisList[i]);
+							add(history[1], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[1]);
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
+						}
+					}
+					if (chooseVE) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[2], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[2]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(VieEng, tmpWord, ans);
+							remove(history[2], hisList[i]);
+							add(history[2], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[2]);
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
+						}
+					}
+					if (chooseSlang) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[3], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[3]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(Slang, tmpWord, ans);
+							remove(history[3], hisList[i]);
+							add(history[3], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[3]);
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
+						}
+					}
+					if (chooseEmo) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[4], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[4]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(Emoji, tmpWord, ans);
+							remove(history[4], hisList[i]);
+							add(history[4], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[4]);
+							for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();
+							searchNoResult = false;
+						}
 					}
 				}
-				if (chooseEV) {
-					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						remove(history[1], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[1]);
-					}
-					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						ans.resize(0);
-						tmpWord = hisList[i];
-						isDisplayingResult = search(EngVie, tmpWord, ans);
-						remove(history[1], hisList[i]);
-						add(history[1], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[1]);
-						for (int i = 0; i < tmpWord.size(); ++i) {
-							ActualSearchBar.text[i] = tmpWord[i];
+				else {
+					if (chooseEE) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[5], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[5]);
 						}
-						ActualSearchBar.lettercount = tmpWord.size();
-						searchNoResult = false;
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(EngEngDef, tmpWord, ans);
+							remove(history[5], hisList[i]);
+							add(history[5], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[5]);
+							/*for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();*/
+							searchNoResult = false;
+						}
+					}
+					if (chooseEV) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[6], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[6]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(EngVieDef, tmpWord, ans);
+							remove(history[6], hisList[i]);
+							add(history[6], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[6]);
+							/*for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();*/
+							searchNoResult = false;
+						}
+					}
+					if (chooseVE) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[7], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[7]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(VieEngDef, tmpWord, ans);
+							remove(history[7], hisList[i]);
+							add(history[7], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[7]);
+							/*for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();*/
+							searchNoResult = false;
+						}
+					}
+					if (chooseSlang) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[8], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[8]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(SlangDef, tmpWord, ans);
+							remove(history[8], hisList[i]);
+							add(history[8], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[8]);
+							/*for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();*/
+							searchNoResult = false;
+						}
+					}
+					if (chooseEmo) {
+						if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							remove(history[9], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[9]);
+						}
+						if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
+							ans.resize(0);
+							tmpWord = hisList[i];
+							isDisplayingResult = search(EmojiDef, tmpWord, ans);
+							remove(history[9], hisList[i]);
+							add(history[9], hisList[i]);
+							hisList.resize(0);
+							hisList = viewList(history[9]);
+							/*for (int i = 0; i < tmpWord.size(); ++i) {
+								ActualSearchBar.text[i] = tmpWord[i];
+							}
+							ActualSearchBar.lettercount = tmpWord.size();*/
+							searchNoResult = false;
+						}
 					}
 				}
-				if (chooseVE) {
-					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						remove(history[2], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[2]);
-					}
-					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						ans.resize(0);
-						tmpWord = hisList[i];
-						isDisplayingResult = search(VieEng, tmpWord, ans);
-						remove(history[2], hisList[i]);
-						add(history[2], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[2]);
-						for (int i = 0; i < tmpWord.size(); ++i) {
-							ActualSearchBar.text[i] = tmpWord[i];
-						}
-						ActualSearchBar.lettercount = tmpWord.size();
-						searchNoResult = false;
-					}
-				}
-				if (chooseSlang) {
-					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						remove(history[3], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[3]);
-					}
-					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						ans.resize(0);
-						tmpWord = hisList[i];
-						isDisplayingResult = search(Slang, tmpWord, ans);
-						remove(history[3], hisList[i]);
-						add(history[3], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[3]);
-						for (int i = 0; i < tmpWord.size(); ++i) {
-							ActualSearchBar.text[i] = tmpWord[i];
-						}
-						ActualSearchBar.lettercount = tmpWord.size();
-						searchNoResult = false;
-					}
-				}
-				if (chooseEmo) {
-					if (CheckCollisionPointRec(mousePoint, { 1420, delHisPosY + 54 * (float)i,22,22 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						remove(history[4], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[4]);
-					}
-					if (CheckCollisionPointRec(mousePoint, { 756, delHisPosY - 22 + 54 * (float)i,664,59 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox)) {
-						ans.resize(0);
-						tmpWord = hisList[i];
-						isDisplayingResult = search(Emoji, tmpWord, ans);
-						remove(history[4], hisList[i]);
-						add(history[4], hisList[i]);
-						hisList.resize(0);
-						hisList = viewList(history[4]);
-						for (int i = 0; i < tmpWord.size(); ++i) {
-							ActualSearchBar.text[i] = tmpWord[i];
-						}
-						ActualSearchBar.lettercount = tmpWord.size();
-						searchNoResult = false;
-					}
-				}
+
 			}
 		}
 		if ((!CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && !CheckCollisionPointRec(mousePoint, { 754,182,708,1103 })) || ActualSearchBar.lettercount > 0) {
@@ -754,6 +912,7 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 		}
 		//////----------------------------------------------------------------------------------------------------------------
 		if (CheckCollisionPointRec(mousePoint, ActualSearchBar.textbox) && ActualSearchBar.text[0] != '\0') {
+			recommendBoxPosY = 182;
 			isDisplayRecommend = true;
 		}
 		if (isDisplayRecommend) {
@@ -800,8 +959,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					DrawRectangle(1432, 182 - 30, 30, 30, white);
 					for (int i = 0; i < recommendResult.size(); ++i) {
 						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-						if (recommendResult[i].size() > 75) {
-							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						if (recommendResult[i].size() > 65) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 65).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						}
 						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
@@ -812,6 +971,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EngEngDef, tmpWord, ans);
+							remove(history[5], recommendResult[i]);
+							add(history[5], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[5]);
 							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
@@ -863,8 +1026,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					DrawRectangle(1432, 182 - 30, 30, 30, white);
 					for (int i = 0; i < recommendResult.size(); ++i) {
 						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-						if (recommendResult[i].size() > 75) {
-							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						if (recommendResult[i].size() > 65) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 65).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						}
 						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
@@ -874,6 +1037,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EngVieDef, tmpWord, ans);
+							remove(history[6], recommendResult[i]);
+							add(history[6], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[6]);
 							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
@@ -925,8 +1092,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					DrawRectangle(1432, 182 - 30, 30, 30, white);
 					for (int i = 0; i < recommendResult.size(); ++i) {
 						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-						if (recommendResult[i].size() > 75) {
-							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						if (recommendResult[i].size() > 65) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 65).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						}
 						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
@@ -936,6 +1103,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(VieEngDef, tmpWord, ans);
+							remove(history[7], recommendResult[i]);
+							add(history[7], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[7]);
 							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
@@ -987,8 +1158,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					DrawRectangle(1432, 182 - 30, 30, 30, white);
 					for (int i = 0; i < recommendResult.size(); ++i) {
 						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-						if (recommendResult[i].size() > 75) {
-							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						if (recommendResult[i].size() > 65) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 65).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						}
 						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
@@ -998,6 +1169,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(SlangDef, tmpWord, ans);
+							remove(history[8], recommendResult[i]);
+							add(history[8], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[8]);
 							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
@@ -1049,8 +1224,8 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 					DrawRectangle(1432, 182 - 30, 30, 30, white);
 					for (int i = 0; i < recommendResult.size(); ++i) {
 						DrawRectangle(754, recommendBoxPosY + 54 * i, 708, 54, white);
-						if (recommendResult[i].size() > 75) {
-							DrawTextEx(bold, divideString1Part(recommendResult[i], 75).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
+						if (recommendResult[i].size() > 65) {
+							DrawTextEx(bold, divideString1Part(recommendResult[i], 65).c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						}
 						else DrawTextEx(bold, recommendResult[i].c_str(), { 800, recommendBoxPosY + 13 + 54 * (float)i }, 26, 0, navy);
 						DrawLine(754, recommendBoxPosY + 54 * i, 1462, recommendBoxPosY + 54 * i, blue);
@@ -1060,6 +1235,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 							ans.resize(0);
 							tmpWord = recommendResult[i];
 							isDisplayingResult = search(EmojiDef, tmpWord, ans);
+							remove(history[9], recommendResult[i]);
+							add(history[9], recommendResult[i]);
+							hisList.resize(0);
+							hisList = viewList(history[9]);
 							searchNoResult = false;
 						}
 						if (CheckCollisionPointRec(mousePoint, { 754, recommendBoxPosY + 54 * (float)i, 708, 54 })) {
@@ -1464,8 +1643,10 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 				readFileToTree(Slang, SlangDef, "Slang.txt");
 
 				for (int i = 0; i < 5; ++i) {
-					deleteLL(history[i]);
 					deleteLL(favor[i]);
+				}
+				for (int i = 0; i < 10; ++i) {
+					deleteLL(history[i]);
 				}
 				hisList.resize(0);
 				hisList = viewList(history[0]);
@@ -1526,15 +1707,17 @@ void HomePage(const int screenWidth, const int screenHeight, trieNode*& VieEng, 
 	}
 	fout.close();
 	fout.open("../Dataset/History.txt");
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 10; ++i) {
 		fout << i << endl;
 		writeNode2File(history[i], fout);
 	}
 	fout.close();
 
 	for (int i = 0; i < 5; ++i) {
-		deleteLL(history[i]);
 		deleteLL(favor[i]);
+	}
+	for (int i = 0; i < 10; ++i) {
+		deleteLL(history[i]);
 	}
 	DeleteAllTree(EngEng);
 	DeleteAllTree(EngEngDef);
@@ -1782,15 +1965,17 @@ void AddWordPage(const int screenWidth, const int screenHeight, trieNode*& VieEn
 	}
 	fout.close();
 	fout.open("../Dataset/History.txt");
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 10; ++i) {
 		fout << i << endl;
 		writeNode2File(history[i], fout);
 	}
 	fout.close();
 
 	for (int i = 0; i < 5; ++i) {
-		deleteLL(history[i]);
 		deleteLL(favor[i]);
+	}
+	for (int i = 0; i < 10; ++i) {
+		deleteLL(history[i]);
 	}
 	DeleteAllTree(EngEng);
 	DeleteAllTree(EngEngDef);
@@ -2529,15 +2714,17 @@ void FavoriteListPage(const int screenWidth, const int screenHeight, trieNode*& 
 	}
 	fout.close();
 	fout.open("../Dataset/History.txt");
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 10; ++i) {
 		fout << i << endl;
 		writeNode2File(history[i], fout);
 	}
 	fout.close();
 
 	for (int i = 0; i < 5; ++i) {
-		deleteLL(history[i]);
 		deleteLL(favor[i]);
+	}
+	for (int i = 0; i < 10; ++i) {
+		deleteLL(history[i]);
 	}
 	DeleteAllTree(EngEng);
 	DeleteAllTree(EngEngDef);
@@ -3174,15 +3361,17 @@ void RevisionPage(const int screenWidth, const int screenHeight, trieNode*& VieE
 	}
 	fout.close();
 	fout.open("../Dataset/History.txt");
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 10; ++i) {
 		fout << i << endl;
 		writeNode2File(history[i], fout);
 	}
 	fout.close();
 
 	for (int i = 0; i < 5; ++i) {
-		deleteLL(history[i]);
 		deleteLL(favor[i]);
+	}
+	for (int i = 0; i < 10; ++i) {
+		deleteLL(history[i]);
 	}
 	DeleteAllTree(EngEng);
 	DeleteAllTree(EngEngDef);
