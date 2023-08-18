@@ -94,6 +94,8 @@ void random1Word4Def(trieNode* root, string& true_word, string& true_def, vector
 								duplicate = true;
 								break;
 							}
+						if (node->mean[0] == true_def)
+							duplicate = true;
 						if (!duplicate) {
 							wrong_def[count - 1] = node->mean[0];
 							count++;

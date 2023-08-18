@@ -520,7 +520,7 @@ bach tuyet`snow white
 bach van`(in the) clear
 bach vien`white monkey
 bach yen`canary|white swallow
-bai`(1) to stretch out|extend; (2) byte|(1) text|lesson|(newspaper) article; (2) (playing) card; (3) against|vs.|anti-; (4) [cl for speeches|newspaper articles]; (5) mandarin symbol of office; (6) to arrange|display; (7) means|way|method|procedure|to bow|humble oneself|(1) field|flat area|plain; (2) to stop|cease|halt|cancel|annul|disperse|to lose|fail|be defeated|to lengthen|make longer|stretch
+bai`(1) to stretch out|extend; (2) byte|(1) text|lesson|(newspaper) article; (2) (playing) card; (3) against|vs|anti-; (4) [cl for speeches|newspaper articles]; (5) mandarin symbol of office; (6) to arrange|display; (7) means|way|method|procedure|to bow|humble oneself|(1) field|flat area|plain; (2) to stop|cease|halt|cancel|annul|disperse|to lose|fail|be defeated|to lengthen|make longer|stretch
 bai bac`to criticize|to gamble
 bai bai`glibly|volubly
 bai bao`newspaper article
@@ -8100,7 +8100,7 @@ com thua canh can`leftovers
 com toi`dinner|evening meal
 com trua`lunch
 com vat`compressed rice
-con`(1) [cl for animals and other small objects]; (2) child; you (said to a child by a parent); i (said to a parent by a child)|i (said by a believer to a religious figure); (3) young|small|baby|(1) to be|remain|be left|have left; (2) also|as for|still|in addition|club|stick|staff|rod|cudgel|attack|outburst|fit|bout; period|crises|water-wheel|(1) sand dune; (2) alcohol; (3) collar; (4) gum|paste|bulging|rut|(of female) be in heat
+con`i (said by a believer to a religious figure); (3) young|small|baby|(1) to be|remain|be left|have left; (2) also|as for|still|in addition|club|stick|staff|rod|cudgel|attack|outburst|fit|bout; period|crises|water-wheel|(1) sand dune; (2) alcohol; (3) collar; (4) gum|paste|bulging|rut|(of female) be in heat
 con ac`raven
 con ai nua`who else
 con ba`tortoise
@@ -8385,7 +8385,7 @@ cong nghiep hoa`industrialization
 cong nghiep nang`smokestack industry|heavy industry
 cong nghiep nhe`light industry
 cong ngo`gateway and alleyway|doors|dates
-cong nguyen`christian era|a.d.
+cong nguyen`christian era|a.d
 cong nha`public office
 cong nhan`worker|employee|workman|to recognize|acknowledge|allow; recognition
 cong nhan chu quyen`to recognize sovereignty
@@ -8728,7 +8728,7 @@ cua mem`soft palate
 cua mieng`mouth|lips|gossip
 cua minh`vulva|to move oneself|stir
 cua mo hoi nuoc mat`hard-earned fortune
-cua my`of american|of the united states|american|u.s.
+cua my`of american|of the united states|american|u.s
 cua na`property|riches|fortune
 cua nach`side door
 cua nang`her
@@ -9833,7 +9833,7 @@ day song`notochord-chordata
 day tay`strawberry
 day than kinh`nerve (fiber)
 day than kinh phe vi`pneumogastric nerve|the vagus
-day thanh`vocal chords|vocal cords.
+day thanh`vocal chords|vocal cords
 day thep`iron wire|wire|telegram
 day thep gai`barbed wire
 day thi`to reach puberty

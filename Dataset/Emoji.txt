@@ -1,76 +1,76 @@
-%-)`user has been staring at a green screen for 15 hours straight.
-(-:`user is left handed.
+%-)`user has been staring at a green screen for 15 hours straight
+(-:`user is left handed
 (8-o`it's mr. bill!
-(:i`user is an egghead.
+(:i`user is an egghead
 *:o)`and bozo the clown!
-*<:-)`user is wearing a santa claus hat.
-+-:-)`user is the pope or holds some other religious office.
-,-)`ditto...but he's winking.
-,:-)`same thing...other side.
--6%`user is braindead.
--:-(`real punk rockers don't smile.
--:-)`user is a punk rocker.
--=*:-)`user is a tex wizard.
-.-)`user only has one eye.
-3:[`mean pet smiley.
-3:]`pet smiley.
-8-)`user is wearing sunglasses.
-8:-)`user is a little girl.
-:'-(`user is crying.
-:'-)`user is so happy, s/he is crying.
-:(`sad.
-:)`sad.
-:*`kisses.
-:*)`user is drunk.
+*<:-)`user is wearing a santa claus hat
++-:-)`user is the pope or holds some other religious office
+,-)`ditto...but he's winking
+,:-)`same thing...other side
+-6%`user is braindead
+-:-(`real punk rockers don't smile
+-:-)`user is a punk rocker
+-=*:-)`user is a tex wizard
+.-)`user only has one eye
+3:[`mean pet smiley
+3:]`pet smiley
+8-)`user is wearing sunglasses
+8:-)`user is a little girl
+:'-(`user is crying
+:'-)`user is so happy, s/he is crying
+:(`sad
+:)`sad
+:*`kisses
+:*)`user is drunk
 :+1:`thumbs up sign
-:,(`crying.
+:,(`crying
 :-``user spitting out its chewing tobacco.dwew  wew ewewewewe wewewe we weweweweweweweweweewweweewewwe
-:-#`user wears braces.
-:-&`user is tongue tied.
+:-#`user wears braces
+:-&`user is tongue tied
 :-(`boo hoo
-:-)`user shaved one of his eyebrows off this morning.|ha ha
-:-)-8`user is a big girl.
-:-)~`user drools.
-:-*`user just ate something sour.
-:-/`user is skeptical.
+:-)`user shaved one of his eyebrows off this morning|ha ha
+:-)-8`user is a big girl
+:-)~`user drools
+:-*`user just ate something sour
+:-/`user is skeptical
 :-0`no yelling!(quiet lab)
 :-1:`thumbs down sign
-:-7`user juust made a wry statement.
-:-9`user is licking his/her lips.
-:-:`mutant smiley; the invisible smiley.
+:-7`user juust made a wry statement
+:-9`user is licking his/her lips
+:-:`mutant smiley; the invisible smiley
 :->`hey hey
-:-?`user smokes a pipe.
-:-@`user is screaming.
-:-[`user is a vampire.
-:-c`user is really bummed.
+:-?`user smokes a pipe
+:-@`user is screaming
+:-[`user is a vampire
+:-c`user is really bummed
 :-d`user is laughing (at you!)
-:-e`bucktoothed vampire.
-:-f`bucktoothed vampire with one tooth missing.
+:-e`bucktoothed vampire
+:-f`bucktoothed vampire with one tooth missing
 :-i`hmmm
 :-o`oops|uh oh!
 :-p`nyahhhh!
-:-q`user is a smoker.
-:-s`user just made an incoherent statement.
-:-x`user's lips are sealed.
-:-{)`user has a mustache.
-:-{}`user wears lipstick.
-:-~)`user has a cold.
+:-q`user is a smoker
+:-s`user just made an incoherent statement
+:-x`user's lips are sealed
+:-{)`user has a mustache
+:-{}`user wears lipstick
+:-~)`user has a cold
 :100:`hundred points symbol
 :1234:`input symbol for numbers
 :1st_place_medal:`first place medal
 :2nd_place_medal:`second place medal
 :3rd_place_medal:`third place medal
 :8ball:`billiards
-::-)`user wears normal glasses.
+::-)`user wears normal glasses
 :<`what?
-:<)`user is from an ivy league school.
-:=)`user has two noses.
+:<)`user is from an ivy league school
+:=)`user has two noses
 :>`what?
 :@`what?
-:[`real downer.
-:]`gleep...a friendly midget smiley who will gladly be your friend.
-:^)`user has a broken nose.
-:_)`user's nose is sliding off of his face.
+:[`real downer
+:]`gleep...a friendly midget smiley who will gladly be your friend
+:^)`user has a broken nose
+:_)`user's nose is sliding off of his face
 :a:`negative squared latin capital letter a, variation selector-16
 :ab:`negative squared ab
 :abc:`input symbol for latin letters
@@ -419,7 +419,7 @@
 :cyclone:`cyclone
 :cyprus:`regional indicator symbol letter c, regional indicator symbol letter y
 :czech_republic:`regional indicator symbol letter c, regional indicator symbol letter z
-:d`laughter.
+:d`laughter
 :dagger:`dagger knife
 :dancer:`dancer
 :dancing_men:`woman with bunny ears, zero width joiner, male sign, variation selector-16
@@ -696,7 +696,7 @@
 :hugs:`hugging face
 :hungary:`regional indicator symbol letter h, regional indicator symbol letter u
 :hushed:`hushed face
-:i`hmmm...
+:i`hmmm
 :ice_cream:`ice cream
 :ice_hockey:`ice hockey stick and puck
 :ice_skate:`ice skate
@@ -961,7 +961,7 @@
 :notebook_with_decorative_cover:`notebook with decorative cover
 :notes:`multiple musical notes
 :nut_and_bolt:`nut and bolt
-:o`yelling.
+:o`yelling
 :o2:`negative squared latin capital letter o, variation selector-16
 :o:`heavy large circle, variation selector-16
 :ocean:`water wave
@@ -1402,7 +1402,7 @@
 :us:`regional indicator symbol letter u, regional indicator symbol letter s
 :us_virgin_islands:`regional indicator symbol letter v, regional indicator symbol letter i
 :uzbekistan:`regional indicator symbol letter u, regional indicator symbol letter z
-:v)`user has a broken nose, but it's the other way.
+:v)`user has a broken nose, but it's the other way
 :v:`victory hand, variation selector-16
 :vanuatu:`regional indicator symbol letter v, regional indicator symbol letter u
 :vatican_city:`regional indicator symbol letter v, regional indicator symbol letter a
@@ -1503,18 +1503,18 @@
 :zzz:`sleeping symbol
 :{`what?
 :}`what should we call these? (what?)
-;-)`winky smiley. user just made a flirtatious and/or sarcastic remark.more of a "don't hit me for what i just said" smiley.
-<:-i`user is a dunce.
-<|-(`user is chinese and doesn't like these kind of jokes.
-<|-)`user is chinese.
-=)`variation on a theme...
+;-)`winky smiley. user just made a flirtatious and/or sarcastic remark.more of a "don't hit me for what i just said" smiley
+<:-i`user is a dunce
+<|-(`user is chinese and doesn't like these kind of jokes
+<|-)`user is chinese
+=)`variation on a theme
 =))`full of laughing
-=:-)`user is a hosehead.
+=:-)`user is a hosehead
 =w=`whatever
->:->`user just made a really devilish remark.
->;->`winky and devil combined. a very lewd remark was just made.
+>:->`user just made a really devilish remark
+>;->`winky and devil combined. a very lewd remark was just made
 >u`screw you!
 ?`huh?
 ?4u`question for you
-@:-)`user is wearing a turban.
-@=`user is pro-nuclear war.
+@:-)`user is wearing a turban
+@=`user is pro-nuclear war
